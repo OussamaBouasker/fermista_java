@@ -178,34 +178,34 @@
 
 
                 <!-- Inside the right Pane, below the "Status des réclamations" section -->
-                <TableView fx:id="reclamationTable" layoutX="8.0" layoutY="213.0" prefHeight="200.0" prefWidth="680.0">
+                <TableView fx:id="reclamationTable" layoutX="8.0" layoutY="213.0" prefHeight="200.0" prefWidth="680.0" >
                     <columns>
-                        <TableColumn prefWidth="50.0" text="ID">
+                        <TableColumn fx:id="idColumn" prefWidth="50.0" text="ID">
                             <cellValueFactory>
                                 <PropertyValueFactory property="id" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="150.0" text="Titre">
+                        <TableColumn fx:id="titreColumn" prefWidth="150.0" text="Titre">
                             <cellValueFactory>
                                 <PropertyValueFactory property="titre" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="200.0" text="Description">
+                        <TableColumn fx:id="descriptionColumn" prefWidth="200.0" text="Description">
                             <cellValueFactory>
                                 <PropertyValueFactory property="description" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="100.0" text="Status">
+                        <TableColumn fx:id="statusColumn" prefWidth="100.0" text="Status">
                             <cellValueFactory>
                                 <PropertyValueFactory property="status" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="130.0" text="Date Soumission">
+                        <TableColumn fx:id="dateSoumissionColumn" prefWidth="130.0" text="Date Soumission">
                             <cellValueFactory>
                                 <PropertyValueFactory property="dateSoumission" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="150.0" text="Utilisateur">
+                        <TableColumn fx:id="userColumn" prefWidth="150.0" text="Utilisateur">
                             <cellValueFactory>
                                 <PropertyValueFactory property="user" />
                             </cellValueFactory>
