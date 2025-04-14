@@ -10,13 +10,13 @@ import java.time.LocalTime;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) {
-        System.out.println("Hello and welcome!");
-        MyDbConnexion c1 = MyDbConnexion.getInstance();
-
-        ServiceUser us = new ServiceUser();
-        ServiceReservation sr = new ServiceReservation();
-        ServiceWorkshop sw = new ServiceWorkshop();
+//    public static void main(String[] args) {
+//        System.out.println("Hello and welcome!");
+//        MyDbConnexion c1 = MyDbConnexion.getInstance();
+//
+//        ServiceUser us = new ServiceUser();
+//        ServiceReservation sr = new ServiceReservation();
+//        ServiceWorkshop sw = new ServiceWorkshop();
 
 //        // ✨ 1. INSERT
 //        User u1 = new User("yosr.jemli@gmail.com", "pass123", "Yosr", "Jemli", "12345678", "image.jpg");
@@ -124,61 +124,58 @@ public class Main {
 //    }
 
 
-
-        ServiceWorkshop service = new ServiceWorkshop();
-
-        try {
-            // 1. Création d'un nouvel utilisateur (supposons que l'utilisateur avec ID 1 existe déjà)
-            User user = new User(7);
-
-            // 2. Création d'un Workshop
-            Workshop newWorkshop = new Workshop();
-            newWorkshop.setTitre("Test Atelier");
-            newWorkshop.setDescription("Ceci est un test.");
-            newWorkshop.setDate(LocalDateTime.now().plusDays(1));
-            newWorkshop.setPrix("99.99");
-            newWorkshop.setTheme("Informatique");
-            newWorkshop.setDuration(LocalTime.of(2, 30));
-            newWorkshop.setNbrPlacesMax(20);
-            newWorkshop.setNbrPlacesRestantes(20);
-            newWorkshop.setType(Workshop.TYPE_LIVE_WORKSHOP);
-            newWorkshop.setImage("image.jpg");
-            newWorkshop.setMeetlink("https://meet.jit.si/testatelier");
-            newWorkshop.setUser(user);
-            newWorkshop.setKeywords("Java,Live");
-
-            // 3. Insertion
-            service.insert(newWorkshop);
-
-            // 4. Affichage de tous les workshops
-            List<Workshop> workshops = service.showAll();
-            System.out.println("=== Liste des workshops ===");
-            for (Workshop w : workshops) {
-                System.out.println(w);
-            }
-
-            // 5. Mise à jour du premier workshop récupéré
-            if (!workshops.isEmpty()) {
-                Workshop first = workshops.get(13);
-                first.setTitre("Atelier Mis à Jour");
-                first.setPrix("999.99");
-                service.update(first);
-                System.out.println("Workshop mis à jour avec succès !");
-            }
-
-//             6. Suppression du dernier workshop
-            if (!workshops.isEmpty()) {
-                Workshop last = workshops.get(workshops.size() - 1);
-                service.delete(last);
-                System.out.println("Workshop supprimé avec succès !");
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-
+//        ServiceWorkshop service = new ServiceWorkshop();
+//
+//        try {
+//            // 1. Création d'un nouvel utilisateur (supposons que l'utilisateur avec ID 1 existe déjà)
+//            User user = new User(7);
+//
+//            // 2. Création d'un Workshop
+//            Workshop newWorkshop = new Workshop();
+//            newWorkshop.setTitre("Test Atelier");
+//            newWorkshop.setDescription("Ceci est un test.");
+//            newWorkshop.setDate(LocalDateTime.now().plusDays(1));
+//            newWorkshop.setPrix("99.99");
+//            newWorkshop.setTheme("Informatique");
+//            newWorkshop.setDuration(LocalTime.of(2, 30));
+//            newWorkshop.setNbrPlacesMax(20);
+//            newWorkshop.setNbrPlacesRestantes(20);
+//            newWorkshop.setType(Workshop.TYPE_LIVE_WORKSHOP);
+//            newWorkshop.setImage("image.jpg");
+//            newWorkshop.setMeetlink("https://meet.jit.si/testatelier");
+//            newWorkshop.setUser(user);
+//            newWorkshop.setKeywords("Java,Live");
+//
+//            // 3. Insertion
+//            service.insert(newWorkshop);
+//
+//            // 4. Affichage de tous les workshops
+//            List<Workshop> workshops = service.showAll();
+//            System.out.println("=== Liste des workshops ===");
+//            for (Workshop w : workshops) {
+//                System.out.println(w);
+//            }
+//
+//            // 5. Mise à jour du premier workshop récupéré
+//            if (!workshops.isEmpty()) {
+//                Workshop first = workshops.get(13);
+//                first.setTitre("Atelier Mis à Jour");
+//                first.setPrix("999.99");
+//                service.update(first);
+//                System.out.println("Workshop mis à jour avec succès !");
+//            }
+//
+////             6. Suppression du dernier workshop
+//            if (!workshops.isEmpty()) {
+//                Workshop last = workshops.get(workshops.size() - 1);
+//                service.delete(last);
+//                System.out.println("Workshop supprimé avec succès !");
+//            }
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 
 //        try {
@@ -235,7 +232,6 @@ public class Main {
 //    }
 
 
-
 //        ServiceCollier service = new ServiceCollier();
 //
 //        // Créer une vache fictive (elle doit exister dans la base de données !)
@@ -275,8 +271,8 @@ public class Main {
 //            System.out.println(c);
 //        }
 //    }
-
-
-
-
 }
+
+
+
+
