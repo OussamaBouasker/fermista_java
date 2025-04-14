@@ -51,76 +51,76 @@
                                 </Text>
                             </buttons>
                         </ButtonBar>
-                  <ButtonBar layoutX="12.0" layoutY="189.0" prefHeight="40.0" prefWidth="200.0">
-                    <buttons>
-                        <ImageView fitHeight="24.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/user-removebg-preview (2).png" />
-                           </image>
-                        </ImageView>
-                      <Button fx:id="btn_workbench11" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="Gestion User" textFill="WHITE">
-                           <font>
-                              <Font name="Century Gothic Bold" size="15.0" />
-                           </font>
-                        </Button>
-                    </buttons>
-                  </ButtonBar>
-                  <ButtonBar layoutX="9.0" layoutY="259.0" prefHeight="40.0" prefWidth="200.0">
-                     <buttons>
-                        <ImageView fitHeight="33.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/images-removebg-preview.png" />
-                           </image>
-                        </ImageView>
-                        <Button fx:id="btn_workbench111" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="Contrôle médical" textFill="WHITE">
-                           <font>
-                              <Font name="Century Gothic Bold" size="13.0" />
-                           </font>
-                        </Button>
-                     </buttons>
-                  </ButtonBar>
-                  <ButtonBar layoutX="10.0" layoutY="320.0" prefHeight="40.0" prefWidth="200.0">
-                     <buttons>
-                        <ImageView fitHeight="33.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/event1-removebg-preview.png" />
-                           </image>
-                        </ImageView>
-                        <Button fx:id="btn_workbench112" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="Gestion événements" textFill="WHITE">
-                           <font>
-                              <Font name="Century Gothic Bold" size="13.0" />
-                           </font>
-                        </Button>
-                     </buttons>
-                  </ButtonBar>
-                  <ButtonBar layoutX="9.0" layoutY="462.0" prefHeight="40.0" prefWidth="200.0">
-                     <buttons>
-                        <ImageView fitHeight="35.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/dashboard.png" />
-                           </image>
-                        </ImageView>
-                        <Button fx:id="btn_workbench1121" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="Suivis médical" textFill="WHITE">
-                           <font>
-                              <Font name="Century Gothic Bold" size="15.0" />
-                           </font>
-                        </Button>
-                     </buttons>
-                  </ButtonBar>
-                  <ButtonBar layoutX="8.0" layoutY="378.0" prefHeight="40.0" prefWidth="200.0">
-                     <buttons>
-                        <ImageView fitHeight="35.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/images__1_-removebg-preview.png" />
-                           </image>
-                        </ImageView>
-                        <Button fx:id="btn_workbench11211" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="E-commerce" textFill="WHITE">
-                           <font>
-                              <Font name="Century Gothic Bold" size="15.0" />
-                           </font>
-                        </Button>
-                     </buttons>
-                  </ButtonBar>
+                        <ButtonBar layoutX="12.0" layoutY="189.0" prefHeight="40.0" prefWidth="200.0">
+                            <buttons>
+                                <ImageView fitHeight="24.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@images/user-removebg-preview (2).png" />
+                                    </image>
+                                </ImageView>
+                                <Button fx:id="btn_workbench11" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="Gestion User" textFill="WHITE">
+                                    <font>
+                                        <Font name="Century Gothic Bold" size="15.0" />
+                                    </font>
+                                </Button>
+                            </buttons>
+                        </ButtonBar>
+                        <ButtonBar layoutX="9.0" layoutY="259.0" prefHeight="40.0" prefWidth="200.0">
+                            <buttons>
+                                <ImageView fitHeight="33.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@images/images-removebg-preview.png" />
+                                    </image>
+                                </ImageView>
+                                <Button fx:id="btn_workbench111" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="Contrôle médical" textFill="WHITE">
+                                    <font>
+                                        <Font name="Century Gothic Bold" size="13.0" />
+                                    </font>
+                                </Button>
+                            </buttons>
+                        </ButtonBar>
+                        <ButtonBar layoutX="10.0" layoutY="320.0" prefHeight="40.0" prefWidth="200.0">
+                            <buttons>
+                                <ImageView fitHeight="33.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@images/event1-removebg-preview.png" />
+                                    </image>
+                                </ImageView>
+                                <Button fx:id="btn_workbench112" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="Gestion événements" textFill="WHITE">
+                                    <font>
+                                        <Font name="Century Gothic Bold" size="13.0" />
+                                    </font>
+                                </Button>
+                            </buttons>
+                        </ButtonBar>
+                        <ButtonBar layoutX="9.0" layoutY="462.0" prefHeight="40.0" prefWidth="200.0">
+                            <buttons>
+                                <ImageView fitHeight="35.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@images/dashboard.png" />
+                                    </image>
+                                </ImageView>
+                                <Button fx:id="btn_workbench1121" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="Suivis médical" textFill="WHITE">
+                                    <font>
+                                        <Font name="Century Gothic Bold" size="15.0" />
+                                    </font>
+                                </Button>
+                            </buttons>
+                        </ButtonBar>
+                        <ButtonBar layoutX="8.0" layoutY="378.0" prefHeight="40.0" prefWidth="200.0">
+                            <buttons>
+                                <ImageView fitHeight="35.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@images/images__1_-removebg-preview.png" />
+                                    </image>
+                                </ImageView>
+                                <Button fx:id="btn_workbench11211" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="E-commerce" textFill="WHITE">
+                                    <font>
+                                        <Font name="Century Gothic Bold" size="15.0" />
+                                    </font>
+                                </Button>
+                            </buttons>
+                        </ButtonBar>
                     </children>
                 </AnchorPane>
             </children>

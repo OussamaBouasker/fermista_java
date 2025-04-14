@@ -21,6 +21,7 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.33</version>
         </dependency>
+
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -41,9 +42,10 @@
                 <configuration>
                     <mainClass>tn.fermista.tests.MainApp</mainClass>
                 </configuration>
-
             </plugin>
         </plugins>
     </build>
+
+
 
 </project>
