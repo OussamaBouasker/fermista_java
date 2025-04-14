@@ -152,3 +152,52 @@
 .scroll-pane > .corner {
     -fx-background-color: black;
 }
+
+.vbox {
+    -fx-background-color: #f4f4f4;
+    -fx-padding: 30;
+    -fx-spacing: 15;
+    -fx-alignment: center;
+    -fx-background-radius: 12;
+    -fx-border-color: #dcdcdc;
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+}
+
+.txt_search{-fx-max-width: 120px;}
+.text-field,
+.date-picker,
+.combo-box {
+    -fx-pref-width: 320px;
+    -fx-min-width: 320px;
+    -fx-max-width: 320px;
+    -fx-padding: 10;
+    -fx-background-color: white;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-font-size: 14px;
+}
+
+.text-field:focused,
+.date-picker:focused,
+.combo-box:focused {
+    -fx-border-color: #4e9af1;
+    -fx-effect: dropshadow(gaussian, rgba(78,154,241,0.3), 8, 0.3, 0, 0);
+}
+
+.button1 {
+    -fx-background-color: linear-gradient(to right, #4ea555, #99dca0);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10 25;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 5, 0.3, 0, 2);
+}
+
+.button1:hover {
+    -fx-background-color: linear-gradient(to right, #99dca0, #4ea555);
+}

@@ -4,15 +4,16 @@ import tn.fermista.models.*;
 import tn.fermista.services.*;
 import tn.fermista.utils.MyDbConnexion;
 
+import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
 public class Main {
 //    public static void main(String[] args) {
-//        System.out.println("Hello and welcome!");
-//        MyDbConnexion c1 = MyDbConnexion.getInstance();
+
 //
 //        ServiceUser us = new ServiceUser();
 //        ServiceReservation sr = new ServiceReservation();
@@ -271,7 +272,176 @@ public class Main {
 //            System.out.println(c);
 //        }
 //    }
+
+
+//
+
+//    Consultation:
+
+//    public static void main(String[] args) {
+//        System.out.println("Hello and welcome!");
+//        MyDbConnexion c1 = MyDbConnexion.getInstance();
+//        // Création des services
+//        ServiceConsultation serviceConsultation = new ServiceConsultation();
+//        ServiceRapportMedical serviceRapportMedical = new ServiceRapportMedical();
+//        ServiceVache serviceVache = new ServiceVache();
+//
+//        try {
+//            // Création de l'objet RapportMedical
+//
+//            RapportMedical rapportMedical = new RapportMedical(2);
+//
+//            // Création de l'objet Vache
+//            Vache vache = new Vache(1);
+//            // Création de la consultation
+//            Consultation consultation = new Consultation();
+//            consultation.setRapportMedical(rapportMedical);
+//            consultation.setVache(vache);
+//            consultation.setNom("Consultation 1");
+//            consultation.setDate(Date.valueOf("2025-05-01"));
+//            consultation.setHeure(Time.valueOf("10:30:00"));
+//            consultation.setLieu("Salle 1");
+//            serviceConsultation.insert(consultation);
+//            System.out.println("Insertion réussie.");
+//
+//
+//            // Récupération de toutes les réservations pour retrouver l'ID de celle qu'on vient d'insérer
+//            List<Consultation> consultations = serviceConsultation.showAll();
+//            Consultation lastInserted = consultations.get(consultations.size() - 1);
+//
+//            // Test update
+//            lastInserted.setNom("Nom mis à jour !");
+//            serviceConsultation.update(lastInserted);
+//            System.out.println("Mise à jour réussie.");
+//
+//            // Test affichage
+//            System.out.println("Liste des réservations :");
+//            for (Consultation c : serviceConsultation.showAll()) {
+//                System.out.println(c);
+//            }
+//            // Test suppression
+//            serviceConsultation.delete(lastInserted);
+//            System.out.println("Suppression réussie.");
+//
+//
+//
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//
+//     Rapport medical:
+
+//    public static void main(String[] args) {
+//        System.out.println("Hello and welcome!");
+//        MyDbConnexion c1 = MyDbConnexion.getInstance();
+//        // Création des services
+//        ServiceConsultation serviceConsultation = new ServiceConsultation();
+//        ServiceRapportMedical serviceRapportMedical = new ServiceRapportMedical();
+//        ServiceVache serviceVache = new ServiceVache();
+//
+//        try {
+//
+//            // Création de la consultation
+//            RapportMedical rp = new RapportMedical();
+//            rp.setNum(2);
+//            rp.setRace("race 1");
+//            rp.setHistoriqueDeMaladie("historique 1");
+//            rp.setCasMedical("cas 1");
+//            rp.setSolution("solution 1");
+//
+//            serviceRapportMedical.insert(rp);
+//            System.out.println("Insertion réussie.");
+//
+//
+//            // Récupération de toutes les réservations pour retrouver l'ID de celle qu'on vient d'insérer
+//            List<RapportMedical> rps = serviceRapportMedical.showAll();
+//            RapportMedical lastInserted = rps.get(rps.size() - 1);
+//
+//            // Test update
+//            lastInserted.setRace("Race mis à jour !");
+//            serviceRapportMedical.update(lastInserted);
+//            System.out.println("Mise à jour réussie.");
+//
+//            // Test affichage
+//            System.out.println("Liste des réservations :");
+//            for (RapportMedical r: serviceRapportMedical.showAll()) {
+//                System.out.println(r);
+//            }
+//            // Test suppression
+//            serviceRapportMedical.delete(lastInserted);
+//            System.out.println("Suppression réussie.");
+//
+//
+//
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//}
+// Rendez vous:
+
+//    public static void main(String[] args) {
+//        System.out.println("Hello and welcome!");
+//        MyDbConnexion c1 = MyDbConnexion.getInstance();
+//        // Création des services
+//        ServiceConsultation serviceConsultation = new ServiceConsultation();
+//        ServiceRapportMedical serviceRapportMedical = new ServiceRapportMedical();
+//        ServiceRendezVous serviceRendezVous = new ServiceRendezVous();
+//
+//
+//        try {
+//            // Création de l'objet AGRI
+//
+//           Agriculteur agriculteur = new Agriculteur(1);
+//
+//            // Création de l'objet VET
+//           Veterinaire veterinaire = new Veterinaire(3);
+//            // Création de la consultation
+//            RendezVous rV = new RendezVous();
+//            rV.setVeterinaire(veterinaire);
+//            rV.setAgriculteur(agriculteur);
+//            rV.setDate(Date.valueOf("2025-05-01"));
+//            rV.setHeure(Time.valueOf("10:30:00"));
+//            rV.setSex("sex 1");
+//            rV.setCause("cause 1");
+//            rV.setStatus("status 1");
+//
+//            serviceRendezVous.insert(rV);
+//            System.out.println("Insertion réussie.");
+//
+//
+//            // Récupération de toutes les réservations pour retrouver l'ID de celle qu'on vient d'insérer
+//            List<RendezVous> rVs = serviceRendezVous.showAll();
+//            RendezVous lastInserted = rVs.get(rVs.size() - 1);
+//
+//            // Test update
+//            lastInserted.setSex("Sex mis à jour !");
+//            serviceRendezVous.update(lastInserted);
+//            System.out.println("Mise à jour réussie.");
+//
+//            // Test affichage
+//            System.out.println("Liste des réservations :");
+//            for (RendezVous r: serviceRendezVous.showAll()) {
+//                System.out.println(r);
+//            }
+//            // Test suppression
+//            serviceRendezVous.delete(lastInserted);
+//            System.out.println("Suppression réussie.");
+//
+//
+//
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
+
+
 
 
 

@@ -21,6 +21,10 @@ public class Vache {
 
     public Vache() {}
 
+    public Vache(int id) {
+        this.id = id;
+    }
+
     //chaima
     public Vache(int id, String name) {
         this.id = id;

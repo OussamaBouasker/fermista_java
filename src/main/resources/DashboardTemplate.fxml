@@ -65,7 +65,7 @@
                                 </Button>
                             </buttons>
                         </ButtonBar>
-                        <ButtonBar layoutX="9.0" layoutY="259.0" prefHeight="40.0" prefWidth="200.0">
+                        <ButtonBar layoutX="9.0" layoutY="300.0" prefHeight="40.0" prefWidth="200.0">
                             <buttons>
                                 <ImageView fitHeight="33.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -79,7 +79,7 @@
                                 </Button>
                             </buttons>
                         </ButtonBar>
-                        <ButtonBar layoutX="10.0" layoutY="320.0" prefHeight="40.0" prefWidth="200.0">
+                        <ButtonBar layoutX="10.0" layoutY="357.0" prefHeight="40.0" prefWidth="200.0">
                             <buttons>
                                 <ImageView fitHeight="33.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -93,7 +93,7 @@
                                 </Button>
                             </buttons>
                         </ButtonBar>
-                        <ButtonBar layoutX="9.0" layoutY="462.0" prefHeight="40.0" prefWidth="200.0">
+                        <ButtonBar layoutX="9.0" layoutY="500.0" prefHeight="40.0" prefWidth="200.0">
                             <buttons>
                                 <ImageView fitHeight="35.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -107,7 +107,7 @@
                                 </Button>
                             </buttons>
                         </ButtonBar>
-                        <ButtonBar layoutX="8.0" layoutY="378.0" prefHeight="40.0" prefWidth="200.0">
+                        <ButtonBar layoutX="8.0" layoutY="430.0" prefHeight="40.0" prefWidth="200.0">
                             <buttons>
                                 <ImageView fitHeight="35.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -121,6 +121,20 @@
                                 </Button>
                             </buttons>
                         </ButtonBar>
+                  <ButtonBar layoutX="8.0" layoutY="241.0" prefHeight="40.0" prefWidth="200.0">
+                     <buttons>
+                        <ImageView fitHeight="45.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/rec-removebg-preview.png" />
+                           </image>
+                        </ImageView>
+                        <Button fx:id="btn_workbench113" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="Reclamations" textFill="WHITE">
+                           <font>
+                              <Font name="Century Gothic Bold" size="15.0" />
+                           </font>
+                        </Button>
+                     </buttons>
+                  </ButtonBar>
                     </children>
                 </AnchorPane>
             </children>

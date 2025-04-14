@@ -20,15 +20,21 @@ public class ServiceRapportMedical implements CRUD<RapportMedical> {
 
     @Override
     public void insert(RapportMedical rapportMedical) throws SQLException {
-        String req = "INSERT INTO rapport_medical ( num, race, historique_de_maladie, cas_medical, solution) VALUES ?, ?, ?, ?, ?)";
+        // La requête SQL a 5 paramètres pour les colonnes : num, race, historique_de_maladie, cas_medical, solution
+        String req = "INSERT INTO rapport_medical (num, race, historique_de_maladie, cas_medical, solution) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement ps = cnx.prepareStatement(req);
-        ps.setInt(2, rapportMedical.getNum());
-        ps.setString(3, rapportMedical.getRace());
-        ps.setString(4, rapportMedical.getHistoriqueDeMaladie());
-        ps.setString(5, rapportMedical.getCasMedical());
-        ps.setString(6, rapportMedical.getSolution());
+
+        // Paramétrage des valeurs dans la requête SQL
+        ps.setInt(1, rapportMedical.getNum());  // num
+        ps.setString(2, rapportMedical.getRace());  // race
+        ps.setString(3, rapportMedical.getHistoriqueDeMaladie());  // historique_de_maladie
+        ps.setString(4, rapportMedical.getCasMedical());  // cas_medical
+        ps.setString(5, rapportMedical.getSolution());  // solution
+
+        // Exécution de la requête
         ps.executeUpdate();
     }
+
 
     @Override
     public void update(RapportMedical rapportMedical) throws SQLException {
@@ -71,4 +77,35 @@ public class ServiceRapportMedical implements CRUD<RapportMedical> {
         }
         return rapports;
     }
+
+    public RapportMedical findById(int id) throws SQLException {
+        String req = "SELECT * FROM rapport_medical WHERE id = ?";
+        PreparedStatement ps = cnx.prepareStatement(req);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            RapportMedical rm = new RapportMedical(
+                    rs.getInt("id"),
+                    rs.getInt("num"),
+                    rs.getString("race"),
+                    rs.getString("historique_de_maladie"),
+                    rs.getString("cas_medical"),
+                    rs.getString("solution")
+            );
+
+            // Optionnel : récupérer la consultation liée si elle est stockée dans la table
+            // Exemple :
+//             int consultationId = rs.getInt("consultation_id");
+//             ServiceConsultation sc = new ServiceConsultation();
+//             Consultation consultation = sc.findById(consultationId);
+//             rm.setConsultation(consultation);
+
+            return rm;
+        }
+
+        return null;
+    }
+
+
 }
