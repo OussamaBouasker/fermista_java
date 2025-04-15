@@ -37,21 +37,7 @@
                                 </Pane>
                             </children>
                         </Pane>
-                        <ButtonBar fx:id="btn_workbench" layoutX="9.0" layoutY="124.0" prefHeight="40.0" prefWidth="200.0" stylesheets="@style.css">
-                            <buttons>
-                                <ImageView fitHeight="29.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/home-removebg-preview (1).png" />
-                                    </image>
-                                </ImageView>
-                                <Text fill="#fcfafa" strokeType="OUTSIDE" strokeWidth="0.0" text="Home" wrappingWidth="110.13676186799967">
-                                    <font>
-                                        <Font name="Century Gothic Bold" size="15.0" />
-                                    </font>
-                                </Text>
-                            </buttons>
-                        </ButtonBar>
-                        <ButtonBar layoutX="12.0" layoutY="189.0" prefHeight="40.0" prefWidth="200.0">
+                        <ButtonBar layoutX="8.0" layoutY="191.0" prefHeight="40.0" prefWidth="200.0">
                             <buttons>
                                 <ImageView fitHeight="24.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -72,7 +58,7 @@
                                         <Image url="@images/images-removebg-preview.png" />
                                     </image>
                                 </ImageView>
-                                <Button fx:id="btn_workbench111" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="Contrôle médical" textFill="WHITE">
+                                <Button fx:id="btn_workbench111" mnemonicParsing="false" onAction="#ControlMedicalShow" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="Contrôle médical" textFill="WHITE">
                                     <font>
                                         <Font name="Century Gothic Bold" size="13.0" />
                                     </font>
@@ -129,6 +115,20 @@
                            </image>
                         </ImageView>
                         <Button fx:id="btn_workbench113" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="Reclamations" textFill="WHITE">
+                           <font>
+                              <Font name="Century Gothic Bold" size="15.0" />
+                           </font>
+                        </Button>
+                     </buttons>
+                  </ButtonBar>
+                  <ButtonBar layoutX="14.0" layoutY="128.0" prefHeight="40.0" prefWidth="200.0">
+                     <buttons>
+                        <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/home-removebg-preview (1).png" />
+                           </image>
+                        </ImageView>
+                        <Button fx:id="btn_workbench114" mnemonicParsing="false" onAction="#DashbordTemplate" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="Home" textFill="WHITE">
                            <font>
                               <Font name="Century Gothic Bold" size="15.0" />
                            </font>

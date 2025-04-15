@@ -14,7 +14,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="930.0" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.fermista.controllers.ControlMedicalShow">
     <children>
@@ -40,20 +39,6 @@
                             </Pane>
                         </children>
                     </Pane>
-                    <ButtonBar fx:id="btn_workbench" layoutX="9.0" layoutY="124.0" prefHeight="40.0" prefWidth="200.0" stylesheets="@style.css">
-                        <buttons>
-                            <ImageView fitHeight="29.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
-                                <image>
-                                    <Image url="@images/home-removebg-preview (1).png" />
-                                </image>
-                            </ImageView>
-                            <Text fill="#fcfafa" strokeType="OUTSIDE" strokeWidth="0.0" text="Home" wrappingWidth="110.13676186799967">
-                                <font>
-                                    <Font name="Century Gothic Bold" size="15.0" />
-                                </font>
-                            </Text>
-                        </buttons>
-                    </ButtonBar>
                     <ButtonBar layoutX="12.0" layoutY="189.0" prefHeight="40.0" prefWidth="200.0">
                         <buttons>
                             <ImageView fitHeight="24.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
@@ -75,7 +60,7 @@
                                     <Image url="@images/images-removebg-preview.png" />
                                 </image>
                             </ImageView>
-                            <Button fx:id="btn_workbench111" mnemonicParsing="false" onAction="#ControlMedicalShow" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="Contrôle médical" textFill="WHITE">
+                            <Button fx:id="btn_workbench111" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="Contrôle médical" textFill="WHITE">
                                 <font>
                                     <Font name="Century Gothic Bold" size="13.0" />
                                 </font>
@@ -124,6 +109,20 @@
                             </Button>
                         </buttons>
                     </ButtonBar>
+                  <ButtonBar layoutX="14.0" layoutY="128.0" prefHeight="40.0" prefWidth="200.0">
+                     <buttons>
+                        <ImageView fitHeight="34.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/home-removebg-preview (1).png" />
+                           </image>
+                        </ImageView>
+                        <Button fx:id="btn_workbench113" mnemonicParsing="false" onAction="#DashboardTemplate" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="Home" textFill="WHITE">
+                           <font>
+                              <Font name="Century Gothic Bold" size="15.0" />
+                           </font>
+                        </Button>
+                     </buttons>
+                  </ButtonBar>
                 </children>
             </AnchorPane>
         </children>
@@ -177,66 +176,75 @@
                     <Font name="Century Gothic Italic" size="30.0" />
                 </font>
             </Label>
-            <TableView layoutX="83.0" layoutY="159.0" prefHeight="139.0" prefWidth="521.0">
+            <Button fx:id="addConsultationBtn" layoutX="564.0" layoutY="133.0" mnemonicParsing="false" onAction="#handleAddConsultation" prefHeight="26.0" prefWidth="21.0" style="-fx-background-color: #4CAF50;">
+                <graphic>
+                    <ImageView fitHeight="26.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@images/plus-removebg-preview.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+            <TableView fx:id="consultationTable" layoutX="66.0" layoutY="159.0" prefHeight="135.0" prefWidth="577.0">
               <columns>
-                <TableColumn prefWidth="43.99998474121094" text="Id" />
-                <TableColumn prefWidth="57.5999755859375" text="Nom" />
-                  <TableColumn prefWidth="84.79998779296875" text="Date" />
-                  <TableColumn prefWidth="92.79994201660156" text="Heure" />
-                  <TableColumn prefWidth="88.00006103515625" text="Lieu" />
-                  <TableColumn prefWidth="150.4000244140625" text="Actions" />
+                <TableColumn fx:id="idColumn" prefWidth="43.99998474121094" text="Id" />
+                <TableColumn fx:id="nomColumn" prefWidth="100.800048828125" text="Nom" />
+                  <TableColumn fx:id="dateColumn" prefWidth="67.99995422363281" text="Date" />
+                  <TableColumn fx:id="heureColumn" prefWidth="96.0" text="Heure" />
+                  <TableColumn fx:id="lieuColumn" prefWidth="103.20001220703125" text="Lieu" />
+                  <TableColumn fx:id="actionsColumn" prefWidth="165.5999755859375" text="Actions" />
               </columns>
             </TableView>
-            <Label layoutX="178.0" layoutY="312.0" text="Les rapports médicaux">
+            <Label layoutX="222.0" layoutY="313.0" text="Les rapports médicaux">
                <font>
                   <Font name="Century Gothic Italic" size="30.0" />
                </font>
             </Label>
-          <Button blendMode="COLOR_DODGE" layoutX="564.0" layoutY="133.0" mnemonicParsing="false" onAction="#AjoutConsultation" prefHeight="26.0" prefWidth="21.0" />
-              <ImageView accessibleRole="BUTTON" fitHeight="26.0" fitWidth="23.0" layoutX="563.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                      <Image url="@images/plus-removebg-preview.png" />
-                  </image>
-              </ImageView>
-            <TableView layoutX="115.0" layoutY="350.0" prefHeight="118.0" prefWidth="481.0">
+            <Button fx:id="addRapportBtn" layoutX="564.0" layoutY="325.0" mnemonicParsing="false" onAction="#handleAddRapportMedical" prefHeight="26.0" prefWidth="21.0" style="-fx-background-color: #4CAF50;">
+                <graphic>
+                    <ImageView fitHeight="26.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@images/plus-removebg-preview.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+            <TableView fx:id="rapportMedicalTable" layoutX="69.0" layoutY="350.0" prefHeight="118.0" prefWidth="577.0">
                <columns>
-                  <TableColumn prefWidth="30.399949073791504" text="Id" />
-                  <TableColumn prefWidth="35.200008392333984" text="Num" />
-                  <TableColumn prefWidth="74.39996337890625" text="Race" />
-                  <TableColumn prefWidth="75.2000732421875" text="Historique" />
-                  <TableColumn prefWidth="82.40003967285156" text="Cas_médical" />
-                  <TableColumn minWidth="0.0" prefWidth="62.4000244140625" text="Solution" />
-                  <TableColumn prefWidth="120.0" text="Actions" />
+                  <TableColumn fx:id="rapportIdColumn" prefWidth="30.399949073791504" text="Id" />
+                  <TableColumn fx:id="numColumn" prefWidth="35.200008392333984" text="Num" />
+                  <TableColumn fx:id="raceColumn" prefWidth="63.99993896484375" text="Race" />
+                  <TableColumn fx:id="historiqueColumn" prefWidth="86.40003967285156" text="Historique" />
+                  <TableColumn fx:id="casMedicalColumn" prefWidth="104.00006103515625" text="Cas_médical" />
+                  <TableColumn fx:id="solutionColumn" minWidth="0.0" prefWidth="99.199951171875" text="Solution" />
+                  <TableColumn fx:id="rapportActionsColumn" prefWidth="156.79998779296875" text="Actions" />
                </columns>
             </TableView>
-            <Button blendMode="COLOR_DODGE" layoutX="564.0" layoutY="318.0" mnemonicParsing="false" onAction="#AjoutRapport" prefHeight="26.0" prefWidth="21.0" />
-            <ImageView accessibleRole="BUTTON" fitHeight="26.0" fitWidth="23.0" layoutX="561.0" layoutY="320.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/plus-removebg-preview.png" />
-               </image>
-            </ImageView>
             <Label layoutX="229.0" layoutY="478.0" text="Les rendez-vous">
                <font>
                   <Font name="Century Gothic Italic" size="30.0" />
                </font>
             </Label>
-            <TableView layoutX="114.0" layoutY="516.0" prefHeight="118.0" prefWidth="481.0">
+            <Button fx:id="addRendezVousBtn" layoutX="564.0" layoutY="490.0" mnemonicParsing="false" onAction="#handleAddRendezVous" prefHeight="26.0" prefWidth="21.0" style="-fx-background-color: #4CAF50;">
+                <graphic>
+                    <ImageView fitHeight="26.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@images/plus-removebg-preview.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+            <TableView fx:id="rendezVousTable" layoutX="63.0" layoutY="516.0" prefHeight="118.0" prefWidth="584.0">
                <columns>
-                  <TableColumn prefWidth="30.399949073791504" text="Id" />
-                  <TableColumn prefWidth="61.59991455078125" text="Date" />
-                  <TableColumn prefWidth="75.20008850097656" text="Heure" />
-                  <TableColumn prefWidth="51.20001220703125" text="Sex" />
-                  <TableColumn prefWidth="82.40003967285156" text="Cause" />
-                  <TableColumn minWidth="0.0" prefWidth="62.4000244140625" text="Status" />
-                  <TableColumn prefWidth="120.0" text="Actions" />
+                  <TableColumn fx:id="rdvIdColumn" prefWidth="30.399949073791504" text="Id" />
+                  <TableColumn fx:id="rdvDateColumn" prefWidth="80.0" text="Date" />
+                  <TableColumn fx:id="rdvHeureColumn" prefWidth="80.0" text="Heure" />
+                  <TableColumn fx:id="rdvSexColumn" prefWidth="80.0" text="Sex" />
+                  <TableColumn fx:id="rdvCauseColumn" prefWidth="120.0" text="Cause" />
+                  <TableColumn fx:id="rdvStatusColumn" prefWidth="80.0" text="Status" />
+                  <TableColumn fx:id="rdvActionsColumn" prefWidth="120.0" text="Actions" />
                </columns>
             </TableView>
-            <Button blendMode="COLOR_DODGE" layoutX="564.0" layoutY="484.0" mnemonicParsing="false" onAction="#AjoutRendezVous" prefHeight="26.0" prefWidth="21.0" />
-            <ImageView accessibleRole="BUTTON" fitHeight="26.0" fitWidth="23.0" layoutX="561.0" layoutY="486.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/plus-removebg-preview.png" />
-               </image>
-            </ImageView>
         </children>
     </Pane>
 </children>

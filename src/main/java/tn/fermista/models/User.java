@@ -15,10 +15,18 @@ public class User {
     private Boolean state;
     private boolean isVerified;
     private String image;
+    private Roles roles;
     private List<Reclamation> reclamations;
     private Set<Reservation> reservations;
     private Set<Workshop> workshops;
 
+    public Roles getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Roles roles) {
+        this.roles = roles;
+    }
 
     public User(String firstName, String lastName) {
         this.firstName = firstName;
