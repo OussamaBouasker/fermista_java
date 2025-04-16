@@ -12,7 +12,7 @@ public class NavigationController {
 
     public static void naviguerVersSuiviMedical(Button sourceButton) {
         try {
-            FXMLLoader loader = new FXMLLoader(NavigationController.class.getResource("/choixvachecollier.fxml"));
+            FXMLLoader loader = new FXMLLoader(NavigationController.class.getResource("/DashboardTemplate.fxml"));
             Parent root = loader.load();
             Scene scene = sourceButton.getScene();
             scene.setRoot(root);
