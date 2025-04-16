@@ -74,19 +74,19 @@ public class ServiceReservation implements CRUD<Reservation> {
     public List<Reservation> showAll() throws SQLException {
         List<Reservation> reservations = new ArrayList<>();
         String sql = "SELECT r.*, w.titre as workshop_titre, u.first_name, u.last_name, u.email as user_email, " +
-                    "u.roles as user_roles " +
-                    "FROM reservation r " +
-                    "LEFT JOIN workshop w ON r.workshop_id = w.id " +
-                    "LEFT JOIN user u ON r.user_id = u.id";
-        
+                "u.roles as user_roles " +
+                "FROM reservation r " +
+                "LEFT JOIN workshop w ON r.workshop_id = w.id " +
+                "LEFT JOIN user u ON r.user_id = u.id";
+
         try (Statement st = cnx.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
 
             while (rs.next()) {
                 Reservation r = new Reservation();
                 r.setId(rs.getInt("id"));
-                r.setReservationDate(rs.getTimestamp("reservation_date") != null ? 
-                    rs.getTimestamp("reservation_date").toLocalDateTime() : null);
+                r.setReservationDate(rs.getTimestamp("reservation_date") != null ?
+                        rs.getTimestamp("reservation_date").toLocalDateTime() : null);
                 r.setStatus(rs.getString("status"));
                 r.setPrix(rs.getString("prix"));
                 r.setCommentaire(rs.getString("commentaire"));
@@ -142,21 +142,21 @@ public class ServiceReservation implements CRUD<Reservation> {
 
     public Reservation getById(int id) throws SQLException {
         String sql = "SELECT r.*, w.titre as workshop_titre, u.first_name, u.last_name, u.email as user_email, " +
-                    "u.roles as user_roles " +
-                    "FROM reservation r " +
-                    "LEFT JOIN workshop w ON r.workshop_id = w.id " +
-                    "LEFT JOIN user u ON r.user_id = u.id " +
-                    "WHERE r.id = ?";
-        
+                "u.roles as user_roles " +
+                "FROM reservation r " +
+                "LEFT JOIN workshop w ON r.workshop_id = w.id " +
+                "LEFT JOIN user u ON r.user_id = u.id " +
+                "WHERE r.id = ?";
+
         try (PreparedStatement pst = cnx.prepareStatement(sql)) {
             pst.setInt(1, id);
-            
+
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {
                     Reservation r = new Reservation();
                     r.setId(rs.getInt("id"));
-                    r.setReservationDate(rs.getTimestamp("reservation_date") != null ? 
-                        rs.getTimestamp("reservation_date").toLocalDateTime() : null);
+                    r.setReservationDate(rs.getTimestamp("reservation_date") != null ?
+                            rs.getTimestamp("reservation_date").toLocalDateTime() : null);
                     r.setStatus(rs.getString("status"));
                     r.setPrix(rs.getString("prix"));
                     r.setCommentaire(rs.getString("commentaire"));

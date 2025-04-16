@@ -43,7 +43,7 @@ public class ServiceWorkshop implements CRUD<Workshop> {
         System.out.println("Workshop inserted successfully!");
     }
 
-//    @Override
+    //    @Override
     public void update(Workshop w) throws SQLException {
         String sql = "UPDATE workshop SET titre = ?, description = ?, date = ?, prix = ?, theme = ?, duration = ?, nbr_places_max = ?, nbr_places_restantes = ?, type = ?, image = ?, meetlink = ?, user_id = ?, keywords = ? WHERE id = ?";
         PreparedStatement pst = cnx.prepareStatement(sql);
@@ -91,9 +91,9 @@ public class ServiceWorkshop implements CRUD<Workshop> {
     public List<Workshop> showAll() throws SQLException {
         List<Workshop> workshops = new ArrayList<>();
         String sql = "SELECT w.*, u.first_name, u.last_name, u.email, u.roles " +
-                    "FROM workshop w " +
-                    "LEFT JOIN user u ON w.user_id = u.id";
-        
+                "FROM workshop w " +
+                "LEFT JOIN user u ON w.user_id = u.id";
+
         try (Statement st = cnx.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
 
@@ -160,21 +160,21 @@ public class ServiceWorkshop implements CRUD<Workshop> {
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {
                     Workshop w = new Workshop(
-                        rs.getInt("id"),
-                        rs.getString("titre"),
-                        rs.getString("description"),
-                        rs.getTimestamp("date") != null ? rs.getTimestamp("date").toLocalDateTime() : null,
-                        rs.getString("prix"),
-                        rs.getString("theme"),
-                        new ArrayList<>(), // réservations à charger ailleurs si besoin
-                        rs.getTime("duration") != null ? rs.getTime("duration").toLocalTime() : null,
-                        rs.getInt("nbr_places_max"),
-                        rs.getInt("nbr_places_restantes"),
-                        rs.getString("type"),
-                        rs.getString("image"),
-                        rs.getString("meetlink"),
-                        new User(rs.getInt("user_id")), // simple instanciation user par ID
-                        rs.getString("keywords")
+                            rs.getInt("id"),
+                            rs.getString("titre"),
+                            rs.getString("description"),
+                            rs.getTimestamp("date") != null ? rs.getTimestamp("date").toLocalDateTime() : null,
+                            rs.getString("prix"),
+                            rs.getString("theme"),
+                            new ArrayList<>(), // réservations à charger ailleurs si besoin
+                            rs.getTime("duration") != null ? rs.getTime("duration").toLocalTime() : null,
+                            rs.getInt("nbr_places_max"),
+                            rs.getInt("nbr_places_restantes"),
+                            rs.getString("type"),
+                            rs.getString("image"),
+                            rs.getString("meetlink"),
+                            new User(rs.getInt("user_id")), // simple instanciation user par ID
+                            rs.getString("keywords")
                     );
                     return w;
                 }

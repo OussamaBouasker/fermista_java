@@ -1,8 +1,11 @@
 package tn.fermista.services;
 
+
 import tn.fermista.models.Roles;
+
 import tn.fermista.models.User;
 import tn.fermista.models.Workshop;
+import tn.fermista.services.CRUD;
 import tn.fermista.utils.MyDbConnexion;
 import tn.fermista.utils.PasswordUtils;
 
@@ -108,7 +111,7 @@ public class ServiceUser implements CRUD<User> {
         User user = null;
         // Hacher le mot de passe pour la comparaison
         String hashedPassword = PasswordUtils.hashPassword(password);
-        
+
         String req = "SELECT * FROM user WHERE email = ? AND password = ?";
 
         try (PreparedStatement st = cnx.prepareStatement(req)) {
@@ -127,7 +130,7 @@ public class ServiceUser implements CRUD<User> {
                     user.setState(rs.getBoolean("state"));
                     user.setVerified(rs.getBoolean("is_verified"));
                     user.setImage(rs.getString("image"));
-                    
+
                     // Déterminer le rôle de l'utilisateur
                     String roleStr = rs.getString("roles");
                     if (roleStr != null && !roleStr.isEmpty()) {
@@ -140,7 +143,7 @@ public class ServiceUser implements CRUD<User> {
                     } else {
                         user.setRoles(Roles.ROLE_CLIENT);
                     }
-                    
+
                     System.out.println("User logged in: " + user.getEmail());
                 } else {
                     System.out.println("No user found with the provided credentials.");
