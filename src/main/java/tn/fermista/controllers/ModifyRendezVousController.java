@@ -107,7 +107,7 @@ public class ModifyRendezVousController implements Initializable {
     @FXML
     private void handleSave() {
         try {
-            // Validation des champs
+            // Validation des champs vides
             if (agriculteurCombo.getValue() == null || veterinaireCombo.getValue() == null ||
                 datePicker.getValue() == null || heureField.getText().isEmpty() ||
                 sexField.getText().isEmpty() || causeField.getText().isEmpty() ||
@@ -116,30 +116,61 @@ public class ModifyRendezVousController implements Initializable {
                 return;
             }
 
+            // Validation de la date (doit être après aujourd'hui)
+            LocalDate selectedDate = datePicker.getValue();
+            if (!selectedDate.isAfter(LocalDate.now())) {
+                showAlert("Erreur", "La date doit être postérieure à aujourd'hui", Alert.AlertType.ERROR);
+                return;
+            }
+
+            // Validation de l'heure (entre 9:00 et 18:00)
+            LocalTime time;
+            try {
+                time = LocalTime.parse(heureField.getText());
+                LocalTime startTime = LocalTime.of(9, 0);
+                LocalTime endTime = LocalTime.of(18, 0);
+                if (time.isBefore(startTime) || time.isAfter(endTime)) {
+                    showAlert("Erreur", "L'heure doit être comprise entre 09:00 et 18:00", Alert.AlertType.ERROR);
+                    return;
+                }
+            } catch (Exception e) {
+                showAlert("Erreur", "Format d'heure invalide. Utilisez le format HH:mm", Alert.AlertType.ERROR);
+                return;
+            }
+
+            // Validation du sexe (male ou female)
+            String sex = sexField.getText().toLowerCase();
+            if (!sex.equals("male") && !sex.equals("female")) {
+                showAlert("Erreur", "Le sexe doit être 'male' ou 'female'", Alert.AlertType.ERROR);
+                return;
+            }
+
+            // Validation de la cause (minimum 10 caractères)
+            if (causeField.getText().length() < 10) {
+                showAlert("Erreur", "La cause doit contenir au moins 10 caractères", Alert.AlertType.ERROR);
+                return;
+            }
+
             // Mise à jour des données du rendez-vous
             rendezVous.setAgriculteur(agriculteurCombo.getValue());
             rendezVous.setVeterinaire(veterinaireCombo.getValue());
             rendezVous.setDate(Date.valueOf(datePicker.getValue()));
-            rendezVous.setHeure(Time.valueOf(LocalTime.parse(heureField.getText())));
-            rendezVous.setSex(sexField.getText());
+            rendezVous.setHeure(Time.valueOf(time));
+            rendezVous.setSex(sex);
             rendezVous.setCause(causeField.getText());
             rendezVous.setStatus(statusField.getText());
 
-            // Validation métier
-            rendezVous.validate();
-
             // Mise à jour dans la base de données
             serviceRendezVous.update(rendezVous);
+
+            // Message de succès
+            showAlert("Succès", "Rendez-vous modifié avec succès", Alert.AlertType.INFORMATION);
 
             // Fermer la fenêtre
             stage.close();
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert("Erreur", "Erreur lors de la modification du rendez-vous", Alert.AlertType.ERROR);
-        } catch (IllegalArgumentException e) {
-            showAlert("Erreur", e.getMessage(), Alert.AlertType.ERROR);
-        } catch (Exception e) {
-            showAlert("Erreur", "Format d'heure invalide. Utilisez le format HH:mm:ss", Alert.AlertType.ERROR);
         }
     }
 

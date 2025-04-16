@@ -62,15 +62,39 @@ public class ModifyRapportMedicalController implements Initializable {
                 return;
             }
 
+            // Validation de la race (féminin ou masculin)
+            String race = raceField.getText().toLowerCase();
+            if (!race.equals("feminin") && !race.equals("masculin")) {
+                showAlert("Erreur", "La race doit être 'feminin' ou 'masculin'", Alert.AlertType.ERROR);
+                return;
+            }
+
+            // Validation de la longueur minimale (10 caractères)
+            if (historiqueField.getText().length() < 10) {
+                showAlert("Erreur", "L'historique médical doit contenir au moins 10 caractères", Alert.AlertType.ERROR);
+                return;
+            }
+            if (casMedicalField.getText().length() < 10) {
+                showAlert("Erreur", "Le cas médical doit contenir au moins 10 caractères", Alert.AlertType.ERROR);
+                return;
+            }
+            if (solutionField.getText().length() < 10) {
+                showAlert("Erreur", "La solution doit contenir au moins 10 caractères", Alert.AlertType.ERROR);
+                return;
+            }
+
             // Mettre à jour les données du rapport
             rapportMedical.setNum(Integer.parseInt(numField.getText()));
-            rapportMedical.setRace(raceField.getText());
+            rapportMedical.setRace(race);
             rapportMedical.setHistoriqueDeMaladie(historiqueField.getText());
             rapportMedical.setCasMedical(casMedicalField.getText());
             rapportMedical.setSolution(solutionField.getText());
 
             // Mettre à jour dans la base de données
             serviceRapportMedical.update(rapportMedical);
+
+            // Afficher un message de succès
+            showAlert("Succès", "Rapport médical modifié avec succès", Alert.AlertType.INFORMATION);
 
             // Fermer la fenêtre
             stage.close();

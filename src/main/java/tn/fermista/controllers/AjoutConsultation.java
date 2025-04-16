@@ -131,12 +131,41 @@ public class AjoutConsultation {
                 return;
             }
 
+            // Validation du nom (doit commencer par une majuscule)
+            String nom = nomField.getText();
+            if (!nom.matches("[A-Z].*")) {
+                showAlert("Erreur", "Le nom doit commencer par une majuscule", Alert.AlertType.ERROR);
+                return;
+            }
+
+            // Validation de l'heure (entre 9:00 et 18:00)
+            String heure = heureField.getText();
+            try {
+                LocalTime time = LocalTime.parse(heure);
+                LocalTime startTime = LocalTime.of(9, 0);
+                LocalTime endTime = LocalTime.of(18, 0);
+                if (time.isBefore(startTime) || time.isAfter(endTime)) {
+                    showAlert("Erreur", "L'heure doit être comprise entre 09:00 et 18:00", Alert.AlertType.ERROR);
+                    return;
+                }
+            } catch (Exception e) {
+                showAlert("Erreur", "Format d'heure invalide. Utilisez le format HH:mm", Alert.AlertType.ERROR);
+                return;
+            }
+
+            // Validation du lieu (minimum 5 caractères)
+            String lieu = lieuField.getText();
+            if (lieu.length() < 5) {
+                showAlert("Erreur", "Le lieu doit contenir au moins 5 caractères", Alert.AlertType.ERROR);
+                return;
+            }
+
             // Créer la nouvelle consultation
             Consultation consultation = new Consultation();
-            consultation.setNom(nomField.getText());
+            consultation.setNom(nom);
             consultation.setDate(Date.valueOf(datePicker.getValue()));
-            consultation.setHeure(Time.valueOf(LocalTime.parse(heureField.getText())));
-            consultation.setLieu(lieuField.getText());
+            consultation.setHeure(Time.valueOf(LocalTime.parse(heure)));
+            consultation.setLieu(lieu);
             consultation.setRapportMedical(rapportMedicalComboBox.getValue());
             consultation.setVache(vacheComboBox.getValue());
 

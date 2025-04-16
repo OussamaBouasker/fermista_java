@@ -36,20 +36,27 @@ public class AjoutRendezVous implements Initializable {
     @FXML
     private TextField causeField;
     @FXML
+    private TextField statusField;
+    @FXML
     private Button submitButton;
+    @FXML
+    private Button cancelButton;
 
+    private Stage stage;
+    private final ServiceRendezVous serviceRendezVous = new ServiceRendezVous();
     private final ServiceAgriculteur serviceAgriculteur = new ServiceAgriculteur();
     private final ServiceVeterinaire serviceVeterinaire = new ServiceVeterinaire();
-    private final ServiceRendezVous serviceRendezVous = new ServiceRendezVous();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Charger les agriculteurs et vétérinaires
+        // Charger les listes d'agriculteurs et de vétérinaires
         ObservableList<Agriculteur> agriculteurs = FXCollections.observableArrayList(serviceAgriculteur.rechercher());
         ObservableList<Veterinaire> veterinaires = FXCollections.observableArrayList(serviceVeterinaire.rechercher());
+        
         agriculteurCombo.setItems(agriculteurs);
         veterinaireCombo.setItems(veterinaires);
-        // Affichage personnalisé dans la ComboBox
+
+        // Configuration de l'affichage des noms dans les ComboBox
         agriculteurCombo.setCellFactory(lv -> new ListCell<>() {
             @Override
             protected void updateItem(Agriculteur item, boolean empty) {
@@ -64,6 +71,7 @@ public class AjoutRendezVous implements Initializable {
                 setText(empty || item == null ? null : item.getFirstName() + " " + item.getLastName());
             }
         });
+
         veterinaireCombo.setCellFactory(lv -> new ListCell<>() {
             @Override
             protected void updateItem(Veterinaire item, boolean empty) {
@@ -78,47 +86,86 @@ public class AjoutRendezVous implements Initializable {
                 setText(empty || item == null ? null : item.getFirstName() + " " + item.getLastName());
             }
         });
-        submitButton.setOnAction(this::handleSubmit);
     }
 
-    private void handleSubmit(ActionEvent event) {
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    @FXML
+    private void handleSubmit() {
         try {
-            // Validation des champs
+            // Validation des champs vides
             if (agriculteurCombo.getValue() == null || veterinaireCombo.getValue() == null ||
                 datePicker.getValue() == null || heureField.getText().isEmpty() ||
-                sexField.getText().isEmpty() || causeField.getText().isEmpty()) {
+                sexField.getText().isEmpty() || causeField.getText().isEmpty() ||
+                statusField.getText().isEmpty()) {
                 showAlert("Erreur", "Veuillez remplir tous les champs", Alert.AlertType.ERROR);
                 return;
             }
-            LocalDate localDate = datePicker.getValue();
-            LocalTime localTime = LocalTime.parse(heureField.getText());
-            Date sqlDate = Date.valueOf(localDate);
-            Time sqlTime = Time.valueOf(localTime);
-            String sex = sexField.getText();
-            String cause = causeField.getText();
-            Agriculteur agriculteur = agriculteurCombo.getValue();
-            Veterinaire veterinaire = veterinaireCombo.getValue();
+
+            // Validation de la date (doit être après aujourd'hui)
+            LocalDate selectedDate = datePicker.getValue();
+            if (!selectedDate.isAfter(LocalDate.now())) {
+                showAlert("Erreur", "La date doit être postérieure à aujourd'hui", Alert.AlertType.ERROR);
+                return;
+            }
+
+            // Validation de l'heure (entre 9:00 et 18:00)
+            LocalTime time;
+            try {
+                time = LocalTime.parse(heureField.getText());
+                LocalTime startTime = LocalTime.of(9, 0);
+                LocalTime endTime = LocalTime.of(18, 0);
+                if (time.isBefore(startTime) || time.isAfter(endTime)) {
+                    showAlert("Erreur", "L'heure doit être comprise entre 09:00 et 18:00", Alert.AlertType.ERROR);
+                    return;
+                }
+            } catch (Exception e) {
+                showAlert("Erreur", "Format d'heure invalide. Utilisez le format HH:mm", Alert.AlertType.ERROR);
+                return;
+            }
+
+            // Validation du sexe (male ou female)
+            String sex = sexField.getText().toLowerCase();
+            if (!sex.equals("male") && !sex.equals("female")) {
+                showAlert("Erreur", "Le sexe doit être 'male' ou 'female'", Alert.AlertType.ERROR);
+                return;
+            }
+
+            // Validation de la cause (minimum 10 caractères)
+            if (causeField.getText().length() < 10) {
+                showAlert("Erreur", "La cause doit contenir au moins 10 caractères", Alert.AlertType.ERROR);
+                return;
+            }
+
+            // Création du nouveau rendez-vous
             RendezVous rendezVous = new RendezVous();
-            rendezVous.setDate(sqlDate);
-            rendezVous.setHeure(sqlTime);
+            rendezVous.setAgriculteur(agriculteurCombo.getValue());
+            rendezVous.setVeterinaire(veterinaireCombo.getValue());
+            rendezVous.setDate(Date.valueOf(datePicker.getValue()));
+            rendezVous.setHeure(Time.valueOf(time));
             rendezVous.setSex(sex);
-            rendezVous.setCause(cause);
-            rendezVous.setAgriculteur(agriculteur);
-            rendezVous.setVeterinaire(veterinaire);
-            rendezVous.setStatus("en attente");
-            // Validation métier (date future, pas week-end)
-            rendezVous.validate();
-            // Insertion
+            rendezVous.setCause(causeField.getText());
+            rendezVous.setStatus(statusField.getText());
+
+            // Ajout dans la base de données
             serviceRendezVous.insert(rendezVous);
+
+            // Message de succès
+            showAlert("Succès", "Rendez-vous ajouté avec succès", Alert.AlertType.INFORMATION);
+
             // Fermer la fenêtre
-            Stage stage = (Stage) submitButton.getScene().getWindow();
             stage.close();
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert("Erreur", "Erreur lors de l'ajout du rendez-vous", Alert.AlertType.ERROR);
-        } catch (Exception e) {
-            showAlert("Erreur", e.getMessage(), Alert.AlertType.ERROR);
         }
+    }
+
+    @FXML
+    private void handleCancel() {
+        stage.close();
     }
 
     private void showAlert(String title, String content, Alert.AlertType type) {
@@ -133,6 +180,5 @@ public class AjoutRendezVous implements Initializable {
     }
 
     public void DashbordTemplate(ActionEvent actionEvent) {
-
     }
 }

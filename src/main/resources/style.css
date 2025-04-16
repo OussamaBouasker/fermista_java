@@ -1,9 +1,9 @@
 .root{
-    -fx-background-color:#EAEEF4;
+    -fx-background-color: white;
 }
 
 .side_ankerpane{
-    -fx-background-color:#080820FF;
+    -fx-background-color: #05071F;
     -fx-border-width: 2px 2px 2px 2px;
     -fx-border-radius: 20px;
     -fx-background-radius: 20px;
@@ -11,25 +11,24 @@
 }
 
 .inner_pane{
-    -fx-background-color:#748CF1;
+    -fx-background-color: #748CF1;
     -fx-border-width: 2px 2px 2px 2px;
     -fx-border-radius: 20px;
     -fx-background-radius: 20px;
     -fx-border-style: solid;
     -fx-border-color: #748CF1;
-
 }
 .most_inner_pane{
-    -fx-background-color:#748CF1;
+    -fx-background-color: #748CF1;
     -fx-border-width: 2px 2px 2px 2px;
-    -fx-border-radius: 20px;
-    -fx-background-radius: 20px;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
     -fx-border-style: solid;
     -fx-border-color: #748CF1;
 }
 .btn{
-    -fx-background-color:#353A56;
-
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
 }
 #btn_workbench {
     -fx-background-color: #141313;
@@ -50,7 +49,6 @@
 .btn_workbench:hover {
     -fx-background-color: rgba(176, 190, 197, 0.5); /* Cheerful grey, 50% transparent */
     -fx-border-color: rgba(176, 190, 197, 0.5);
-
 }
 
 #btn_workbench:hover {
@@ -96,7 +94,6 @@
     -fx-background-radius: 16px;
     -fx-border-style: solid;
     -fx-border-color: #FD9999;
-
 }
 
 .pane_1111{
@@ -200,4 +197,91 @@
 
 .button1:hover {
     -fx-background-color: linear-gradient(to right, #99dca0, #4ea555);
+}
+
+/* Nouveaux styles */
+.search-field {
+    -fx-background-color: #f4f4f4;
+    -fx-background-radius: 20;
+    -fx-padding: 8;
+    -fx-font-size: 14px;
+}
+
+.section-box {
+    -fx-background-color: white;
+    -fx-padding: 15;
+    -fx-spacing: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
+    -fx-background-radius: 8;
+}
+
+.section-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2D3447;
+}
+
+.add-button {
+    -fx-background-color: #4CAF50;
+    -fx-background-radius: 20;
+    -fx-padding: 8;
+    -fx-cursor: hand;
+}
+
+.add-button:hover {
+    -fx-background-color: #45a049;
+}
+
+.custom-table {
+    -fx-background-color: transparent;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 5;
+}
+
+.custom-table .column-header {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 10;
+    -fx-font-weight: bold;
+}
+
+.custom-table .table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: transparent transparent #f0f0f0 transparent;
+}
+
+.custom-table .table-row-cell:hover {
+    -fx-background-color: #f8f9fa;
+}
+
+.custom-table .table-row-cell:selected {
+    -fx-background-color: #e8f5e9;
+}
+
+/* Style pour les boutons d'action dans les tableaux */
+.button {
+    -fx-background-radius: 15;
+    -fx-padding: 5 10;
+    -fx-cursor: hand;
+    -fx-font-size: 12px;
+}
+
+/* Style spécifique pour le bouton modifier */
+.button.modify {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+}
+
+/* Style spécifique pour le bouton supprimer */
+.button.delete {
+    -fx-background-color: #f44336;
+    -fx-text-fill: white;
+}
+
+/* Hover effects */
+.button.modify:hover {
+    -fx-background-color: #45a049;
+}
+
+.button.delete:hover {
+    -fx-background-color: #da190b;
 }

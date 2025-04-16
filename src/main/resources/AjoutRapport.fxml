@@ -160,18 +160,10 @@
                     <children>
 
                         <TextField fx:id="numField" promptText="Numéro" />
-
-
                         <TextField fx:id="raceField" promptText="Race" />
-
                         <TextField fx:id="historiqueField" promptText="Historique de maladie" />
-
-
                         <TextField fx:id="casMedicalField" promptText="Cas médical" />
-
-
                         <TextField fx:id="solutionField" promptText="Solution" />
-
                         <Button fx:id="submitRapportBtn" styleClass="button1" stylesheets="@style.css" text="Enregistrer le rapport médical" />
                     </children>
                 </VBox>

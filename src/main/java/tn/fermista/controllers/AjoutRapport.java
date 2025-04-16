@@ -52,16 +52,40 @@ public class AjoutRapport implements Initializable {
                 return;
             }
 
+            // Validation de la race (féminin ou masculin)
+            String race = raceField.getText().toLowerCase();
+            if (!race.equals("feminin") && !race.equals("masculin")) {
+                showAlert("Erreur", "La race doit être 'feminin' ou 'masculin'", Alert.AlertType.ERROR);
+                return;
+            }
+
+            // Validation de la longueur minimale (10 caractères)
+            if (historiqueField.getText().length() < 10) {
+                showAlert("Erreur", "L'historique médical doit contenir au moins 10 caractères", Alert.AlertType.ERROR);
+                return;
+            }
+            if (casMedicalField.getText().length() < 10) {
+                showAlert("Erreur", "Le cas médical doit contenir au moins 10 caractères", Alert.AlertType.ERROR);
+                return;
+            }
+            if (solutionField.getText().length() < 10) {
+                showAlert("Erreur", "La solution doit contenir au moins 10 caractères", Alert.AlertType.ERROR);
+                return;
+            }
+
             // Créer un nouveau rapport médical
             RapportMedical rapportMedical = new RapportMedical();
             rapportMedical.setNum(Integer.parseInt(numField.getText()));
-            rapportMedical.setRace(raceField.getText());
+            rapportMedical.setRace(race);
             rapportMedical.setHistoriqueDeMaladie(historiqueField.getText());
             rapportMedical.setCasMedical(casMedicalField.getText());
             rapportMedical.setSolution(solutionField.getText());
 
             // Ajouter le rapport dans la base de données
             serviceRapportMedical.insert(rapportMedical);
+
+            // Afficher un message de succès
+            showAlert("Succès", "Rapport médical ajouté avec succès", Alert.AlertType.INFORMATION);
 
             // Fermer la fenêtre
             Stage stage = (Stage) submitRapportBtn.getScene().getWindow();

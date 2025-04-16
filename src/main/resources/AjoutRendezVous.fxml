@@ -167,7 +167,8 @@
                         <TextField fx:id="causeField" prefWidth="320.0" promptText="Cause" />
                         <ComboBox fx:id="agriculteurCombo" prefWidth="320.0" promptText="Sélectionner un agriculteur" />
                         <ComboBox fx:id="veterinaireCombo" prefWidth="320.0" promptText="Sélectionner un vétérinaire" />
-                        <Button fx:id="submitButton" styleClass="button1" stylesheets="@style.css" text="Enregistrer" />
+                        <TextField fx:id="statusField" prefWidth="320.0" promptText="Status" />
+                        <Button fx:id="submitButton" onAction="#handleSubmit" styleClass="button1" stylesheets="@style.css" text="Enregistrer" />
                     </children>
                 </VBox>
             </children>

@@ -2,6 +2,8 @@ package tn.fermista.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,10 +36,14 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.control.TextField;
 
 public class ControlMedicalShow implements Initializable {
     @FXML
     private TableView<Consultation> consultationTable;
+
+    @FXML
+    private TextField txt_search;
 
     @FXML
     private TableColumn<Consultation, Integer> idColumn;
@@ -114,8 +120,23 @@ public class ControlMedicalShow implements Initializable {
     private final ObservableList<RapportMedical> rapportMedicalList = FXCollections.observableArrayList();
     private final ObservableList<RendezVous> rendezVousList = FXCollections.observableArrayList();
 
+    // Filtered lists
+    private FilteredList<Consultation> filteredConsultations;
+    private FilteredList<RapportMedical> filteredRapports;
+    private FilteredList<RendezVous> filteredRendezVous;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Initialize filtered lists
+        filteredConsultations = new FilteredList<>(consultationList, p -> true);
+        filteredRapports = new FilteredList<>(rapportMedicalList, p -> true);
+        filteredRendezVous = new FilteredList<>(rendezVousList, p -> true);
+
+        // Setup search functionality
+        txt_search.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterData(newValue);
+        });
+
         // Initialize consultation table columns
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         nomColumn.setCellValueFactory(new PropertyValueFactory<>("nom"));
@@ -139,6 +160,21 @@ public class ControlMedicalShow implements Initializable {
         rdvCauseColumn.setCellValueFactory(new PropertyValueFactory<>("cause"));
         rdvStatusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 
+        // Create SortedList from FilteredList
+        SortedList<Consultation> sortedConsultations = new SortedList<>(filteredConsultations);
+        SortedList<RapportMedical> sortedRapports = new SortedList<>(filteredRapports);
+        SortedList<RendezVous> sortedRendezVous = new SortedList<>(filteredRendezVous);
+
+        // Bind sorted result with the tables
+        sortedConsultations.comparatorProperty().bind(consultationTable.comparatorProperty());
+        consultationTable.setItems(sortedConsultations);
+
+        sortedRapports.comparatorProperty().bind(rapportMedicalTable.comparatorProperty());
+        rapportMedicalTable.setItems(sortedRapports);
+
+        sortedRendezVous.comparatorProperty().bind(rendezVousTable.comparatorProperty());
+        rendezVousTable.setItems(sortedRendezVous);
+
         // Setup actions columns
         setupActionsColumn();
         setupRapportActionsColumn();
@@ -157,6 +193,59 @@ public class ControlMedicalShow implements Initializable {
 
         // Setup add button for rendez-vous
         addRendezVousBtn.setOnAction(this::handleAddRendezVous);
+    }
+
+    private void filterData(String searchText) {
+        if (searchText == null || searchText.isEmpty()) {
+            filteredConsultations.setPredicate(p -> true);
+            filteredRapports.setPredicate(p -> true);
+            filteredRendezVous.setPredicate(p -> true);
+        } else {
+            String lowerCaseFilter = searchText.toLowerCase();
+
+            // Filter consultations
+            filteredConsultations.setPredicate(consultation -> {
+                return (consultation.getNom() != null && consultation.getNom().toLowerCase().contains(lowerCaseFilter)) ||
+                       (consultation.getLieu() != null && consultation.getLieu().toLowerCase().contains(lowerCaseFilter)) ||
+                       (consultation.getDate() != null && consultation.getDate().toString().contains(lowerCaseFilter));
+            });
+
+            // Filter rapports médicaux
+            filteredRapports.setPredicate(rapport -> {
+                return String.valueOf(rapport.getNum()).contains(lowerCaseFilter) ||
+                       (rapport.getRace() != null && rapport.getRace().toLowerCase().contains(lowerCaseFilter)) ||
+                       (rapport.getHistoriqueDeMaladie() != null && rapport.getHistoriqueDeMaladie().toLowerCase().contains(lowerCaseFilter)) ||
+                       (rapport.getCasMedical() != null && rapport.getCasMedical().toLowerCase().contains(lowerCaseFilter)) ||
+                       (rapport.getSolution() != null && rapport.getSolution().toLowerCase().contains(lowerCaseFilter));
+            });
+
+            // Filter rendez-vous
+            filteredRendezVous.setPredicate(rdv -> {
+                boolean matchesAgriculteur = false;
+                boolean matchesVeterinaire = false;
+
+                if (rdv.getAgriculteur() != null) {
+                    matchesAgriculteur = (rdv.getAgriculteur().getFirstName() != null && 
+                                        rdv.getAgriculteur().getFirstName().toLowerCase().contains(lowerCaseFilter)) ||
+                                       (rdv.getAgriculteur().getLastName() != null && 
+                                        rdv.getAgriculteur().getLastName().toLowerCase().contains(lowerCaseFilter));
+                }
+
+                if (rdv.getVeterinaire() != null) {
+                    matchesVeterinaire = (rdv.getVeterinaire().getFirstName() != null && 
+                                        rdv.getVeterinaire().getFirstName().toLowerCase().contains(lowerCaseFilter)) ||
+                                       (rdv.getVeterinaire().getLastName() != null && 
+                                        rdv.getVeterinaire().getLastName().toLowerCase().contains(lowerCaseFilter));
+                }
+
+                return (rdv.getSex() != null && rdv.getSex().toLowerCase().contains(lowerCaseFilter)) ||
+                       (rdv.getCause() != null && rdv.getCause().toLowerCase().contains(lowerCaseFilter)) ||
+                       (rdv.getStatus() != null && rdv.getStatus().toLowerCase().contains(lowerCaseFilter)) ||
+                       (rdv.getDate() != null && rdv.getDate().toString().contains(lowerCaseFilter)) ||
+                       matchesAgriculteur ||
+                       matchesVeterinaire;
+            });
+        }
     }
 
     private void setupRapportActionsColumn() {
@@ -202,10 +291,9 @@ public class ControlMedicalShow implements Initializable {
         try {
             rapportMedicalList.clear();
             rapportMedicalList.addAll(serviceRapportMedical.showAll());
-            rapportMedicalTable.setItems(rapportMedicalList);
         } catch (SQLException e) {
             e.printStackTrace();
-            // TODO: Show error message to user
+            showAlert("Erreur", "Erreur lors du chargement des rapports médicaux", Alert.AlertType.ERROR);
         }
     }
 
@@ -292,10 +380,9 @@ public class ControlMedicalShow implements Initializable {
         try {
             consultationList.clear();
             consultationList.addAll(serviceConsultation.showAll());
-            consultationTable.setItems(consultationList);
         } catch (SQLException e) {
             e.printStackTrace();
-            // You might want to show an error message to the user here
+            showAlert("Erreur", "Erreur lors du chargement des consultations", Alert.AlertType.ERROR);
         }
     }
 
@@ -357,9 +444,14 @@ public class ControlMedicalShow implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Ajouter un rendez-vous");
             stage.setScene(new Scene(loader.load()));
+            
+            // Récupérer le contrôleur et lui passer la référence du Stage
+            AjoutRendezVous controller = loader.getController();
+            controller.setStage(stage);
+            
             stage.showAndWait();
             // Rafraîchir les données après l'ajout
-            // (à implémenter : loadRendezVousData();)
+            loadRendezVousData();
         } catch (IOException e) {
             e.printStackTrace();
             showAlert("Erreur", "Erreur lors de l'ouverture de la fenêtre d'ajout de rendez-vous", Alert.AlertType.ERROR);
@@ -413,7 +505,6 @@ public class ControlMedicalShow implements Initializable {
         try {
             rendezVousList.clear();
             rendezVousList.addAll(serviceRendezVous.showAll());
-            rendezVousTable.setItems(rendezVousList);
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert("Erreur", "Erreur lors du chargement des rendez-vous", Alert.AlertType.ERROR);
