@@ -18,6 +18,8 @@ public class User {
     private List<Reclamation> reclamations;
     private Set<Reservation> reservations;
     private Set<Workshop> workshops;
+    private Roles roles;
+
 
 
     public User(String firstName, String lastName) {
@@ -124,6 +126,14 @@ public class User {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Roles getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Roles roles) {
+        this.roles = roles;
     }
 
     public List<Reclamation> getReclamations() {

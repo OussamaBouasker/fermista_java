@@ -41,7 +41,12 @@ public class Workshop {
 
     private String keywords;
 
-public Workshop() {}
+    public Workshop() {
+        this.reservations = new ArrayList<>();
+        this.nbrPlacesMax = 0;
+        this.nbrPlacesRestantes = 0;
+    }
+
     public Workshop(int id, String titre, String description, LocalDateTime date, String prix, String theme, List<Reservation> reservations, LocalTime duration, Integer nbrPlacesMax, Integer nbrPlacesRestantes, String type, String image, String meetlink, User user, String keywords) {
         this.id = id;
         this.titre = titre;
@@ -49,17 +54,16 @@ public Workshop() {}
         this.date = date;
         this.prix = prix;
         this.theme = theme;
-        this.reservations = reservations;
+        this.reservations = reservations != null ? reservations : new ArrayList<>();
         this.duration = duration;
-        this.nbrPlacesMax = nbrPlacesMax;
-        this.nbrPlacesRestantes = nbrPlacesRestantes;
+        this.nbrPlacesMax = nbrPlacesMax != null ? nbrPlacesMax : 0;
+        this.nbrPlacesRestantes = nbrPlacesRestantes != null ? nbrPlacesRestantes : 0;
         this.type = type;
         this.image = image;
         this.meetlink = meetlink;
         this.user = user;
         this.keywords = keywords;
     }
-
 
     public int getId() {
         return id;
@@ -181,7 +185,6 @@ public Workshop() {}
         this.keywords = keywords;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -194,7 +197,6 @@ public Workshop() {}
     public int hashCode() {
         return Objects.hash(id, titre, description, date, prix, theme, duration, reservations, nbrPlacesMax, nbrPlacesRestantes, type, image, meetlink, user, keywords);
     }
-
 
     @Override
     public String toString() {

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="930.0" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.fermista.controllers.ShowWorkshopsController">    <children>
+    <VBox prefHeight="680.0" prefWidth="205.0">
+        <children>
+            <AnchorPane fx:id="side_ankerpane" prefHeight="680.0" prefWidth="253.0" styleClass="side_ankerpane" stylesheets="@style.css">
+                <children>
+                    <Pane fx:id="inner_pane" layoutX="17.0" layoutY="26.0" prefHeight="64.0" prefWidth="186.0" styleClass="inner_pane" stylesheets="@style.css">
+                        <children>
+                            <ImageView fitHeight="60.0" fitWidth="61.0" layoutX="33.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@images/67c1111dd9ab1.png" />
+                                </image>
+                            </ImageView>
+                            <Pane fx:id="most_inner_pane" layoutX="126.0" layoutY="6.0" prefHeight="52.0" prefWidth="35.0" styleClass="most_inner_pane" stylesheets="@style.css">
+                                <children>
+                                    <ImageView fitHeight="33.0" fitWidth="23.0" layoutX="6.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+                                        <image>
+                                            <Image url="@images/troispoints-removebg-preview.png" />
+                                        </image>
+                                    </ImageView>
+                                </children>
+                            </Pane>
+                        </children>
+                    </Pane>
+                    <ButtonBar fx:id="btn_workbench" layoutX="9.0" layoutY="124.0" prefHeight="40.0" prefWidth="200.0" stylesheets="@style.css">
+                        <buttons>
+                            <ImageView fitHeight="29.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@images/home-removebg-preview (1).png" />
+                                </image>
+                            </ImageView>
+                            <Text fill="#fcfafa" strokeType="OUTSIDE" strokeWidth="0.0" text="Home" wrappingWidth="110.13676186799967">
+                                <font>
+                                    <Font name="Century Gothic Bold" size="15.0" />
+                                </font>
+                            </Text>
+                        </buttons>
+                    </ButtonBar>
+                    <ButtonBar layoutX="12.0" layoutY="189.0" prefHeight="40.0" prefWidth="200.0">
+                        <buttons>
+                            <ImageView fitHeight="24.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@images/user-removebg-preview (2).png" />
+                                </image>
+                            </ImageView>
+                            <Button fx:id="btn_workbench11" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="Gestion User" textFill="WHITE">
+                                <font>
+                                    <Font name="Century Gothic Bold" size="15.0" />
+                                </font>
+                            </Button>
+                        </buttons>
+                    </ButtonBar>
+                    <ButtonBar layoutX="9.0" layoutY="259.0" prefHeight="40.0" prefWidth="200.0">
+                        <buttons>
+                            <ImageView fitHeight="33.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@images/images-removebg-preview.png" />
+                                </image>
+                            </ImageView>
+                            <Button fx:id="btn_workbench111" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="Contrôle médical" textFill="WHITE">
+                                <font>
+                                    <Font name="Century Gothic Bold" size="13.0" />
+                                </font>
+                            </Button>
+                        </buttons>
+                    </ButtonBar>
+                    <ButtonBar layoutX="10.0" layoutY="320.0" prefHeight="40.0" prefWidth="200.0">
+                        <buttons>
+                            <ImageView fitHeight="33.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@images/event1-removebg-preview.png" />
+                                </image>
+                            </ImageView>
+                            <Button fx:id="btn_workbench112" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="Gestion événements" textFill="WHITE">
+                                <font>
+                                    <Font name="Century Gothic Bold" size="13.0" />
+                                </font>
+                            </Button>
+                        </buttons>
+                    </ButtonBar>
+                    <ButtonBar layoutX="9.0" layoutY="462.0" prefHeight="40.0" prefWidth="200.0">
+                        <buttons>
+                            <ImageView fitHeight="35.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@images/dashboard.png" />
+                                </image>
+                            </ImageView>
+                            <Button fx:id="btn_workbench1121" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="Suivis médical" textFill="WHITE">
+                                <font>
+                                    <Font name="Century Gothic Bold" size="15.0" />
+                                </font>
+                            </Button>
+                        </buttons>
+                    </ButtonBar>
+                    <ButtonBar layoutX="8.0" layoutY="378.0" prefHeight="40.0" prefWidth="200.0">
+                        <buttons>
+                            <ImageView fitHeight="35.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@images/images__1_-removebg-preview.png" />
+                                </image>
+                            </ImageView>
+                            <Button fx:id="btn_workbench11211" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="E-commerce" textFill="WHITE">
+                                <font>
+                                    <Font name="Century Gothic Bold" size="15.0" />
+                                </font>
+                            </Button>
+                        </buttons>
+                    </ButtonBar>
+                </children>
+            </AnchorPane>
+        </children>
+    </VBox>
+    <Pane prefHeight="680.0" prefWidth="709.0">
+        <children>
+            <FlowPane layoutY="14.0" prefHeight="60.0" prefWidth="710.0">
+                <children>
+                    <Pane prefHeight="50.0" prefWidth="200.0" translateX="350.0">
+                        <children>
+                            <TextField fx:id="txt_search" alignment="TOP_LEFT" layoutX="30.0" layoutY="17.0" prefHeight="30.0" prefWidth="166.0" promptText="Search">
+                                <font>
+                                    <Font name="Century Gothic" size="12.0" />
+                                </font>
+                            </TextField>
+                            <ImageView fitHeight="30.0" fitWidth="32.0" layoutX="-1.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@images/search-removebg-preview.png" />
+                                </image>
+                            </ImageView>
+                        </children>
+                    </Pane>
+                    <ImageView fitHeight="64.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true" />
+                    <ButtonBar prefHeight="64.0" prefWidth="34.0" translateX="330.0">
+                        <buttons>
+                            <ImageView fitHeight="31.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@images/settings-removebg-preview.png" />
+                                </image>
+                            </ImageView>
+                        </buttons>
+                    </ButtonBar>
+                    <ButtonBar prefHeight="42.0" prefWidth="46.0" translateX="350.0">
+                        <buttons>
+                            <ImageView fitHeight="38.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@images/67c1111dd9ab1.png" />
+                                </image>
+                            </ImageView>
+                        </buttons>
+                    </ButtonBar>
+                </children>
+            </FlowPane>
+            <Label layoutX="38.0" layoutY="91.0" text="Liste des workshops">
+                <font>
+                    <Font name="Century Gothic Bold" size="33.0" />
+                </font>
+            </Label>
+            <Label layoutX="38.0" layoutY="133.0" text="Investir dans le bien-être pour un futur meilleur">
+                <font>
+                    <Font name="Century Gothic" size="14.0" />
+                </font>
+            </Label>
+            <Label layoutX="38.0" layoutY="164.0" text="Today" textFill="#9c9b9b">
+                <font>
+                    <Font name="Century Gothic Bold" size="14.0" />
+                </font>
+            </Label>
+            <TableView fx:id="workshopTable" layoutX="21.0" layoutY="199.0" prefHeight="432.0" prefWidth="657.0">
+              <columns>
+                <TableColumn fx:id="idColumn" prefWidth="50.0" text="ID" />
+                <TableColumn fx:id="titreColumn" prefWidth="100.0" text="Titre" />
+                <TableColumn fx:id="dateColumn" prefWidth="100.0" text="Date" />
+                <TableColumn fx:id="prixColumn" prefWidth="75.0" text="Prix" />
+                <TableColumn fx:id="themeColumn" prefWidth="80.0" text="Theme" />
+                <TableColumn fx:id="typeColumn" prefWidth="90.0" text="Type" />
+                <TableColumn fx:id="placesColumn" prefWidth="80.0" text="Places" />
+                <TableColumn fx:id="durationColumn" prefWidth="80.0" text="Duration" />
+                <TableColumn fx:id="formateurColumn" prefWidth="100.0" text="Formateur" />
+                <TableColumn fx:id="actionsColumn" prefWidth="120.0" text="Actions" />
+              </columns>
+            </TableView>
+            <Button fx:id="addButton" layoutX="536.0" layoutY="112.0" mnemonicParsing="false" onAction="#handleAddWorkshop" styleClass="button-primary" text="Ajouter un workshop" />
+        </children>
+    </Pane>
+</children>
+</HBox>
