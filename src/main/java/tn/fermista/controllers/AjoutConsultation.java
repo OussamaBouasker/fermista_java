@@ -190,6 +190,30 @@ public class AjoutConsultation {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(content);
+        
+        // Ajout de style CSS
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(
+            getClass().getResource("/styles/alert.css").toExternalForm()
+        );
+        dialogPane.getStyleClass().add("custom-alert");
+        
+        // Personnalisation des icônes selon le type d'alerte
+        switch (type) {
+            case ERROR:
+                dialogPane.getStyleClass().add("error-alert");
+                break;
+            case INFORMATION:
+                dialogPane.getStyleClass().add("info-alert");
+                break;
+            case WARNING:
+                dialogPane.getStyleClass().add("warning-alert");
+                break;
+            case CONFIRMATION:
+                dialogPane.getStyleClass().add("confirm-alert");
+                break;
+        }
+        
         alert.showAndWait();
     }
 

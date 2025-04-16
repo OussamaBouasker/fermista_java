@@ -37,6 +37,8 @@ import java.sql.Time;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.TextField;
+import javafx.scene.control.DialogPane;
+import javafx.scene.control.ButtonType;
 
 public class ControlMedicalShow implements Initializable {
     @FXML
@@ -265,13 +267,31 @@ public class ControlMedicalShow implements Initializable {
 
                 deleteBtn.setOnAction(event -> {
                     RapportMedical rapport = getTableView().getItems().get(getIndex());
-                    try {
-                        serviceRapportMedical.delete(rapport);
-                        rapportMedicalList.remove(rapport);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                        // TODO: Show error message to user
-                    }
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Confirmation de suppression");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Êtes-vous sûr de vouloir supprimer ce rapport médical ?");
+                    
+                    // Ajout de style CSS
+                    DialogPane dialogPane = alert.getDialogPane();
+                    dialogPane.getStylesheets().add(
+                        getClass().getResource("/styles/alert.css").toExternalForm()
+                    );
+                    dialogPane.getStyleClass().add("custom-alert");
+                    dialogPane.getStyleClass().add("confirm-alert");
+
+                    alert.showAndWait().ifPresent(response -> {
+                        if (response == ButtonType.OK) {
+                            try {
+                                serviceRapportMedical.delete(rapport);
+                                rapportMedicalList.remove(rapport);
+                                showAlert("Succès", "Rapport médical supprimé avec succès", Alert.AlertType.INFORMATION);
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                                showAlert("Erreur", "Erreur lors de la suppression du rapport", Alert.AlertType.ERROR);
+                            }
+                        }
+                    });
                 });
             }
 
@@ -311,7 +331,7 @@ public class ControlMedicalShow implements Initializable {
             loadConsultationData();
         } catch (IOException e) {
             e.printStackTrace();
-            // TODO: Show error message to user
+            
         }
     }
 
@@ -332,13 +352,31 @@ public class ControlMedicalShow implements Initializable {
 
                 deleteBtn.setOnAction(event -> {
                     Consultation consultation = getTableView().getItems().get(getIndex());
-                    try {
-                        serviceConsultation.delete(consultation);
-                        consultationList.remove(consultation);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                        // TODO: Show error message to user
-                    }
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Confirmation de suppression");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Êtes-vous sûr de vouloir supprimer cette consultation ?");
+                    
+                    // Ajout de style CSS
+                    DialogPane dialogPane = alert.getDialogPane();
+                    dialogPane.getStylesheets().add(
+                        getClass().getResource("/styles/alert.css").toExternalForm()
+                    );
+                    dialogPane.getStyleClass().add("custom-alert");
+                    dialogPane.getStyleClass().add("confirm-alert");
+
+                    alert.showAndWait().ifPresent(response -> {
+                        if (response == ButtonType.OK) {
+                            try {
+                                serviceConsultation.delete(consultation);
+                                consultationList.remove(consultation);
+                                showAlert("Succès", "Consultation supprimée avec succès", Alert.AlertType.INFORMATION);
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                                showAlert("Erreur", "Erreur lors de la suppression de la consultation", Alert.AlertType.ERROR);
+                            }
+                        }
+                    });
                 });
             }
 
@@ -479,13 +517,31 @@ public class ControlMedicalShow implements Initializable {
 
                 deleteBtn.setOnAction(event -> {
                     RendezVous rdv = getTableView().getItems().get(getIndex());
-                    try {
-                        serviceRendezVous.delete(rdv);
-                        rendezVousList.remove(rdv);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                        showAlert("Erreur", "Erreur lors de la suppression du rendez-vous", Alert.AlertType.ERROR);
-                    }
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Confirmation de suppression");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Êtes-vous sûr de vouloir supprimer ce rendez-vous ?");
+                    
+                    // Ajout de style CSS
+                    DialogPane dialogPane = alert.getDialogPane();
+                    dialogPane.getStylesheets().add(
+                        getClass().getResource("/styles/alert.css").toExternalForm()
+                    );
+                    dialogPane.getStyleClass().add("custom-alert");
+                    dialogPane.getStyleClass().add("confirm-alert");
+
+                    alert.showAndWait().ifPresent(response -> {
+                        if (response == ButtonType.OK) {
+                            try {
+                                serviceRendezVous.delete(rdv);
+                                rendezVousList.remove(rdv);
+                                showAlert("Succès", "Rendez-vous supprimé avec succès", Alert.AlertType.INFORMATION);
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                                showAlert("Erreur", "Erreur lors de la suppression du rendez-vous", Alert.AlertType.ERROR);
+                            }
+                        }
+                    });
                 });
             }
 
