@@ -1,38 +1,43 @@
 package tn.fermista.models;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 public class User {
-
     private Integer id;
     private String email;
     private String password;
     private String firstName;
     private String lastName;
     private String number;
-    private Boolean state;
+    private boolean  state;
     private boolean isVerified;
     private String image;
     private List<Reclamation> reclamations;
+    private Roles roles;
     private Set<Reservation> reservations;
     private Set<Workshop> workshops;
+    public User() {
+    }
 
+    public User( String email, String password, String firstName, String lastName) {
 
-    public User(String firstName, String lastName) {
+        this.email = email;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public User() {
+    public User(String email, String password, String firstName, String number, String lastName, Roles roles) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.number = number;
+        this.lastName = lastName;
+        this.roles = roles;
     }
 
-    public User(Integer id) {
-        this.id = id;
-    }
-
-    public User(Integer id, String email, String password, String firstName, String lastName, String number, Boolean state, boolean isVerified, String image, List<Reclamation> reclamations) {
+    public User(Integer id, String email, String password, String firstName, String lastName, String number, Boolean state, boolean isVerified, String image, List<Reclamation> reclamations, Roles roles) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -43,19 +48,31 @@ public class User {
         this.isVerified = isVerified;
         this.image = image;
         this.reclamations = reclamations;
+        this.roles = roles;
     }
 
-    public User(String email, String password, String firstName, String lastName, String number, String image) {
-        this.email = email;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.number = number;
-        this.image = image;
+    public User(int userId) {
     }
+
 
     public Integer getId() {
         return id;
+    }
+
+    public Set<Workshop> getWorkshops() {
+        return workshops;
+    }
+
+    public void setWorkshops(Set<Workshop> workshops) {
+        this.workshops = workshops;
+    }
+
+    public Set<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(Set<Reservation> reservations) {
+        this.reservations = reservations;
     }
 
     public void setId(Integer id) {
@@ -134,21 +151,12 @@ public class User {
         this.reclamations = reclamations;
     }
 
-
-    public Set<Reservation> getReservations() {
-        return reservations;
+    public Roles getRoles() {
+        return roles;
     }
 
-    public void setReservations(Set<Reservation> reservations) {
-        this.reservations = reservations;
-    }
-
-    public Set<Workshop> getWorkshops() {
-        return workshops;
-    }
-
-    public void setWorkshops(Set<Workshop> workshops) {
-        this.workshops = workshops;
+    public void setRoles(Roles roles) {
+        this.roles = roles;
     }
 
     @Override
@@ -156,12 +164,12 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return isVerified == user.isVerified && Objects.equals(id, user.id) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(number, user.number) && Objects.equals(state, user.state) && Objects.equals(image, user.image) && Objects.equals(reclamations, user.reclamations) && Objects.equals(reservations, user.reservations) && Objects.equals(workshops, user.workshops);
+        return isVerified == user.isVerified && Objects.equals(id, user.id) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(number, user.number) && Objects.equals(state, user.state) && Objects.equals(image, user.image) && Objects.equals(reclamations, user.reclamations) && roles == user.roles;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, password, firstName, lastName, number, state, isVerified, image, reclamations, reservations, workshops);
+        return Objects.hash(id, email, password, firstName, lastName, number, state, isVerified, image, reclamations, roles);
     }
 
     @Override
@@ -177,8 +185,7 @@ public class User {
                 ", isVerified=" + isVerified +
                 ", image='" + image + '\'' +
                 ", reclamations=" + reclamations +
-                ", reservations=" + reservations +
-                ", workshops=" + workshops +
+                ", roles=" + roles +
                 '}';
     }
 }

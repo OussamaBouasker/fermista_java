@@ -1,8 +1,10 @@
 package tn.fermista.services;
 
+import tn.fermista.models.Roles;
 import tn.fermista.models.User;
 import tn.fermista.models.Workshop;
 import tn.fermista.utils.MyDbConnexion;
+import tn.fermista.utils.PasswordUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -100,5 +102,54 @@ public class ServiceUser implements CRUD<User> {
         pst.setInt(1, user.getId());
         pst.executeUpdate();
         System.out.println("User deleted successfully!");
+    }
+
+    public User signIn(String email, String password) {
+        User user = null;
+        // Hacher le mot de passe pour la comparaison
+        String hashedPassword = PasswordUtils.hashPassword(password);
+        
+        String req = "SELECT * FROM user WHERE email = ? AND password = ?";
+
+        try (PreparedStatement st = cnx.prepareStatement(req)) {
+            st.setString(1, email);
+            st.setString(2, hashedPassword);
+
+            try (ResultSet rs = st.executeQuery()) {
+                if (rs.next()) {
+                    user = new User();
+                    user.setId(rs.getInt("id"));
+                    user.setEmail(rs.getString("email"));
+                    user.setPassword(rs.getString("password"));
+                    user.setFirstName(rs.getString("first_name"));
+                    user.setLastName(rs.getString("last_name"));
+                    user.setNumber(rs.getString("number"));
+                    user.setState(rs.getBoolean("state"));
+                    user.setVerified(rs.getBoolean("is_verified"));
+                    user.setImage(rs.getString("image"));
+                    
+                    // Déterminer le rôle de l'utilisateur
+                    String roleStr = rs.getString("roles");
+                    if (roleStr != null && !roleStr.isEmpty()) {
+                        try {
+                            user.setRoles(Roles.valueOf(roleStr));
+                        } catch (IllegalArgumentException e) {
+                            // Si le rôle n'est pas valide, définir un rôle par défaut
+                            user.setRoles(Roles.ROLE_CLIENT);
+                        }
+                    } else {
+                        user.setRoles(Roles.ROLE_CLIENT);
+                    }
+                    
+                    System.out.println("User logged in: " + user.getEmail());
+                } else {
+                    System.out.println("No user found with the provided credentials.");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error during sign-in: " + e.getMessage());
+        }
+
+        return user;
     }
 }
