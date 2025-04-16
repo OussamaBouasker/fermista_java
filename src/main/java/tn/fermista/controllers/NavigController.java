@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Alert;
 import java.io.IOException;
 
-public class ModifRendezVous {
+public class NavigController {
     
     @FXML
     private Button btn_workbench1121; // Bouton Suivis médical

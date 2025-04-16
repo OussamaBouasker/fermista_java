@@ -9,7 +9,7 @@ import javafx.scene.control.Button;
 import java.io.IOException;
 
 public class NavigationController {
-    
+
     public static void naviguerVersSuiviMedical(Button sourceButton) {
         try {
             FXMLLoader loader = new FXMLLoader(NavigationController.class.getResource("/choixvachecollier.fxml"));
@@ -25,4 +25,4 @@ public class NavigationController {
             e.printStackTrace(); // Pour le débogage
         }
     }
-} 
+}
