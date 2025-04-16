@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+
 public class Vache {
     private int id,age;
     private String name,race,etat_medical;
@@ -38,10 +39,10 @@ public class Vache {
 
     // Getters and Setters
 
+
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }

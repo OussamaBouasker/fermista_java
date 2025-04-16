@@ -7,19 +7,19 @@
             private int id;
             private String reference;
             private String taille;
-            private double valeurTemperature;
-            private double valeurAgitation;
+            private double valeur_Temperature;
+            private double valeur_Agitation;
             private Vache vache;
 
             public Collier() {
             }
 
 
-            public Collier(String reference, String taille, double valeurTemperature, double valeurAgitation, Vache vache) {
+            public Collier(String reference, String taille, double valeur_Temperature, double valeur_Agitation, Vache vache) {
                 this.reference = reference;
                 this.taille = taille;
-                this.valeurTemperature = valeurTemperature;
-                this.valeurAgitation = valeurAgitation;
+                this.valeur_Temperature = valeur_Temperature;
+                this.valeur_Agitation = valeur_Agitation;
                 this.vache = vache;
             }
 
@@ -50,19 +50,19 @@
             }
 
             public double getValeurTemperature() {
-                return valeurTemperature;
+                return valeur_Temperature;
             }
 
-            public void setValeurTemperature(double valeurTemperature) {
-                this.valeurTemperature = valeurTemperature;
+            public void setValeurTemperature(double valeur_Temperature) {
+                this.valeur_Temperature = valeur_Temperature;
             }
 
             public double getValeurAgitation() {
-                return valeurAgitation;
+                return valeur_Agitation;
             }
 
-            public void setValeurAgitation(double valeurAgitation) {
-                this.valeurAgitation = valeurAgitation;
+            public void setValeurAgitation(double valeur_Agitation) {
+                this.valeur_Agitation = valeur_Agitation;
             }
 
             public Vache getVache() {
@@ -80,8 +80,8 @@
                 if (!(o instanceof Collier)) return false;
                 Collier collier = (Collier) o;
                 return id == collier.id &&
-                        Double.compare(collier.valeurTemperature, valeurTemperature) == 0 &&
-                        Double.compare(collier.valeurAgitation, valeurAgitation) == 0 &&
+                        Double.compare(collier.valeur_Temperature, valeur_Temperature) == 0 &&
+                        Double.compare(collier.valeur_Agitation, valeur_Agitation) == 0 &&
                         Objects.equals(reference, collier.reference) &&
                         Objects.equals(taille, collier.taille) &&
                         Objects.equals(vache, collier.vache);
@@ -89,7 +89,7 @@
 
             @Override
             public int hashCode() {
-                return Objects.hash(id, reference, taille, valeurTemperature, valeurAgitation, vache);
+                return Objects.hash(id, reference, taille, valeur_Temperature, valeur_Agitation, vache);
             }
 
             @Override
@@ -98,8 +98,8 @@
                         "id=" + id +
                         ", reference='" + reference + '\'' +
                         ", taille='" + taille + '\'' +
-                        ", valeurTemperature=" + valeurTemperature +
-                        ", valeurAgitation=" + valeurAgitation +
+                        ", valeurTemperature=" + valeur_Temperature +
+                        ", valeurAgitation=" + valeur_Agitation +
                         ", vache=" + vache +
                         '}';
             }
