@@ -20,6 +20,9 @@ public class NavigationController implements Initializable {
     
     @FXML
     private Button btn_workbench113;
+    
+    @FXML
+    private Button logoutButton;
 
     @FXML
     private Label userNameLabel;
@@ -41,10 +44,32 @@ public class NavigationController implements Initializable {
         
         // Afficher le nom de l'utilisateur connecté
         if (currentUser != null && userNameLabel != null) {
-            userNameLabel.setText("Bienvenue, " + currentUser.getFirstName() + " " + currentUser.getLastName());
+            userNameLabel.setText("Hello, " + currentUser.getFirstName() + " " + currentUser.getLastName());
+        }
+        
+        if (logoutButton != null) {
+            logoutButton.setOnAction(event -> handleLogout());
         }
     }
 
+    @FXML
+    private void handleLogout() {
+        try {
+            // Réinitialiser l'utilisateur courant
+            currentUser = null;
+            
+            // Rediriger vers la page de login
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) logoutButton.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     private void navigateToCrudUser() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/CrudUser.fxml"));
@@ -70,4 +95,4 @@ public class NavigationController implements Initializable {
             e.printStackTrace();
         }
     }
-} 
+}

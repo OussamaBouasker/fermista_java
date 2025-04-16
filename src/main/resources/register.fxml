@@ -88,9 +88,9 @@
     </Button>
 
     <!-- Lien "J'ai déjà un compte" -->
-    <Text fx:id="loginLink" fill="#030d04" layoutX="403.0" layoutY="413.0" onMouseClicked="#navigateToLogin" text="J'ai déjà un compte">
+    <Text fx:id="loginLink" fill="#a41616" layoutX="431.0" layoutY="413.0" onMouseClicked="#navigateToLogin" text="J'ai déjà un compte">
         <font>
-            <Font name="System Bold Italic" size="19.0" />
+            <Font name="System Bold Italic" size="15.0" />
         </font>
     </Text>
 

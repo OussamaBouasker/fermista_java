@@ -111,6 +111,8 @@ public class RegisterController extends Application {
             // Hachage du mot de passe
             String hashedPassword = PasswordUtils.hashPassword(password.getText());
 
+            // Dans la méthode signUp, avant le switch case
+            User user = null;
             switch (role) {
                 case ROLE_ADMIN:
                     Admin admin = new Admin();
@@ -120,7 +122,9 @@ public class RegisterController extends Application {
                     admin.setEmail(email.getText());
                     admin.setPassword(hashedPassword);
                     admin.setRoles(role);
+                    admin.setState(true); // Définir state à true
                     serviceAdmin.ajouter(admin);
+                    user = admin;
                     break;
 
                 case ROLE_CLIENT:
@@ -131,6 +135,7 @@ public class RegisterController extends Application {
                     client.setEmail(email.getText());
                     client.setPassword(hashedPassword);
                     client.setRoles(role);
+                    client.setState(true); // Définir state à true
                     serviceClient.ajouter(client);
                     break;
 
@@ -142,6 +147,7 @@ public class RegisterController extends Application {
                     formateur.setEmail(email.getText());
                     formateur.setPassword(hashedPassword);
                     formateur.setRoles(role);
+                    formateur.setState(true);
                     serviceFormateur.ajouter(formateur);
                     break;
 
@@ -153,6 +159,7 @@ public class RegisterController extends Application {
                     agriculteur.setEmail(email.getText());
                     agriculteur.setPassword(hashedPassword);
                     agriculteur.setRoles(role);
+                    agriculteur.setState(true);
                     serviceAgriculteur.ajouter(agriculteur);
                     break;
 
@@ -164,6 +171,7 @@ public class RegisterController extends Application {
                     veterinaire.setEmail(email.getText());
                     veterinaire.setPassword(hashedPassword);
                     veterinaire.setRoles(role);
+                    veterinaire.setState(true);
                     serviceVeterinaire.ajouter(veterinaire);
                     break;
             }
