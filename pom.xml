@@ -53,6 +53,8 @@
                     <mainClass>tn.fermista.tests.MainApp</mainClass>
                 </configuration>
             </plugin>
+
+
         </plugins>
     </build>
 </project>

@@ -72,14 +72,14 @@
                                     <Image url="@images/event1-removebg-preview.png" />
                                 </image>
                             </ImageView>
-                            <Button fx:id="btn_workbench112" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="Gestion événements" textFill="WHITE">
+                            <Button fx:id="btn_workbench112" mnemonicParsing="false" onAction="#ShowWorkshops" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="Gestion Workshops" textFill="WHITE">
                                 <font>
                                     <Font name="Century Gothic Bold" size="13.0" />
                                 </font>
                             </Button>
                         </buttons>
                     </ButtonBar>
-                    <ButtonBar layoutX="9.0" layoutY="500.0" prefHeight="40.0" prefWidth="200.0">
+                    <ButtonBar layoutX="8.0" layoutY="554.0" prefHeight="40.0" prefWidth="200.0">
                         <buttons>
                             <ImageView fitHeight="35.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                                 <image>
@@ -93,7 +93,7 @@
                             </Button>
                         </buttons>
                     </ButtonBar>
-                    <ButtonBar layoutX="8.0" layoutY="430.0" prefHeight="40.0" prefWidth="200.0">
+                    <ButtonBar layoutY="492.0" prefHeight="40.0" prefWidth="200.0">
                         <buttons>
                             <ImageView fitHeight="35.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                                 <image>
@@ -131,6 +131,20 @@
                         <Button fx:id="btn_workbench114" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="home" textFill="WHITE">
                            <font>
                               <Font name="Century Gothic Bold" size="16.0" />
+                           </font>
+                        </Button>
+                     </buttons>
+                  </ButtonBar>
+                  <ButtonBar layoutX="12.0" layoutY="421.0" prefHeight="40.0" prefWidth="200.0">
+                     <buttons>
+                        <ImageView fitHeight="33.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/event1-removebg-preview.png" />
+                           </image>
+                        </ImageView>
+                        <Button fx:id="btn_workbench1122" mnemonicParsing="false" onAction="#ShowReservations" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="Gestion Réservations" textFill="WHITE">
+                           <font>
+                              <Font name="Century Gothic Bold" size="13.0" />
                            </font>
                         </Button>
                      </buttons>

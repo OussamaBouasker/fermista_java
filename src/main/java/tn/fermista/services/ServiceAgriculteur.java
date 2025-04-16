@@ -1,4 +1,5 @@
 package tn.fermista.services;
+
 import tn.fermista.models.Admin;
 import tn.fermista.models.Agriculteur;
 import tn.fermista.models.Roles;
@@ -103,5 +104,31 @@ public class ServiceAgriculteur extends ServiceUser implements IService<Agricult
         }
 
         return agriculteurs;
+    }
+
+    public Agriculteur getById(int id) throws SQLException {
+        String req = "SELECT * FROM user WHERE id = ? AND JSON_CONTAINS(roles, '\"ROLE_AGRICULTOR\"')";
+        
+        try (PreparedStatement st = cnx.prepareStatement(req)) {
+            st.setInt(1, id);
+            
+            try (ResultSet rs = st.executeQuery()) {
+                if (rs.next()) {
+                    Agriculteur agriculteur = new Agriculteur();
+                    agriculteur.setId(rs.getInt("id"));
+                    agriculteur.setEmail(rs.getString("email"));
+                    agriculteur.setPassword(rs.getString("password"));
+                    agriculteur.setFirstName(rs.getString("first_name"));
+                    agriculteur.setLastName(rs.getString("last_name"));
+                    agriculteur.setNumber(rs.getString("number"));
+                    agriculteur.setState(rs.getBoolean("state"));
+                    agriculteur.setVerified(rs.getBoolean("is_verified"));
+                    agriculteur.setImage(rs.getString("image"));
+                    agriculteur.setRoles(Roles.ROLE_AGRICULTOR);
+                    return agriculteur;
+                }
+            }
+        }
+        return null;
     }
 }

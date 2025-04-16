@@ -21,6 +21,7 @@ public class User {
     private Set<Workshop> workshops;
 
 
+
     public User(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -163,6 +164,8 @@ public class User {
     public void setImage(String image) {
         this.image = image;
     }
+
+
 
     public List<Reclamation> getReclamations() {
         return reclamations;

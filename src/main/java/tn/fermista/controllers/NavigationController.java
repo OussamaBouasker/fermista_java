@@ -1,5 +1,6 @@
 package tn.fermista.controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,7 +16,6 @@ import tn.fermista.services.ServiceClient;
 import tn.fermista.services.ServiceFormateur;
 import tn.fermista.services.ServiceReclamation;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -198,6 +198,32 @@ public class NavigationController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Erreur lors du chargement de ControlMedicalShow.fxml: " + e.getMessage());
+        }
+    }
+
+    public void ShowReservations(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ShowReservations.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ShowReservations.fxml: " + e.getMessage());
+        }
+    }
+
+    public void ShowWorkshops(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ShowWorkshops.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ShowWorkshops.fxml: " + e.getMessage());
         }
     }
 }
