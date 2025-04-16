@@ -6,7 +6,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import tn.fermista.models.User;
 
 import java.io.IOException;
 import java.net.URL;
@@ -19,6 +21,15 @@ public class NavigationController implements Initializable {
     @FXML
     private Button btn_workbench113;
 
+    @FXML
+    private Label userNameLabel;
+
+    private static User currentUser;
+
+    public static void setCurrentUser(User user) {
+        currentUser = user;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if (btn_workbench11 != null) {
@@ -26,6 +37,11 @@ public class NavigationController implements Initializable {
         }
         if (btn_workbench113 != null) {
             btn_workbench113.setOnAction(event -> navigateToCrudReclamation());
+        }
+        
+        // Afficher le nom de l'utilisateur connecté
+        if (currentUser != null && userNameLabel != null) {
+            userNameLabel.setText("Bienvenue, " + currentUser.getFirstName() + " " + currentUser.getLastName());
         }
     }
 

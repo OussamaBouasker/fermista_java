@@ -77,6 +77,9 @@ public class LoginController {
                 UserSession.clearUser();
             }
             
+            // Définir l'utilisateur courant pour le NavigationController
+            NavigationController.setCurrentUser(user);
+            
             // Rediriger vers la page appropriée selon le rôle
             String fxmlPath = getFxmlPathForRole(user.getRoles());
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
