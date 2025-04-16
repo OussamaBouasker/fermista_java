@@ -21,7 +21,7 @@ public class ServiceCollier implements CRUD<Collier> {
     @Override
     public void insert(Collier collier) {
         // Si une vache est associée, on ajoute l'ID de la vache dans la table collier
-        String req = "INSERT INTO collier (vache_id,reference, taille, valeur_temperature, valeur_agitation) VALUES ('"
+        String req = "INSERT INTO collier (reference, taille, valeur_temperature, valeur_agitation, vache_id) VALUES ('"
                 + collier.getReference() + "', '"
                 + collier.getTaille() + "', "
                 + collier.getValeurTemperature() + ", "
@@ -41,8 +41,8 @@ public class ServiceCollier implements CRUD<Collier> {
         // Mise à jour de la vache associée avec la clé étrangère
         String req = "UPDATE collier SET reference = '" + collier.getReference()
                 + "', taille = '" + collier.getTaille()
-                + "', valeurTemperature = " + collier.getValeurTemperature()
-                + ", valeurAgitation = " + collier.getValeurAgitation()
+                + "', valeur_Temperature = " + collier.getValeurTemperature()
+                + ", valeur_Agitation = " + collier.getValeurAgitation()
                 + ", vache_id = " + (collier.getVache() != null ? collier.getVache().getId() : "NULL")
                 + " WHERE id = " + collier.getId();
         try {
@@ -78,8 +78,8 @@ public class ServiceCollier implements CRUD<Collier> {
                 c.setId(rs.getInt("id"));
                 c.setReference(rs.getString("reference"));
                 c.setTaille(rs.getString("taille"));
-                c.setValeurTemperature(rs.getDouble("valeurTemperature"));
-                c.setValeurAgitation(rs.getDouble("valeurAgitation"));
+                c.setValeurTemperature(rs.getDouble("valeur_Temperature"));
+                c.setValeurAgitation(rs.getDouble("valeur_Agitation"));
 
                 // Récupérer la vache associée à ce collier
                 int vacheId = rs.getInt("vache_id");
@@ -94,6 +94,20 @@ public class ServiceCollier implements CRUD<Collier> {
             System.out.println("Erreur lors de la recherche : " + e.getMessage());
         }
         return colliers;
+    }
+
+    public boolean vacheHasCollier(int vacheId) {
+        String req = "SELECT COUNT(*) FROM collier WHERE vache_id = " + vacheId;
+        try {
+            Statement st = cnx.createStatement();
+            ResultSet rs = st.executeQuery(req);
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la vérification du collier : " + e.getMessage());
+        }
+        return false;
     }
 
     // Méthode pour récupérer une vache par son ID

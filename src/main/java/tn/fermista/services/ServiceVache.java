@@ -114,6 +114,32 @@ public class ServiceVache implements CRUD<Vache> {
         return null;
     }
 
+    public List<Vache> getAll() {
+        List<Vache> vaches = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM vache";
+            Statement stmt = cnx.createStatement(); // cnx = ta connexion JDBC
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                Vache v = new Vache();
+                v.setId(rs.getInt("id"));
+                v.setName(rs.getString("name"));
+                v.setAge(rs.getInt("age"));
+                v.setRace(rs.getString("race"));
+                v.setEtat_medical(rs.getString("etat_medical"));
+
+                vaches.add(v);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return vaches;
+    }
+
 
 }
 
