@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+
+<VBox prefHeight="680.0" prefWidth="800.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" 
+      fx:controller="tn.fermista.controllers.LivraisonListViewController" style="-fx-background-color: #f5f5f5;">
+    <padding>
+        <Insets top="30" right="40" bottom="30" left="40" />
+    </padding>
+
+    <HBox alignment="CENTER_LEFT" spacing="20">
+        <Label text="Liste des Livraisons">
+            <font>
+                <Font name="Century Gothic Bold" size="30.0"/>
+            </font>
+        </Label>
+        <Region HBox.hgrow="ALWAYS" />
+        <Button text="Retour à la gestion" onAction="#handleBackToManager"
+                style="-fx-background-color: #2196F3; -fx-text-fill: white;" />
+    </HBox>
+    
+    <VBox.margin>
+        <Insets bottom="20" />
+    </VBox.margin>
+    
+    <TableView fx:id="livraisonsTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID" minWidth="50" />
+            <TableColumn fx:id="dateColumn" text="Date" minWidth="150" />
+            <TableColumn fx:id="livreurColumn" text="Livreur" minWidth="200" />
+            <TableColumn fx:id="lieuColumn" text="Lieu" minWidth="200" />
+        </columns>
+    </TableView>
+    
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <VBox.margin>
+            <Insets top="20" />
+        </VBox.margin>
+        <Button text="Rafraîchir" onAction="#refreshLivraisonList"
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white;" prefWidth="120" />
+    </HBox>
+</VBox> 

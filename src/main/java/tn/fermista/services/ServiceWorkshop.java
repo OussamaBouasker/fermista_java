@@ -5,8 +5,6 @@ import tn.fermista.models.Workshop;
 import tn.fermista.utils.MyDbConnexion;
 
 import java.sql.*;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +16,7 @@ public class ServiceWorkshop implements CRUD<Workshop> {
     }
 
     @Override
-    public void insert(Workshop w) throws SQLException {
+    public boolean insert(Workshop w) throws SQLException {
         String sql = "INSERT INTO workshop (titre, description, date, prix, theme, duration, nbr_places_max, nbr_places_restantes, type, image, meetlink, user_id, keywords) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement pst = cnx.prepareStatement(sql);
         pst.setString(1, w.getTitre());
@@ -36,10 +34,11 @@ public class ServiceWorkshop implements CRUD<Workshop> {
         pst.setString(13, w.getKeywords());
         pst.executeUpdate();
         System.out.println("Workshop inserted successfully!");
+        return false;
     }
 
 //    @Override
-    public void update(Workshop w) throws SQLException {
+    public boolean update(Workshop w) throws SQLException {
         String sql = "UPDATE workshop SET titre = ?, description = ?, date = ?, prix = ?, theme = ?, duration = ?, nbr_places_max = ?, nbr_places_restantes = ?, type = ?, image = ?, meetlink = ?, user_id = ?, keywords = ? WHERE id = ?";
         PreparedStatement pst = cnx.prepareStatement(sql);
         pst.setString(1, w.getTitre());
@@ -58,6 +57,7 @@ public class ServiceWorkshop implements CRUD<Workshop> {
         pst.setLong(14, w.getId());
         pst.executeUpdate();
         System.out.println("Workshop updated successfully!");
+        return false;
     }
 
     public void update1(Workshop workshop) throws SQLException {
@@ -74,12 +74,13 @@ public class ServiceWorkshop implements CRUD<Workshop> {
     }
 
     @Override
-    public void delete(Workshop w) throws SQLException {
+    public boolean delete(Workshop w) throws SQLException {
         String sql = "DELETE FROM workshop WHERE id = ?";
         PreparedStatement pst = cnx.prepareStatement(sql);
         pst.setLong(1, w.getId());
         pst.executeUpdate();
         System.out.println("Workshop deleted successfully!");
+        return false;
     }
 
     @Override

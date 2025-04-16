@@ -17,7 +17,7 @@ public class ServiceReclamation implements CRUD<Reclamation> {
     }
 
     @Override
-    public void insert(Reclamation r) throws SQLException {
+    public boolean insert(Reclamation r) throws SQLException {
         String sql = "INSERT INTO reclamation (titre, description, status, date_soumission, user_id) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement pst = cnx.prepareStatement(sql);
         pst.setString(1, r.getTitre());
@@ -27,10 +27,11 @@ public class ServiceReclamation implements CRUD<Reclamation> {
         pst.setInt(5, r.getUser().getId());
         pst.executeUpdate();
         System.out.println("Reclamation inserted successfully!");
+        return false;
     }
 
     @Override
-    public void update(Reclamation r) throws SQLException {
+    public boolean update(Reclamation r) throws SQLException {
         String sql = "UPDATE reclamation SET titre = ?, description = ?, status = ?, date_soumission = ?, user_id = ? WHERE id = ?";
         PreparedStatement pst = cnx.prepareStatement(sql);
         pst.setString(1, r.getTitre());
@@ -41,15 +42,17 @@ public class ServiceReclamation implements CRUD<Reclamation> {
         pst.setInt(6, r.getId());
         pst.executeUpdate();
         System.out.println("Reclamation updated successfully!");
+        return false;
     }
 
     @Override
-    public void delete(Reclamation r) throws SQLException {
+    public boolean delete(Reclamation r) throws SQLException {
         String sql = "DELETE FROM reclamation WHERE id = ?";
         PreparedStatement pst = cnx.prepareStatement(sql);
         pst.setInt(1, r.getId());
         pst.executeUpdate();
         System.out.println("Reclamation deleted successfully!");
+        return false;
     }
 
     @Override

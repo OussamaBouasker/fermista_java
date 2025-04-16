@@ -15,7 +15,7 @@ public class ServiceVache implements CRUD<Vache> {
         cnx = MyDbConnexion.getInstance().getCnx();
     }
     @Override
-    public void insert(Vache vache) {
+    public boolean insert(Vache vache) {
         String req = "INSERT INTO vache (age, race, etat_medical, name, collier_id) VALUES ('"
                 + vache.getAge() + "', '"
                 + vache.getRace() + "', '"
@@ -29,10 +29,11 @@ public class ServiceVache implements CRUD<Vache> {
         } catch (SQLException e) {
             System.out.println("Erreur lors de l'ajout : " + e.getMessage());
         }
+        return false;
     }
 
     @Override
-    public void update(Vache vache) {
+    public boolean update(Vache vache) {
         String req = "UPDATE vache SET age = '" + vache.getAge()
                 + "', race = '" + vache.getRace()
                 + "', etat_medical = '" + vache.getEtat_medical()
@@ -46,10 +47,11 @@ public class ServiceVache implements CRUD<Vache> {
         } catch (SQLException e) {
             System.out.println("Erreur lors de la modification : " + e.getMessage());
         }
+        return false;
     }
 
     @Override
-    public void delete(Vache vache) {
+    public boolean delete(Vache vache) {
         // Optionnellement, supprimer le collier associé avant la vache
         if (vache.getCollier() != null) {
             String deleteCollier = "DELETE FROM collier WHERE id = " + vache.getCollier().getId();
@@ -69,6 +71,7 @@ public class ServiceVache implements CRUD<Vache> {
         } catch (SQLException e) {
             System.out.println("Erreur lors de la suppression : " + e.getMessage());
         }
+        return false;
     }
 
     @Override

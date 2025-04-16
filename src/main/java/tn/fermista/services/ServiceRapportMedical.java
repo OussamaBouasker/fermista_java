@@ -19,7 +19,7 @@ public class ServiceRapportMedical implements CRUD<RapportMedical> {
     }
 
     @Override
-    public void insert(RapportMedical rapportMedical) throws SQLException {
+    public boolean insert(RapportMedical rapportMedical) throws SQLException {
         String req = "INSERT INTO rapport_medical ( num, race, historique_de_maladie, cas_medical, solution) VALUES ?, ?, ?, ?, ?)";
         PreparedStatement ps = cnx.prepareStatement(req);
         ps.setInt(2, rapportMedical.getNum());
@@ -28,10 +28,11 @@ public class ServiceRapportMedical implements CRUD<RapportMedical> {
         ps.setString(5, rapportMedical.getCasMedical());
         ps.setString(6, rapportMedical.getSolution());
         ps.executeUpdate();
+        return false;
     }
 
     @Override
-    public void update(RapportMedical rapportMedical) throws SQLException {
+    public boolean update(RapportMedical rapportMedical) throws SQLException {
         String req = "UPDATE rapport_medical SET num = ?, race = ?, historique_de_maladie = ?, cas_medical = ?, solution = ? WHERE id = ?";
         PreparedStatement ps = cnx.prepareStatement(req);
         ps.setInt(1, rapportMedical.getNum());
@@ -41,14 +42,16 @@ public class ServiceRapportMedical implements CRUD<RapportMedical> {
         ps.setString(5, rapportMedical.getSolution());
         ps.setInt(6, rapportMedical.getId());
         ps.executeUpdate();
+        return false;
     }
 
     @Override
-    public void delete(RapportMedical rapportMedical) throws SQLException {
+    public boolean delete(RapportMedical rapportMedical) throws SQLException {
         String req = "DELETE FROM rapport_medical WHERE id = ?";
         PreparedStatement ps = cnx.prepareStatement(req);
         ps.setInt(1, rapportMedical.getId());
         ps.executeUpdate();
+        return false;
     }
 
     @Override

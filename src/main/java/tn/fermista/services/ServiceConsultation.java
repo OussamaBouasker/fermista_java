@@ -18,7 +18,7 @@ public class ServiceConsultation implements CRUD<Consultation> {
     }
 
     @Override
-    public void insert(Consultation consultation) throws SQLException {
+    public boolean insert(Consultation consultation) throws SQLException {
         String req = "INSERT INTO consultation (id, rapportmedical_id, vache_id, nom, date, heure, lieu) VALUES (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = cnx.prepareStatement(req);
         ps.setInt(1, consultation.getId());
@@ -29,10 +29,11 @@ public class ServiceConsultation implements CRUD<Consultation> {
         ps.setTime(6, consultation.getHeure());
         ps.setString(7, consultation.getLieu());
         ps.executeUpdate();
+        return false;
     }
 
     @Override
-    public void update(Consultation consultation) throws SQLException {
+    public boolean update(Consultation consultation) throws SQLException {
         String req = "UPDATE consultation SET rapportmedical_id = ?, vache_id = ?, nom = ?, date = ?, heure = ?, lieu = ? WHERE id = ?";
         PreparedStatement ps = cnx.prepareStatement(req);
         ps.setInt(1, consultation.getRapportMedical().getId());
@@ -43,14 +44,16 @@ public class ServiceConsultation implements CRUD<Consultation> {
         ps.setString(6, consultation.getLieu());
         ps.setInt(7, consultation.getId());
         ps.executeUpdate();
+        return false;
     }
 
     @Override
-    public void delete(Consultation consultation) throws SQLException {
+    public boolean delete(Consultation consultation) throws SQLException {
         String req = "DELETE FROM consultation WHERE id = ?";
         PreparedStatement ps = cnx.prepareStatement(req);
         ps.setInt(1, consultation.getId());
         ps.executeUpdate();
+        return false;
     }
 
     @Override

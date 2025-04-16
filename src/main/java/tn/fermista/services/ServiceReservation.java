@@ -17,7 +17,7 @@ public class ServiceReservation implements CRUD<Reservation> {
     }
 
     @Override
-    public void insert(Reservation reservation) throws SQLException {
+    public boolean insert(Reservation reservation) throws SQLException {
         String sql = "INSERT INTO reservation (reservation_date, status, prix, commentaire, confirmation, workshop_id, email, num_tel, num_carte_bancaire, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement pst = cnx.prepareStatement(sql);
         pst.setTimestamp(1, reservation.getReservationDate() != null ? Timestamp.valueOf(reservation.getReservationDate()) : null);
@@ -32,10 +32,11 @@ public class ServiceReservation implements CRUD<Reservation> {
         pst.setInt(10, reservation.getUser() != null ? reservation.getUser().getId() : null);
         pst.executeUpdate();
         System.out.println("Reservation inserted successfully!");
+        return false;
     }
 
     @Override
-    public void update(Reservation reservation) throws SQLException {
+    public boolean update(Reservation reservation) throws SQLException {
         String sql = "UPDATE reservation SET reservation_date = ?, status = ?, prix = ?, commentaire = ?, confirmation = ?, workshop_id = ?, email = ?, num_tel = ?, num_carte_bancaire = ?, user_id = ? WHERE id = ?";
         PreparedStatement pst = cnx.prepareStatement(sql);
         pst.setTimestamp(1, reservation.getReservationDate() != null ? Timestamp.valueOf(reservation.getReservationDate()) : null);
@@ -51,15 +52,17 @@ public class ServiceReservation implements CRUD<Reservation> {
         pst.setInt(11, reservation.getId());
         pst.executeUpdate();
         System.out.println("Reservation updated successfully!");
+        return false;
     }
 
     @Override
-    public void delete(Reservation reservation) throws SQLException {
+    public boolean delete(Reservation reservation) throws SQLException {
         String sql = "DELETE FROM reservation WHERE id = ?";
         PreparedStatement pst = cnx.prepareStatement(sql);
         pst.setInt(1, reservation.getId());
         pst.executeUpdate();
         System.out.println("Reservation deleted successfully!");
+        return false;
     }
 
     @Override

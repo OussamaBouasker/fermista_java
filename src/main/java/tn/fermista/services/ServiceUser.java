@@ -16,7 +16,7 @@ public class ServiceUser implements CRUD<User> {
     }
 
     @Override
-    public void insert(User user) throws SQLException {
+    public boolean insert(User user) throws SQLException {
         String sql = "INSERT INTO user (email, password, first_name, last_name, number, state, is_verified, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement pst = cnx.prepareStatement(sql);
         pst.setString(1, user.getEmail());
@@ -29,10 +29,11 @@ public class ServiceUser implements CRUD<User> {
         pst.setString(8, user.getImage());
         pst.executeUpdate();
         System.out.println("User inserted successfully!");
+        return false;
     }
 
     @Override
-    public void update(User user) throws SQLException {
+    public boolean update(User user) throws SQLException {
         String sql = "UPDATE user SET email = ?, password = ?, first_name = ?, last_name = ?, number = ?, state = ?, is_verified = ?, image = ? WHERE id = ?";
         PreparedStatement pst = cnx.prepareStatement(sql);
         pst.setString(1, user.getEmail());
@@ -46,15 +47,17 @@ public class ServiceUser implements CRUD<User> {
         pst.setInt(9, user.getId());
         pst.executeUpdate();
         System.out.println("User updated successfully!");
+        return false;
     }
 
     @Override
-    public void delete(User user) throws SQLException {
+    public boolean delete(User user) throws SQLException {
         String sql = "DELETE FROM user WHERE id = ?";
         PreparedStatement pst = cnx.prepareStatement(sql);
         pst.setInt(1, user.getId());
         pst.executeUpdate();
         System.out.println("User deleted successfully!");
+        return false;
     }
 
 

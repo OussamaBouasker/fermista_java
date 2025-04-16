@@ -19,7 +19,7 @@ public class ServiceCollier implements CRUD<Collier> {
         cnx = MyDbConnexion.getInstance().getCnx();
     }
     @Override
-    public void insert(Collier collier) {
+    public boolean insert(Collier collier) {
         // Si une vache est associée, on ajoute l'ID de la vache dans la table collier
         String req = "INSERT INTO collier (vache_id,reference, taille, valeur_temperature, valeur_agitation) VALUES ('"
                 + collier.getReference() + "', '"
@@ -34,10 +34,11 @@ public class ServiceCollier implements CRUD<Collier> {
         } catch (SQLException e) {
             System.out.println("Erreur lors de l'ajout : " + e.getMessage());
         }
+        return false;
     }
 
     @Override
-    public void update(Collier collier) {
+    public boolean update(Collier collier) {
         // Mise à jour de la vache associée avec la clé étrangère
         String req = "UPDATE collier SET reference = '" + collier.getReference()
                 + "', taille = '" + collier.getTaille()
@@ -52,10 +53,11 @@ public class ServiceCollier implements CRUD<Collier> {
         } catch (SQLException e) {
             System.out.println("Erreur lors de la modification : " + e.getMessage());
         }
+        return false;
     }
 
     @Override
-    public void delete(Collier collier) {
+    public boolean delete(Collier collier) {
         String req = "DELETE FROM collier WHERE id = " + collier.getId();
         try {
             Statement st = cnx.createStatement();
@@ -64,6 +66,7 @@ public class ServiceCollier implements CRUD<Collier> {
         } catch (SQLException e) {
             System.out.println("Erreur lors de la suppression : " + e.getMessage());
         }
+        return false;
     }
 
     @Override

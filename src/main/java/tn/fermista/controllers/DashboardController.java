@@ -3,7 +3,6 @@ package tn.fermista.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,6 +12,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
 import java.io.IOException;
 
 public class DashboardController {
@@ -90,11 +92,8 @@ public class DashboardController {
     void CrudTemplate(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/CrudTemplate.fxml"));
-            
-            // Créer et assigner le contrôleur
             ReclamationController reclamationController = new ReclamationController();
             loader.setController(reclamationController);
-            
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Liste des Réclamations");
@@ -104,5 +103,34 @@ public class DashboardController {
             e.printStackTrace();
             System.err.println("Erreur: " + e.getMessage());
         }
+    }
+
+    @FXML
+    void handleEcommerce() {
+        try {
+            // Charger la vue du shop
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ProductShopView.fxml"));
+            Parent root = loader.load();
+            
+            // Créer une nouvelle scène
+            Scene scene = new Scene(root);
+            
+            // Obtenir la fenêtre actuelle
+            Stage stage = (Stage) root.getScene().getWindow();
+            
+            // Changer la scène
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            showAlert("Erreur", "Impossible de charger la page du shop: " + e.getMessage());
+        }
+    }
+
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }

@@ -5,9 +5,9 @@ import java.util.List;
 
 public interface CRUD<T> {
 
-    void insert(T t) throws SQLException;
-    void update(T t)  throws SQLException;
-    void delete(T t) throws SQLException;
+    boolean insert(T t) throws SQLException;
+    boolean update(T t)  throws SQLException;
+    boolean delete(T t) throws SQLException;
     List<T> showAll() throws SQLException;
 
 }

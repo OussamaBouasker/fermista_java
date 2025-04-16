@@ -4,8 +4,6 @@ import tn.fermista.models.Agriculteur;
 import tn.fermista.models.RendezVous;
 import tn.fermista.models.Veterinaire;
 import tn.fermista.utils.MyDbConnexion;
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -20,7 +18,7 @@ public class ServiceRendezVous implements CRUD<RendezVous> {
     }
 
     @Override
-    public void insert(RendezVous rendezVous) throws SQLException {
+    public boolean insert(RendezVous rendezVous) throws SQLException {
         String req = "INSERT INTO rendezvous (date, heure, sex, cause, veterinaire_id, agriculteur_id, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pst = cnx.prepareStatement(req)) {
             pst.setDate(1, new java.sql.Date(rendezVous.getDate().getTime()));
@@ -32,10 +30,11 @@ public class ServiceRendezVous implements CRUD<RendezVous> {
             pst.setString(7, rendezVous.getStatus());
             pst.executeUpdate();
         }
+        return false;
     }
 
     @Override
-    public void update(RendezVous rendezVous) throws SQLException {
+    public boolean update(RendezVous rendezVous) throws SQLException {
         String req = "UPDATE rendezvous SET date = ?, heure = ?, sex = ?, cause = ?, veterinaire_id = ?, agriculteur_id = ?, status = ? WHERE id = ?";
         try (PreparedStatement pst = cnx.prepareStatement(req)) {
             pst.setDate(1, new java.sql.Date(rendezVous.getDate().getTime()));
@@ -48,15 +47,17 @@ public class ServiceRendezVous implements CRUD<RendezVous> {
             pst.setInt(8, rendezVous.getId());
             pst.executeUpdate();
         }
+        return false;
     }
 
     @Override
-    public void delete(RendezVous rendezVous) throws SQLException {
+    public boolean delete(RendezVous rendezVous) throws SQLException {
         String req = "DELETE FROM rendezvous WHERE id = ?";
         try (PreparedStatement pst = cnx.prepareStatement(req)) {
             pst.setInt(1, rendezVous.getId());
             pst.executeUpdate();
         }
+        return false;
     }
 
     @Override
