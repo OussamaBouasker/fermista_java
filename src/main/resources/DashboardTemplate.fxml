@@ -58,7 +58,7 @@
                                     <Image url="@images/images-removebg-preview.png" />
                                 </image>
                             </ImageView>
-                            <Button fx:id="btn_workbench111" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="Contrôle médical" textFill="WHITE">
+                            <Button fx:id="btn_workbench111" mnemonicParsing="false" onAction="#ControlMedicalShow" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="Contrôle médical" textFill="WHITE">
                                 <font>
                                     <Font name="Century Gothic Bold" size="13.0" />
                                 </font>

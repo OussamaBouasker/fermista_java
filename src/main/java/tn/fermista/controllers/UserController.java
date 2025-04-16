@@ -98,7 +98,7 @@ public class UserController implements Initializable {
 
         // Setup search functionality
         setupSearch();
-        
+
         // Setup navigation
         if (btn_workbench113 != null) {
             btn_workbench113.setOnAction(event -> navigateToCrudReclamation());
@@ -107,7 +107,7 @@ public class UserController implements Initializable {
             btn_workbench114.setOnAction(event -> navigateToDashboard());
         }
     }
-    
+
     private void navigateToCrudReclamation() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/CrudReclamation.fxml"));
@@ -139,8 +139,8 @@ public class UserController implements Initializable {
             @Override
             public TableCell<User, Void> call(final TableColumn<User, Void> param) {
                 return new TableCell<User, Void>() {
-                    private final Button updateButton = new Button("Modifier");
-                    private final Button deleteButton = new Button("Supprimer");
+                    private final Button updateButton = new Button("Update");
+                    private final Button deleteButton = new Button("Delete");
                     private final HBox buttons = new HBox(5, updateButton, deleteButton);
 
                     {
@@ -199,14 +199,7 @@ public class UserController implements Initializable {
         try {
             // Check if email already exists
             if (emailExists(user.getEmail())) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Email existant");
-                alert.setHeaderText(null);
-                alert.setContentText("Cet email existe déjà. Veuillez utiliser une autre adresse email.");
-                alert.showAndWait();
-                
-                // Reopen the form
-                showUserFormPopup(user, false);
+                showAlert("Erreur", "Cet email existe déjà. Veuillez utiliser une autre adresse email.");
                 return;
             }
 
@@ -237,10 +230,10 @@ public class UserController implements Initializable {
     private boolean emailExists(String email) {
         // Check in all user types
         return !serviceAdmin.rechercher().stream().filter(u -> u.getEmail().equals(email)).findFirst().isEmpty() ||
-               !serviceAgriculteur.rechercher().stream().filter(u -> u.getEmail().equals(email)).findFirst().isEmpty() ||
-               !serviceClient.rechercher().stream().filter(u -> u.getEmail().equals(email)).findFirst().isEmpty() ||
-               !serviceVeterinaire.rechercher().stream().filter(u -> u.getEmail().equals(email)).findFirst().isEmpty() ||
-               !serviceFormateur.rechercher().stream().filter(u -> u.getEmail().equals(email)).findFirst().isEmpty();
+                !serviceAgriculteur.rechercher().stream().filter(u -> u.getEmail().equals(email)).findFirst().isEmpty() ||
+                !serviceClient.rechercher().stream().filter(u -> u.getEmail().equals(email)).findFirst().isEmpty() ||
+                !serviceVeterinaire.rechercher().stream().filter(u -> u.getEmail().equals(email)).findFirst().isEmpty() ||
+                !serviceFormateur.rechercher().stream().filter(u -> u.getEmail().equals(email)).findFirst().isEmpty();
     }
 
     public void updateUser(User user) {

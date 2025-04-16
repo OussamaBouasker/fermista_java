@@ -7,16 +7,19 @@
     public class RendezVous {
 
         private Integer id;
+        private Veterinaire veterinaire;
+        private Agriculteur agriculteur;
         private Date date;  // Utiliser java.sql.Date, mais si vous pouvez, remplacez-le par java.time.LocalDate
         private Time heure; // Utiliser java.sql.Time, mais préférer LocalTime
         private String sex;
         private String cause;
+        private String status = "en attente";
 
         // Relations
-        private Veterinaire veterinaire;
-        private Agriculteur agriculteur;
 
-        private String status = "en attente";
+
+
+
 
         // Constructeurs
         public RendezVous() {}
@@ -29,6 +32,16 @@
             this.cause = cause;
             this.veterinaire = veterinaire;
             this.agriculteur = agriculteur;
+            this.status = status;
+        }
+
+        public RendezVous(Veterinaire veterinaire, Agriculteur agriculteur, Date date, Time heure, String sex, String cause, String status) {
+            this.veterinaire = veterinaire;
+            this.agriculteur = agriculteur;
+            this.date = date;
+            this.heure = heure;
+            this.sex = sex;
+            this.cause = cause;
             this.status = status;
         }
 

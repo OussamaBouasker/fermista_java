@@ -7,7 +7,7 @@ import java.util.Objects;
 public class Vache {
     private int id,age;
     private String name,race,etat_medical;
-    private Collier collier;
+
     private List<Consultation> consultations = new ArrayList<>();
 
     public List<Consultation> getConsultations() {
@@ -20,6 +20,10 @@ public class Vache {
     // Constructors
 
     public Vache() {}
+
+    public Vache(int id) {
+        this.id = id;
+    }
 
     //chaima
     public Vache(int id, String name) {
@@ -78,13 +82,7 @@ public class Vache {
         this.etat_medical = etat_medical;
     }
 
-    public Collier getCollier() {
-        return collier;
-    }
 
-    public void setCollier(Collier collier) {
-        this.collier = collier;
-    }
 
     // Equals & HashCode
 
@@ -94,12 +92,12 @@ public class Vache {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Vache vache = (Vache) o;
-        return id == vache.id && age == vache.age && Objects.equals(name, vache.name) && Objects.equals(race, vache.race) && Objects.equals(etat_medical, vache.etat_medical) && Objects.equals(collier, vache.collier) && Objects.equals(consultations, vache.consultations);
+        return id == vache.id && age == vache.age && Objects.equals(name, vache.name) && Objects.equals(race, vache.race) && Objects.equals(etat_medical, vache.etat_medical) && Objects.equals(consultations, vache.consultations);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, age, name, race, etat_medical, collier, consultations);
+        return Objects.hash(id, age, name, race, etat_medical,  consultations);
     }
 
     @Override
@@ -110,7 +108,6 @@ public class Vache {
                 ", name='" + name + '\'' +
                 ", race='" + race + '\'' +
                 ", etat_medical='" + etat_medical + '\'' +
-                ", collier=" + collier +
                 ", consultations=" + consultations +
                 '}';
     }

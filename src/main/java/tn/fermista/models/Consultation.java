@@ -23,6 +23,18 @@ public class Consultation {
         this.lieu = lieu;
     }
 
+    public Consultation(RapportMedical rapportMedical, Vache vache, String nom, Date date, Time heure, String lieu) {
+        this.rapportMedical = rapportMedical;
+        this.vache = vache;
+        this.nom = nom;
+        this.date = date;
+        this.heure = heure;
+        this.lieu = lieu;
+    }
+
+    public Consultation() {
+    }
+
     public int getId() {
         return id;
     }
