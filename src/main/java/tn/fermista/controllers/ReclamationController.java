@@ -191,8 +191,8 @@ public class ReclamationController implements Initializable {
             @Override
             public TableCell<Reclamation, Integer> call(TableColumn<Reclamation, Integer> param) {
                 return new TableCell<>() {
-                    private final Button updateButton = new Button("Update");
-                    private final Button deleteButton = new Button("Delete");
+                    private final Button updateButton = new Button("Modifier");
+                    private final Button deleteButton = new Button("Supprimer");
 
                     {
                         updateButton.getStyleClass().add("btn-update");

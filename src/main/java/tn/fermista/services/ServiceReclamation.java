@@ -80,4 +80,16 @@ public class ServiceReclamation implements CRUD<Reclamation> {
 
         return list;
     }
+
+    public int countReclamationsByStatus(String status) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM reclamation WHERE status = ?";
+        PreparedStatement pst = cnx.prepareStatement(sql);
+        pst.setString(1, status);
+        ResultSet rs = pst.executeQuery();
+        
+        if (rs.next()) {
+            return rs.getInt(1);
+        }
+        return 0;
+    }
 }

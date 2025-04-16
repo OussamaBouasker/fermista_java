@@ -160,8 +160,8 @@
 .btn-primary2 {
     -fx-background-color: #639834;
     -fx-text-fill: #ffffff;
-    -fx-font-size: 14px;
-    -fx-padding: 8px 16px;
+    -fx-padding: 5 10;
+    -fx-min-width: 80;
     -fx-background-radius: 4px;
 }
 .btn-primary:hover {
@@ -174,29 +174,29 @@
 .btn-danger {
     -fx-background-color: #f44336;
     -fx-text-fill: white;
-    -fx-padding: 5 15;
-    -fx-min-width: 100;
+    -fx-padding: 5 10;
+    -fx-min-width: 80;
 }
 
 .btn-update {
     -fx-background-color: #639834;
     -fx-text-fill: white;
-    -fx-padding: 5 15;
+    -fx-padding: 5 10;
     -fx-min-width: 80;
 }
 
 .btn-delete {
     -fx-background-color: #f44336;
     -fx-text-fill: white;
-    -fx-padding: 5 15;
+    -fx-padding: 5 10;
     -fx-min-width: 80;
 }
 
 .btn-success {
     -fx-background-color: #639834;
     -fx-text-fill: white;
-    -fx-font-size: 12px;
-    -fx-padding: 5px 10px;
+    -fx-padding: 5 10;
+    -fx-min-width: 80;
     -fx-cursor: hand;
 }
 
@@ -207,8 +207,8 @@
 .btn-danger {
     -fx-background-color: #f44336;
     -fx-text-fill: white;
-    -fx-font-size: 12px;
-    -fx-padding: 9px 15px;
+    -fx-padding: 5 10;
+    -fx-min-width: 80;
     -fx-cursor: hand;
 }
 

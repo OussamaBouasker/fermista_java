@@ -139,8 +139,8 @@ public class UserController implements Initializable {
             @Override
             public TableCell<User, Void> call(final TableColumn<User, Void> param) {
                 return new TableCell<User, Void>() {
-                    private final Button updateButton = new Button("Update");
-                    private final Button deleteButton = new Button("Delete");
+                    private final Button updateButton = new Button("Modifier");
+                    private final Button deleteButton = new Button("Supprimer");
                     private final HBox buttons = new HBox(5, updateButton, deleteButton);
 
                     {
@@ -196,24 +196,51 @@ public class UserController implements Initializable {
     }
 
     public void addUser(User user) {
-        switch (user.getRoles().toString()) {
-            case "ROLE_ADMIN":
-                serviceAdmin.ajouter((Admin) user);
-                break;
-            case "ROLE_AGRICULTOR":
-                serviceAgriculteur.ajouter((Agriculteur) user);
-                break;
-            case "ROLE_CLIENT":
-                serviceClient.ajouter((Client) user);
-                break;
-            case "ROLE_VETERINAIR":
-                serviceVeterinaire.ajouter((Veterinaire) user);
-                break;
-            case "ROLE_FORMATEUR":
-                serviceFormateur.ajouter((Formateur) user);
-                break;
+        try {
+            // Check if email already exists
+            if (emailExists(user.getEmail())) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Email existant");
+                alert.setHeaderText(null);
+                alert.setContentText("Cet email existe déjà. Veuillez utiliser une autre adresse email.");
+                alert.showAndWait();
+                
+                // Reopen the form
+                showUserFormPopup(user, false);
+                return;
+            }
+
+            // If email doesn't exist, proceed with adding the user
+            switch (user.getRoles().toString()) {
+                case "ROLE_ADMIN":
+                    serviceAdmin.ajouter((Admin) user);
+                    break;
+                case "ROLE_AGRICULTOR":
+                    serviceAgriculteur.ajouter((Agriculteur) user);
+                    break;
+                case "ROLE_CLIENT":
+                    serviceClient.ajouter((Client) user);
+                    break;
+                case "ROLE_VETERINAIR":
+                    serviceVeterinaire.ajouter((Veterinaire) user);
+                    break;
+                case "ROLE_FORMATEUR":
+                    serviceFormateur.ajouter((Formateur) user);
+                    break;
+            }
+            loadUserData();
+        } catch (Exception e) {
+            showAlert("Erreur", "Une erreur est survenue lors de l'ajout de l'utilisateur: " + e.getMessage());
         }
-        loadUserData();
+    }
+
+    private boolean emailExists(String email) {
+        // Check in all user types
+        return !serviceAdmin.rechercher().stream().filter(u -> u.getEmail().equals(email)).findFirst().isEmpty() ||
+               !serviceAgriculteur.rechercher().stream().filter(u -> u.getEmail().equals(email)).findFirst().isEmpty() ||
+               !serviceClient.rechercher().stream().filter(u -> u.getEmail().equals(email)).findFirst().isEmpty() ||
+               !serviceVeterinaire.rechercher().stream().filter(u -> u.getEmail().equals(email)).findFirst().isEmpty() ||
+               !serviceFormateur.rechercher().stream().filter(u -> u.getEmail().equals(email)).findFirst().isEmpty();
     }
 
     public void updateUser(User user) {
