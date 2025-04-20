@@ -3,6 +3,7 @@ package tn.fermista.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;  // Add this import
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import tn.fermista.models.*;
@@ -22,6 +23,8 @@ public class UserFormPopupController {
     private TextField txt_number;
     @FXML
     private ComboBox<String> roleComboBox;
+    @FXML
+    private Label formTitle; // Add this field
 
     private User user;
     private boolean isUpdate;
@@ -37,6 +40,9 @@ public class UserFormPopupController {
         this.user = user;
         this.isUpdate = isUpdate;
         this.parentController = parentController;
+
+        // Update form title based on operation
+        formTitle.setText(isUpdate ? "Modification d'un utilisateur" : "Ajout d'un utilisateur");
 
         if (user != null) {
             txt_email.setText(user.getEmail());
