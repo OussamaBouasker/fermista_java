@@ -3,6 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
 
 <AnchorPane fx:id="root" prefHeight="600.0" prefWidth="500.0" stylesheets="@style.css"
             xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
@@ -11,7 +12,7 @@
         <VBox spacing="15" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="20">
             <children>
                 <Label text="Ajouter un Workshop" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
-                
+
                 <TextField fx:id="titreField" promptText="Titre"/>
                 <TextArea fx:id="descriptionField" promptText="Description" prefHeight="100"/>
                 <DatePicker fx:id="dateField" promptText="Date"/>
@@ -25,7 +26,7 @@
                 <TextField fx:id="imageField" promptText="Image URL"/>
                 <TextField fx:id="meetlinkField" promptText="Meet Link"/>
                 <TextField fx:id="keywordsField" promptText="Keywords"/>
-                
+
                 <HBox spacing="10">
                     <children>
                         <Button fx:id="saveButton" text="Enregistrer" onAction="#handleSave" styleClass="button-primary"/>

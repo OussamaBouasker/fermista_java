@@ -14,17 +14,27 @@ public class Produit {
         // constructeur vide
     }
 
+    public Produit(int id, String nom, String description, String image, double prix, String categorie, String etat) {
+        this.id = id;
+        this.nom = nom;
+        this.description = description;
+        this.image = image;
+        this.Prix = (int) prix;
+        this.Categorie = categorie;
+        this.etat = etat;
+        this.commande_id = null;
+    }
+
     public Produit(int id, String nom, String description, String image, int prix, String categorie, String etat, Commande commande_id) {
         this.id = id;
         this.nom = nom;
         this.description = description;
         this.image = image;
-        Prix = prix;
-        Categorie = categorie;
+        this.Prix = prix;
+        this.Categorie = categorie;
         this.etat = etat;
         this.commande_id = commande_id;
     }
-
 
     public int getId() {
         return id;

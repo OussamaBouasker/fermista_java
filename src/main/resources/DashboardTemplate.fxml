@@ -14,6 +14,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<!-- Add these fx:ids to your root HBox and first VBox -->
+
 <HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="930.0" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.fermista.controllers.NavigationController">    <children>
     <VBox prefHeight="680.0" prefWidth="205.0">
         <children>
@@ -44,7 +46,7 @@
                                     <Image url="@images/user-removebg-preview (2).png" />
                                 </image>
                             </ImageView>
-                            <Button fx:id="btn_workbench11" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="Gestion User" textFill="WHITE">
+                            <Button fx:id="btn_workbench11" mnemonicParsing="false" onAction="#CrudUser" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="Gestion User" textFill="WHITE">
                                 <font>
                                     <Font name="Century Gothic Bold" size="15.0" />
                                 </font>
@@ -67,9 +69,9 @@
                     </ButtonBar>
                     <ButtonBar layoutX="10.0" layoutY="357.0" prefHeight="40.0" prefWidth="200.0">
                         <buttons>
-                            <ImageView fitHeight="33.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                            <ImageView fitHeight="34.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                                 <image>
-                                    <Image url="@images/event1-removebg-preview.png" />
+                                    <Image url="@images/workshop.png" />
                                 </image>
                             </ImageView>
                             <Button fx:id="btn_workbench112" mnemonicParsing="false" onAction="#ShowWorkshops" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="Gestion Workshops" textFill="WHITE">
@@ -86,7 +88,7 @@
                                     <Image url="@images/dashboard.png" />
                                 </image>
                             </ImageView>
-                            <Button fx:id="btn_workbench1121" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="Suivis médical" textFill="WHITE">
+                            <Button fx:id="btn_workbench1121" mnemonicParsing="false" onAction="#choixvachecollier" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="Suivis médical" textFill="WHITE">
                                 <font>
                                     <Font name="Century Gothic Bold" size="15.0" />
                                 </font>
@@ -100,7 +102,7 @@
                                     <Image url="@images/images__1_-removebg-preview.png" />
                                 </image>
                             </ImageView>
-                            <Button fx:id="btn_workbench11211" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="E-commerce" textFill="WHITE">
+                            <Button fx:id="btn_workbench11211" mnemonicParsing="false" onAction="#CrudProduit" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="E-commerce" textFill="WHITE">
                                 <font>
                                     <Font name="Century Gothic Bold" size="15.0" />
                                 </font>
@@ -114,7 +116,7 @@
                                     <Image url="@images/rec-removebg-preview.png" />
                                 </image>
                             </ImageView>
-                            <Button fx:id="btn_workbench113" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="Reclamations" textFill="WHITE">
+                            <Button fx:id="btn_workbench113" mnemonicParsing="false" onAction="#CrudReclamation" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="Reclamations" textFill="WHITE">
                                 <font>
                                     <Font name="Century Gothic Bold" size="15.0" />
                                 </font>
@@ -128,7 +130,7 @@
                               <Image url="@images/home-removebg-preview (1).png" />
                            </image>
                         </ImageView>
-                        <Button fx:id="btn_workbench114" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="home" textFill="WHITE">
+                        <Button fx:id="btn_workbench114" mnemonicParsing="false" onAction="#DashboardTemplate" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="home" textFill="WHITE">
                            <font>
                               <Font name="Century Gothic Bold" size="16.0" />
                            </font>

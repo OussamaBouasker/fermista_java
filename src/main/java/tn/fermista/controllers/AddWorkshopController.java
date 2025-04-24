@@ -5,12 +5,16 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import tn.fermista.models.Workshop;
 import tn.fermista.models.Formateur;
 import tn.fermista.services.ServiceWorkshop;
 import tn.fermista.services.ServiceFormateur;
 
+import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -45,11 +49,11 @@ public class AddWorkshopController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         serviceWorkshop = new ServiceWorkshop();
         serviceFormateur = new ServiceFormateur();
-        
+
         // Initialize the type combo box
         typeComboBox.getItems().addAll(
-            Workshop.TYPE_LIVE_WORKSHOP,
-            Workshop.TYPE_SELF_PACED_WORKSHOP
+                Workshop.TYPE_LIVE_WORKSHOP,
+                Workshop.TYPE_SELF_PACED_WORKSHOP
         );
 
         // Load formateurs into the combo box
@@ -71,7 +75,7 @@ public class AddWorkshopController implements Initializable {
     public void setWorkshopForEdit(Workshop workshop) {
         this.workshopToEdit = workshop;
         this.isEditMode = true;
-        
+
         // Populate the form with workshop data
         titreField.setText(workshop.getTitre());
         descriptionField.setText(workshop.getDescription());
@@ -110,22 +114,22 @@ public class AddWorkshopController implements Initializable {
             Workshop workshop = isEditMode ? workshopToEdit : new Workshop();
             workshop.setTitre(titreField.getText());
             workshop.setDescription(descriptionField.getText());
-            
+
             // Combine date and time
             LocalDate date = dateField.getValue();
             LocalTime time = LocalTime.parse(timeField.getText(), DateTimeFormatter.ofPattern("HH:mm"));
             workshop.setDate(LocalDateTime.of(date, time));
-            
+
             workshop.setPrix(prixField.getText());
             workshop.setTheme(themeField.getText());
             workshop.setDuration(LocalTime.parse(durationField.getText(), DateTimeFormatter.ofPattern("HH:mm")));
             workshop.setNbrPlacesMax(Integer.parseInt(nbrPlacesMaxField.getText()));
-            
+
             // Only update nbrPlacesRestantes if it's a new workshop
             if (!isEditMode) {
                 workshop.setNbrPlacesRestantes(Integer.parseInt(nbrPlacesMaxField.getText()));
             }
-            
+
             workshop.setType(typeComboBox.getValue());
             workshop.setImage(imageField.getText());
             workshop.setMeetlink(meetlinkField.getText());
@@ -145,15 +149,15 @@ public class AddWorkshopController implements Initializable {
                 serviceWorkshop.insert(workshop);
                 showAlert(Alert.AlertType.INFORMATION, "Succès", "Workshop ajouté avec succès!");
             }
-            
+
             // Refresh the parent table
             if (parentController != null) {
                 parentController.refreshTable();
             }
-            
+
             // Close the form
             closeForm();
-            
+
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors de l'opération: " + e.getMessage());
             e.printStackTrace();
@@ -180,7 +184,7 @@ public class AddWorkshopController implements Initializable {
         if (durationField.getText().isEmpty()) errors.append("La durée est requise\n");
         if (nbrPlacesMaxField.getText().isEmpty()) errors.append("Le nombre de places est requis\n");
         if (typeComboBox.getValue() == null) errors.append("Le type est requis\n");
-        
+
         // Validate formateur selection for live workshops
         if (Workshop.TYPE_LIVE_WORKSHOP.equals(typeComboBox.getValue()) && formateurComboBox.getValue() == null) {
             errors.append("Le formateur est requis pour un atelier live\n");
@@ -198,7 +202,7 @@ public class AddWorkshopController implements Initializable {
         try {
             ObservableList<Formateur> formateurs = FXCollections.observableArrayList(serviceFormateur.rechercher());
             formateurComboBox.setItems(formateurs);
-            
+
             // Set cell factory to display formateur name
             formateurComboBox.setCellFactory(param -> new ListCell<Formateur>() {
                 @Override
@@ -211,7 +215,7 @@ public class AddWorkshopController implements Initializable {
                     }
                 }
             });
-            
+
             // Set converter to display selected formateur name
             formateurComboBox.setConverter(new javafx.util.StringConverter<Formateur>() {
                 @Override

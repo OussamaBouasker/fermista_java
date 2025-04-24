@@ -4,9 +4,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -180,7 +182,12 @@ public class UserController implements Initializable {
             controller.setUser(user, isUpdate, this);
 
             Stage stage = new Stage();
-            stage.setTitle(isUpdate ? "Modifier un utilisateur" : "Ajouter un utilisateur");
+            // Set different titles based on the action
+            if (isUpdate) {
+                stage.setTitle("Modifier L'utilisateur");
+            } else {
+                stage.setTitle("Ajout d'un utilisateur");
+            }
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
@@ -377,5 +384,114 @@ public class UserController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+
+    public void CrudReclamation(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/CrudReclamation.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ShowWorkshops.fxml: " + e.getMessage());
+        }
+    }
+
+
+
+    public void ControlMedicalShow(javafx.event.ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ControlMedicalShow.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ControlMedicalShow.fxml: " + e.getMessage());
+        }
+    }
+
+    public void ShowReservations(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ShowReservations.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ShowReservations.fxml: " + e.getMessage());
+        }
+    }
+
+    public void ShowWorkshops(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ShowWorkshops.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ShowWorkshops.fxml: " + e.getMessage());
+        }
+    }
+
+
+
+    public void DashboardTemplate(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/DashboardTemplate.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ShowWorkshops.fxml: " + e.getMessage());
+        }
+    }
+
+    public void choixvachecollier(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/choixvachecollier.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ShowWorkshops.fxml: " + e.getMessage());
+        }
+    }
+
+    public void CrudProduit(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/CrudProduit.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ShowWorkshops.fxml: " + e.getMessage());
+        }
+    }
+
+    public void CrudUser(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/CrudUser.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ShowWorkshops.fxml: " + e.getMessage());
+        }
     }
 }

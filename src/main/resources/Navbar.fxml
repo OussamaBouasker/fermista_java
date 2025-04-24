@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="tn.fermista.controllers.NavbarController" stylesheets="@/styles/StyleNavbar.css">
+    <VBox spacing="20.0" alignment="CENTER" prefHeight="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+
+        <!-- Header Section: All elements in the same row -->
+        <HBox spacing="20.0" alignment="CENTER_LEFT" prefHeight="60.0" style="-fx-background-color: #f5f2ed;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <!-- Fermista text aligned to the left -->
+            <Text text="Fermista" styleClass="large-text" />
+
+            <!-- Spacer to push buttons to the right -->
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- Navigation Section -->
+            <HBox spacing="10.0" alignment="CENTER_LEFT">
+                <children>
+                    <Button text="Home" onAction="#handleHome"/>
+                    <Button text="Shop" onAction="#handleShop"/>
+                    <Button text="Collier" onAction="#handleCollier"/>
+
+
+
+                    <Button text="Workshops" onAction="#handleWorkshops"/>
+                    <Button text="Contrôle Médical" onAction="#handleControlMedical"/>
+                    <Button text="Rendez-vous" onAction="#handleRendezVous"/>
+                    <Button text="Liste des Rendez-vous" onAction="#handleListeRendezVous"/> <!-- New button -->
+                    <Button text="Produits" onAction="#handleProduits"/>
+
+                    <MenuButton text="Suivis Médical">
+                        <items>
+                            <MenuItem text="Mes Vaches" onAction="#handleMesVaches"/>
+                            <MenuItem text="Mes Colliers" onAction="#handleMesColliers"/>
+                        </items>
+                    </MenuButton>
+                </children>
+                <padding>
+                    <Insets top="5.0" right="5.0" bottom="5.0" left="5.0"/>
+                </padding>
+            </HBox>
+
+            <!-- User Icon Menu -->
+            <MenuButton fx:id="userMenu" graphicTextGap="10.0">
+                <graphic>
+                    <ImageView fitWidth="30.0" fitHeight="30.0">
+                        <image>
+                            <Image url="@/images/client.jpg"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+                <items>
+                    <MenuItem text="Se connecter" onAction="#handleLogin"/>
+                    <MenuItem text="Se déconnecter" onAction="#handleLogout"/>
+                    <MenuItem text="Réclamations" onAction="#handleReclamations"/>
+                </items>
+            </MenuButton>
+        </HBox>
+
+    </VBox>
+</AnchorPane>

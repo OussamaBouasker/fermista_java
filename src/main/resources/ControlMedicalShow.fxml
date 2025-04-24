@@ -19,16 +19,16 @@
     <children>
         <VBox prefHeight="680.0" prefWidth="205.0">
             <children>
-                <AnchorPane fx:id="side_ankerpane" prefHeight="680.0" prefWidth="253.0" styleClass="side_ankerpane" stylesheets="@StyleControlMedical.css">
+                <AnchorPane fx:id="side_ankerpane" prefHeight="680.0" prefWidth="253.0" styleClass="side_ankerpane" stylesheets="@style.css">
                     <children>
-                        <Pane fx:id="inner_pane" layoutX="17.0" layoutY="26.0" prefHeight="64.0" prefWidth="186.0" styleClass="inner_pane" stylesheets="@StyleControlMedical.css">
+                        <Pane fx:id="inner_pane" layoutX="17.0" layoutY="26.0" prefHeight="64.0" prefWidth="186.0" styleClass="inner_pane" stylesheets="@style.css">
                             <children>
-                                <ImageView fitHeight="60.0" fitWidth="61.0" layoutX="33.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fitHeight="64.0" fitWidth="60.0" layoutX="33.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@images/67c1111dd9ab1.png" />
                                     </image>
                                 </ImageView>
-                                <Pane fx:id="most_inner_pane" layoutX="126.0" layoutY="6.0" prefHeight="52.0" prefWidth="35.0" styleClass="most_inner_pane" stylesheets="@StyleControlMedical.css">
+                                <Pane fx:id="most_inner_pane" layoutX="126.0" layoutY="6.0" prefHeight="52.0" prefWidth="35.0" styleClass="most_inner_pane" stylesheets="@style.css">
                                     <children>
                                         <ImageView fitHeight="33.0" fitWidth="23.0" layoutX="6.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -46,79 +46,107 @@
                                         <Image url="@images/user-removebg-preview (2).png" />
                                     </image>
                                 </ImageView>
-                                <Button fx:id="btn_workbench11" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@StyleControlMedical.css" text="Gestion User" textFill="WHITE">
+                                <Button fx:id="btn_workbench11" mnemonicParsing="false" onAction="#CrudUser" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="Gestion User" textFill="WHITE">
                                     <font>
                                         <Font name="Century Gothic Bold" size="15.0" />
                                     </font>
                                 </Button>
                             </buttons>
                         </ButtonBar>
-                        <ButtonBar layoutX="9.0" layoutY="259.0" prefHeight="40.0" prefWidth="200.0">
+                        <ButtonBar layoutX="9.0" layoutY="300.0" prefHeight="40.0" prefWidth="200.0">
                             <buttons>
                                 <ImageView fitHeight="33.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@images/images-removebg-preview.png" />
                                     </image>
                                 </ImageView>
-                                <Button fx:id="btn_workbench111" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@StyleControlMedical.css" text="Contrôle médical" textFill="WHITE">
+                                <Button fx:id="btn_workbench111" mnemonicParsing="false" onAction="#ControlMedicalShow" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="Contrôle médical" textFill="WHITE">
                                     <font>
                                         <Font name="Century Gothic Bold" size="13.0" />
                                     </font>
                                 </Button>
                             </buttons>
                         </ButtonBar>
-                        <ButtonBar layoutX="10.0" layoutY="320.0" prefHeight="40.0" prefWidth="200.0">
+                        <ButtonBar layoutX="10.0" layoutY="357.0" prefHeight="40.0" prefWidth="200.0">
                             <buttons>
-                                <ImageView fitHeight="33.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fitHeight="34.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@images/event1-removebg-preview.png" />
+                                        <Image url="@images/workshop.png" />
                                     </image>
                                 </ImageView>
-                                <Button fx:id="btn_workbench112" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@StyleControlMedical.css" text="Gestion événements" textFill="WHITE">
+                                <Button fx:id="btn_workbench112" mnemonicParsing="false" onAction="#ShowWorkshops" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="Gestion Workshops" textFill="WHITE">
                                     <font>
                                         <Font name="Century Gothic Bold" size="13.0" />
                                     </font>
                                 </Button>
                             </buttons>
                         </ButtonBar>
-                        <ButtonBar layoutX="9.0" layoutY="462.0" prefHeight="40.0" prefWidth="200.0">
+                        <ButtonBar layoutX="8.0" layoutY="554.0" prefHeight="40.0" prefWidth="200.0">
                             <buttons>
                                 <ImageView fitHeight="35.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@images/dashboard.png" />
                                     </image>
                                 </ImageView>
-                                <Button fx:id="btn_workbench1121" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@StyleControlMedical.css" text="Suivis médical" textFill="WHITE">
+                                <Button fx:id="btn_workbench1121" mnemonicParsing="false" onAction="#choixvachecollier" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="Suivis médical" textFill="WHITE">
                                     <font>
                                         <Font name="Century Gothic Bold" size="15.0" />
                                     </font>
                                 </Button>
                             </buttons>
                         </ButtonBar>
-                        <ButtonBar layoutX="8.0" layoutY="378.0" prefHeight="40.0" prefWidth="200.0">
+                        <ButtonBar layoutY="492.0" prefHeight="40.0" prefWidth="200.0">
                             <buttons>
                                 <ImageView fitHeight="35.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@images/images__1_-removebg-preview.png" />
                                     </image>
                                 </ImageView>
-                                <Button fx:id="btn_workbench11211" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@StyleControlMedical.css" text="E-commerce" textFill="WHITE">
+                                <Button fx:id="btn_workbench11211" mnemonicParsing="false" onAction="#CrudProduit" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="E-commerce" textFill="WHITE">
                                     <font>
                                         <Font name="Century Gothic Bold" size="15.0" />
                                     </font>
                                 </Button>
                             </buttons>
                         </ButtonBar>
-                        <ButtonBar layoutX="14.0" layoutY="128.0" prefHeight="40.0" prefWidth="200.0">
+                        <ButtonBar layoutX="8.0" layoutY="241.0" prefHeight="40.0" prefWidth="200.0">
                             <buttons>
-                                <ImageView fitHeight="34.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fitHeight="45.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@images/rec-removebg-preview.png" />
+                                    </image>
+                                </ImageView>
+                                <Button fx:id="btn_workbench113" mnemonicParsing="false" onAction="#CrudReclamation" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="Reclamations" textFill="WHITE">
+                                    <font>
+                                        <Font name="Century Gothic Bold" size="15.0" />
+                                    </font>
+                                </Button>
+                            </buttons>
+                        </ButtonBar>
+                        <ButtonBar layoutX="8.0" layoutY="137.0" prefHeight="40.0" prefWidth="200.0">
+                            <buttons>
+                                <ImageView fitHeight="21.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@images/home-removebg-preview (1).png" />
                                     </image>
                                 </ImageView>
-                                <Button fx:id="btn_workbench113" mnemonicParsing="false" onAction="#DashboardTemplate" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@StyleControlMedical.css" text="Home" textFill="WHITE">
+                                <Button fx:id="btn_workbench114" mnemonicParsing="false" onAction="#DashboardTemplate" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="home" textFill="WHITE">
                                     <font>
-                                        <Font name="Century Gothic Bold" size="15.0" />
+                                        <Font name="Century Gothic Bold" size="16.0" />
+                                    </font>
+                                </Button>
+                            </buttons>
+                        </ButtonBar>
+                        <ButtonBar layoutX="12.0" layoutY="421.0" prefHeight="40.0" prefWidth="200.0">
+                            <buttons>
+                                <ImageView fitHeight="33.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@images/event1-removebg-preview.png" />
+                                    </image>
+                                </ImageView>
+                                <Button fx:id="btn_workbench1122" mnemonicParsing="false" onAction="#ShowReservations" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="Gestion Réservations" textFill="WHITE">
+                                    <font>
+                                        <Font name="Century Gothic Bold" size="13.0" />
                                     </font>
                                 </Button>
                             </buttons>

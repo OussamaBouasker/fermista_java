@@ -82,4 +82,8 @@ public class CommandeListViewController implements Initializable {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+
+
+
 } 

@@ -38,22 +38,34 @@ public class ServiceProduit implements CRUD2<Produit> {
 
     @Override
     public boolean update(Produit produit) throws SQLException {
-        String req = "UPDATE produit SET nom = ?, description = ?, image = ?, prix = ?, categorie = ?, etat = ?, commande_id = ? WHERE id = ?";
-        PreparedStatement ps = cnx.prepareStatement(req);
-        ps.setString(1, produit.getNom());
-        ps.setString(2, produit.getDescription());
-        ps.setString(3, produit.getImage());
-        ps.setInt(4, produit.getPrix());
-        ps.setString(5, produit.getCategorie());
-        ps.setString(6, produit.getEtat());
-        if (produit.getCommande_id() != null) {
-            ps.setInt(7, produit.getCommande_id().getId());
-        } else {
-            ps.setNull(7, Types.INTEGER);
+        String req = "UPDATE produit SET nom = ?, description = ?, image = ?, prix = ?, categorie = ?, etat = ? WHERE id = ?";
+        PreparedStatement ps = null;
+        try {
+            ps = cnx.prepareStatement(req);
+            ps.setString(1, produit.getNom());
+            ps.setString(2, produit.getDescription());
+            ps.setString(3, produit.getImage());
+            ps.setInt(4, produit.getPrix());
+            ps.setString(5, produit.getCategorie());
+            ps.setString(6, produit.getEtat());
+            ps.setInt(7, produit.getId());
+
+            System.out.println("Executing update for product ID: " + produit.getId());
+            System.out.println("SQL Query: " + req);
+
+            int rowsAffected = ps.executeUpdate();
+            System.out.println("Rows affected: " + rowsAffected);
+
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            System.err.println("Erreur SQL lors de la mise à jour: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
         }
-        ps.setInt(8, produit.getId());
-        ps.executeUpdate();
-        return false;
     }
 
     @Override
@@ -61,6 +73,14 @@ public class ServiceProduit implements CRUD2<Produit> {
         String req = "DELETE FROM produit WHERE id = ?";
         PreparedStatement ps = cnx.prepareStatement(req);
         ps.setInt(1, produit.getId());
+        ps.executeUpdate();
+        return false;
+    }
+
+    public boolean delete(int id) throws SQLException {
+        String req = "DELETE FROM produit WHERE id = ?";
+        PreparedStatement ps = cnx.prepareStatement(req);
+        ps.setInt(1, id);
         ps.executeUpdate();
         return false;
     }
@@ -94,5 +114,39 @@ public class ServiceProduit implements CRUD2<Produit> {
         }
 
         return list;
+    }
+
+    public Produit getById(int id) {
+        String query = "SELECT * FROM produit WHERE id = ?";
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            pst = cnx.prepareStatement(query);
+            pst.setInt(1, id);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                return new Produit(
+                        rs.getInt("id"),
+                        rs.getString("nom"),
+                        rs.getString("description"),
+                        rs.getString("image"),
+                        rs.getInt("prix"),
+                        rs.getString("categorie"),
+                        rs.getString("etat"),
+                        null
+                );
+            }
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la récupération du produit: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (pst != null) pst.close();
+            } catch (SQLException e) {
+                System.err.println("Erreur lors de la fermeture des ressources: " + e.getMessage());
+            }
+        }
+        return null;
     }
 }

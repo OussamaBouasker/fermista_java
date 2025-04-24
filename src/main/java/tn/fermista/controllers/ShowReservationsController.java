@@ -92,7 +92,7 @@ public class ShowReservationsController implements Initializable {
             }
         });
 
-        // Add search functionality
+        // Add search functionality with debounce
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             filterTable(newValue);
         });
@@ -169,8 +169,15 @@ public class ShowReservationsController implements Initializable {
             List<Reservation> allReservations = serviceReservation.showAll();
             List<Reservation> filteredReservations = new ArrayList<>();
 
+            if (searchText == null || searchText.isEmpty()) {
+                reservationTable.setItems(FXCollections.observableArrayList(allReservations));
+                return;
+            }
+
+            String searchLower = searchText.toLowerCase();
+            
             for (Reservation reservation : allReservations) {
-                if (matchesSearch(reservation, searchText.toLowerCase())) {
+                if (matchesSearch(reservation, searchLower)) {
                     filteredReservations.add(reservation);
                 }
             }
@@ -183,9 +190,13 @@ public class ShowReservationsController implements Initializable {
 
     private boolean matchesSearch(Reservation reservation, String searchText) {
         return String.valueOf(reservation.getId()).contains(searchText) ||
+               reservation.getReservationDate().toString().toLowerCase().contains(searchText) ||
+               reservation.getStatus().toLowerCase().contains(searchText) ||
+               String.valueOf(reservation.getPrix()).contains(searchText) ||
                reservation.getEmail().toLowerCase().contains(searchText) ||
                String.valueOf(reservation.getNumTel()).contains(searchText) ||
-               reservation.getStatus().toLowerCase().contains(searchText) ||
+               (reservation.getWorkshop() != null && 
+                reservation.getWorkshop().getTitre().toLowerCase().contains(searchText)) ||
                (reservation.getUser() != null &&
                 (reservation.getUser().getFirstName().toLowerCase().contains(searchText) ||
                  reservation.getUser().getLastName().toLowerCase().contains(searchText)));
@@ -211,18 +222,7 @@ public class ShowReservationsController implements Initializable {
         }
     }
 
-    public void CrudUser(ActionEvent actionEvent) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/CrudUser.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Erreur lors du chargement de ShowWorkshops.fxml: " + e.getMessage());
-        }
-    }
+
 
     public void ControlMedicalShow(ActionEvent actionEvent) {
         try {
@@ -237,6 +237,40 @@ public class ShowReservationsController implements Initializable {
         }
     }
 
+    public void CrudReclamation(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/CrudReclamation.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ShowWorkshops.fxml: " + e.getMessage());
+        }
+    }
+
+
+
+
+
+    public void ShowReservations(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ShowReservations.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ShowReservations.fxml: " + e.getMessage());
+        }
+    }
+
+
+
+
+
     public void DashboardTemplate(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/DashboardTemplate.fxml"));
@@ -250,9 +284,9 @@ public class ShowReservationsController implements Initializable {
         }
     }
 
-    public void ShowReservations(ActionEvent actionEvent) {
+    public void choixvachecollier(ActionEvent actionEvent) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ShowReservations.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/choixvachecollier.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -261,6 +295,34 @@ public class ShowReservationsController implements Initializable {
             e.printStackTrace();
             System.err.println("Erreur lors du chargement de ShowWorkshops.fxml: " + e.getMessage());
         }
-
     }
+
+    public void CrudProduit(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/CrudProduit.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ShowWorkshops.fxml: " + e.getMessage());
+        }
+    }
+
+    public void CrudUser(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/CrudUser.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ShowWorkshops.fxml: " + e.getMessage());
+        }
+    }
+
+
+
 }

@@ -2,9 +2,11 @@ package tn.fermista.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -20,6 +22,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -56,12 +60,12 @@ public class ShowWorkshopsController implements Initializable {
             typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
             placesColumn.setCellValueFactory(new PropertyValueFactory<>("nbrPlacesRestantes"));
             durationColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
-            
+
             formateurColumn.setCellValueFactory(cellData -> {
                 Workshop workshop = cellData.getValue();
                 if (workshop.getUser() != null) {
                     return javafx.beans.binding.Bindings.createStringBinding(
-                        () -> workshop.getUser().getFirstName() + " " + workshop.getUser().getLastName()
+                            () -> workshop.getUser().getFirstName() + " " + workshop.getUser().getLastName()
                     );
                 }
                 return javafx.beans.binding.Bindings.createStringBinding(() -> "");
@@ -76,7 +80,7 @@ public class ShowWorkshopsController implements Initializable {
                 {
                     editButton.getStyleClass().add("button-primary");
                     deleteButton.getStyleClass().add("button-danger");
-                    
+
                     editButton.setOnAction(event -> {
                         Workshop workshop = getTableView().getItems().get(getIndex());
                         handleEdit(workshop);
@@ -110,17 +114,17 @@ public class ShowWorkshopsController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddWorkshopForm.fxml"));
             Parent root = loader.load();
-            
+
             AddWorkshopController controller = loader.getController();
             controller.setParentController(this);
             controller.setWorkshopForEdit(workshop);
-            
+
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Modifier le Workshop");
             stage.setScene(new Scene(root));
             stage.show();
-            
+
         } catch (IOException e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors de l'ouverture du formulaire de modification");
@@ -151,16 +155,16 @@ public class ShowWorkshopsController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddWorkshopForm.fxml"));
             Parent root = loader.load();
-            
+
             AddWorkshopController controller = loader.getController();
             controller.setParentController(this);
-            
+
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Ajouter un Workshop");
             stage.setScene(new Scene(root));
             stage.show();
-            
+
         } catch (IOException e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors de l'ouverture du formulaire d'ajout");
@@ -187,5 +191,147 @@ public class ShowWorkshopsController implements Initializable {
         alert.setTitle(title);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    public void CrudReclamation(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/CrudReclamation.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ShowWorkshops.fxml: " + e.getMessage());
+        }
+    }
+
+    public void ControlMedicalShow(javafx.event.ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ControlMedicalShow.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ControlMedicalShow.fxml: " + e.getMessage());
+        }
+    }
+
+    public void ShowReservations(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ShowReservations.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ShowReservations.fxml: " + e.getMessage());
+        }
+    }
+
+    public void ShowWorkshops(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ShowWorkshops.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ShowWorkshops.fxml: " + e.getMessage());
+        }
+    }
+
+    public void DashboardTemplate(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/DashboardTemplate.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ShowWorkshops.fxml: " + e.getMessage());
+        }
+    }
+
+    public void choixvachecollier(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/choixvachecollier.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ShowWorkshops.fxml: " + e.getMessage());
+        }
+    }
+
+    public void CrudProduit(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/CrudProduit.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ShowWorkshops.fxml: " + e.getMessage());
+        }
+    }
+
+    public void CrudUser(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/CrudUser.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ShowWorkshops.fxml: " + e.getMessage());
+        }
+    }
+
+    private void filterTable(String searchText) {
+        try {
+            List<Workshop> allWorkshops = serviceWorkshop.showAll();
+            List<Workshop> filteredWorkshops = new ArrayList<>();
+
+            if (searchText == null || searchText.isEmpty()) {
+                workshopTable.setItems(FXCollections.observableArrayList(allWorkshops));
+                return;
+            }
+
+            String searchLower = searchText.toLowerCase();
+            
+            for (Workshop workshop : allWorkshops) {
+                if (matchesSearch(workshop, searchLower)) {
+                    filteredWorkshops.add(workshop);
+                }
+            }
+
+            workshopTable.setItems(FXCollections.observableArrayList(filteredWorkshops));
+        } catch (SQLException e) {
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors de la recherche: " + e.getMessage());
+        }
+    }
+
+    private boolean matchesSearch(Workshop workshop, String searchText) {
+        return String.valueOf(workshop.getId()).contains(searchText) ||
+               workshop.getTitre().toLowerCase().contains(searchText) ||
+               workshop.getDate().toString().toLowerCase().contains(searchText) ||
+               workshop.getPrix().toLowerCase().contains(searchText) ||
+               workshop.getTheme().toLowerCase().contains(searchText) ||
+               workshop.getType().toLowerCase().contains(searchText) ||
+               String.valueOf(workshop.getNbrPlacesRestantes()).contains(searchText) ||
+               workshop.getDuration().toString().toLowerCase().contains(searchText) ||
+               (workshop.getUser() != null && 
+                (workshop.getUser().getFirstName().toLowerCase().contains(searchText) ||
+                 workshop.getUser().getLastName().toLowerCase().contains(searchText)));
     }
 } 
