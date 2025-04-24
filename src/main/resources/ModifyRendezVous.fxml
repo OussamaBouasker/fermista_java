@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.fermista.controllers.ModifyRendezVousController">
+   <children>
+      <ScrollPane fitToWidth="true" layoutX="0.0" layoutY="0.0" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <content>
+            <VBox layoutX="14.0" layoutY="14.0" prefWidth="572.0" spacing="20.0" style="-fx-padding: 20;">
+               <children>
+                  <Label text="Modifier Rendez-vous" textFill="#4CAF50">
+                     <font>
+                        <Font name="Century Gothic Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <VBox spacing="10.0">
+                     <children>
+                        <Label text="Agriculteur">
+                           <font>
+                              <Font name="Century Gothic" size="14.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="agriculteurCombo" prefWidth="320.0" promptText="Sélectionner un agriculteur" />
+                        
+                        <Label text="Vétérinaire">
+                           <font>
+                              <Font name="Century Gothic" size="14.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="veterinaireCombo" prefWidth="320.0" promptText="Sélectionner un vétérinaire" />
+                        
+                        <Label text="Date">
+                           <font>
+                              <Font name="Century Gothic" size="14.0" />
+                           </font>
+                        </Label>
+                        <DatePicker fx:id="datePicker" prefWidth="320.0" />
+                        
+                        <Label text="Heure">
+                           <font>
+                              <Font name="Century Gothic" size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="heureField" prefWidth="320.0" promptText="Heure (ex: 10:30)" />
+                        
+                        <Label text="Sexe">
+                           <font>
+                              <Font name="Century Gothic" size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="sexField" prefWidth="320.0" promptText="Sexe (M/F)" />
+                        
+                        <Label text="Cause">
+                           <font>
+                              <Font name="Century Gothic" size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="causeField" prefWidth="320.0" promptText="Cause" />
+                        
+                        <Label text="Status">
+                           <font>
+                              <Font name="Century Gothic" size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="statusField" prefWidth="320.0" promptText="Status" />
+                     </children>
+                  </VBox>
+                  <HBox alignment="CENTER" spacing="20.0">
+                     <children>
+                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSave" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Enregistrer">
+                           <font>
+                              <Font name="Century Gothic Bold" size="14.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#handleCancel" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #f44336; -fx-text-fill: white;" text="Annuler">
+                           <font>
+                              <Font name="Century Gothic Bold" size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane> 

@@ -86,7 +86,7 @@ public class ServiceReclamation implements CRUD<Reclamation> {
         PreparedStatement pst = cnx.prepareStatement(sql);
         pst.setString(1, status);
         ResultSet rs = pst.executeQuery();
-        
+
         if (rs.next()) {
             return rs.getInt(1);
         }

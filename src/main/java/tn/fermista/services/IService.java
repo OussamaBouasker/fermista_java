@@ -8,4 +8,3 @@ public interface IService <T> {
     void supprimer(T t);
     List<T> rechercher();
 }
-

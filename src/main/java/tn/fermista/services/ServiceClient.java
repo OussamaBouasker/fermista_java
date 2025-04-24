@@ -1,6 +1,5 @@
 package tn.fermista.services;
 
-
 import tn.fermista.models.Client;
 import tn.fermista.models.Roles;
 import tn.fermista.utils.MyDbConnexion;
@@ -104,5 +103,31 @@ public class ServiceClient extends ServiceUser implements IService<Client> {
         }
 
         return clients;
+    }
+
+    public Client getById(int id) throws SQLException {
+        String req = "SELECT * FROM user WHERE id = ? AND JSON_CONTAINS(roles, '\"ROLE_CLIENT\"')";
+        
+        try (PreparedStatement st = cnx.prepareStatement(req)) {
+            st.setInt(1, id);
+            
+            try (ResultSet rs = st.executeQuery()) {
+                if (rs.next()) {
+                    Client client = new Client();
+                    client.setId(rs.getInt("id"));
+                    client.setEmail(rs.getString("email"));
+                    client.setPassword(rs.getString("password"));
+                    client.setFirstName(rs.getString("first_name"));
+                    client.setLastName(rs.getString("last_name"));
+                    client.setNumber(rs.getString("number"));
+                    client.setState(rs.getBoolean("state"));
+                    client.setVerified(rs.getBoolean("is_verified"));
+                    client.setImage(rs.getString("image"));
+                    client.setRoles(Roles.ROLE_CLIENT);
+                    return client;
+                }
+            }
+        }
+        return null;
     }
 }

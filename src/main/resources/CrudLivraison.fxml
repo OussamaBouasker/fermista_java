@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+
+<VBox prefHeight="680.0" prefWidth="800.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" 
+      fx:controller="tn.fermista.controllers.LivraisonController" style="-fx-background-color: #f5f5f5;">
+    <padding>
+        <Insets top="30" right="40" bottom="30" left="40" />
+    </padding>
+
+    <HBox alignment="CENTER_LEFT" spacing="20">
+        <Label text="Gestion des Livraisons">
+            <font>
+                <Font name="Century Gothic Bold" size="30.0"/>
+            </font>
+        </Label>
+        <Region HBox.hgrow="ALWAYS" />
+        <Button text="Retour" onAction="#handleBackToMain"
+                style="-fx-background-color: #555555; -fx-text-fill: white;" />
+    </HBox>
+
+    <VBox.margin>
+        <Insets bottom="30" />
+    </VBox.margin>
+
+    <GridPane hgap="20" vgap="15">
+        <columnConstraints>
+            <ColumnConstraints minWidth="100" prefWidth="150" />
+            <ColumnConstraints prefWidth="450" />
+        </columnConstraints>
+        
+        <Label text="Date:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+        <DatePicker fx:id="datePicker" promptText="Date de livraison" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+        
+        <Label text="Livreur:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+        <TextField fx:id="livreurField" promptText="Nom du livreur" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+        
+        <Label text="Lieu:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+        <TextField fx:id="lieuField" promptText="Lieu de livraison" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+    </GridPane>
+    
+    <HBox spacing="15" alignment="CENTER_LEFT">
+        <VBox.margin>
+            <Insets top="30" />
+        </VBox.margin>
+        
+        <Button onAction="#handleAddLivraison" text="Ajouter la livraison" 
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;" 
+                prefWidth="150" prefHeight="40" />
+                
+        <Button onAction="#handleUpdateLivraison" text="Mettre à jour" 
+                style="-fx-background-color: #FFA500; -fx-text-fill: white; -fx-font-weight: bold;" 
+                prefWidth="150" prefHeight="40" />
+                
+        <Button onAction="#handleDeleteLivraison" text="Supprimer" 
+                style="-fx-background-color: #F44336; -fx-text-fill: white; -fx-font-weight: bold;" 
+                prefWidth="150" prefHeight="40" />
+    </HBox>
+    
+    <Button onAction="#navigateToLivraisonList" text="Voir toutes les livraisons" 
+            style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;"
+            prefWidth="200" prefHeight="40">
+        <VBox.margin>
+            <Insets top="30" />
+        </VBox.margin>
+    </Button>
+</VBox> 

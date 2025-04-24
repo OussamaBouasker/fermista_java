@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="930.0" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.fermista.controllers.ModifierCollierController">
+    <children>
+        <VBox prefHeight="680.0" prefWidth="205.0">
+            <children>
+                <AnchorPane fx:id="side_ankerpane" prefHeight="680.0" prefWidth="253.0" styleClass="side_ankerpane" stylesheets="@style.css">
+                    <children>
+                        <Pane fx:id="inner_pane" layoutX="17.0" layoutY="26.0" prefHeight="64.0" prefWidth="186.0" styleClass="inner_pane" stylesheets="@style.css">
+                            <children>
+                                <ImageView fitHeight="60.0" fitWidth="61.0" layoutX="33.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@images/67c1111dd9ab1.png" />
+                                    </image>
+                                </ImageView>
+                                <Pane fx:id="most_inner_pane" layoutX="126.0" layoutY="6.0" prefHeight="52.0" prefWidth="35.0" styleClass="most_inner_pane" stylesheets="@style.css">
+                                    <children>
+                                        <ImageView fitHeight="33.0" fitWidth="23.0" layoutX="6.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@images/troispoints-removebg-preview.png" />
+                                            </image>
+                                        </ImageView>
+                                    </children>
+                                </Pane>
+                            </children>
+                        </Pane>
+                        <ButtonBar layoutX="12.0" layoutY="189.0" prefHeight="40.0" prefWidth="200.0">
+                            <buttons>
+                                <ImageView fitHeight="29.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@images/user-removebg-preview (2).png" />
+                                    </image>
+                                </ImageView>
+                                <Button fx:id="btn_workbench11" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="Gestion User" textFill="WHITE">
+                                    <font>
+                                        <Font name="Century Gothic Bold" size="15.0" />
+                                    </font>
+                                </Button>
+                            </buttons>
+                        </ButtonBar>
+                        <ButtonBar layoutX="9.0" layoutY="259.0" prefHeight="40.0" prefWidth="200.0">
+                            <buttons>
+                                <ImageView fitHeight="33.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@images/images-removebg-preview.png" />
+                                    </image>
+                                </ImageView>
+                                <Button fx:id="btn_workbench111" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="Contrôle médical" textFill="WHITE">
+                                    <font>
+                                        <Font name="Century Gothic Bold" size="13.0" />
+                                    </font>
+                                </Button>
+                            </buttons>
+                        </ButtonBar>
+                        <ButtonBar layoutX="10.0" layoutY="320.0" prefHeight="40.0" prefWidth="200.0">
+                            <buttons>
+                                <ImageView fitHeight="33.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@images/event1-removebg-preview.png" />
+                                    </image>
+                                </ImageView>
+                                <Button fx:id="btn_workbench112" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="Gestion événements" textFill="WHITE">
+                                    <font>
+                                        <Font name="Century Gothic Bold" size="13.0" />
+                                    </font>
+                                </Button>
+                            </buttons>
+                        </ButtonBar>
+                        <ButtonBar layoutX="9.0" layoutY="462.0" prefHeight="40.0" prefWidth="200.0">
+                            <buttons>
+                                <ImageView fitHeight="35.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@images/dashboard.png" />
+                                    </image>
+                                </ImageView>
+                                <Button fx:id="btn_workbench1121" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="Suivis médical" textFill="WHITE">
+                                    <font>
+                                        <Font name="Century Gothic Bold" size="15.0" />
+                                    </font>
+                                </Button>
+                            </buttons>
+                        </ButtonBar>
+                        <ButtonBar layoutX="8.0" layoutY="378.0" prefHeight="40.0" prefWidth="200.0">
+                            <buttons>
+                                <ImageView fitHeight="35.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@images/images__1_-removebg-preview.png" />
+                                    </image>
+                                </ImageView>
+                                <Button fx:id="btn_workbench11211" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="E-commerce" textFill="WHITE">
+                                    <font>
+                                        <Font name="Century Gothic Bold" size="15.0" />
+                                    </font>
+                                </Button>
+                            </buttons>
+                        </ButtonBar>
+                        <ButtonBar layoutX="14.0" layoutY="122.0" prefHeight="40.0" prefWidth="200.0">
+                            <buttons>
+                                <ImageView fitHeight="36.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@images/home-removebg-preview (1).png" />
+                                    </image>
+                                </ImageView>
+                                <Button fx:id="btn_workbench113" mnemonicParsing="false" prefHeight="30.0" prefWidth="119.0" styleClass="btn" stylesheets="@style.css" text="HOME" textFill="WHITE">
+                                    <font>
+                                        <Font name="Century Gothic Bold" size="15.0" />
+                                    </font>
+                                </Button>
+                            </buttons>
+                        </ButtonBar>
+                    </children>
+                </AnchorPane>
+            </children>
+        </VBox>
+        <Pane prefHeight="680.0" prefWidth="709.0">
+            <children>
+                <FlowPane layoutY="14.0" prefHeight="60.0" prefWidth="710.0">
+                    <children>
+                        <Pane prefHeight="50.0" prefWidth="47.0" translateX="350.0" />
+                        <ImageView fitHeight="64.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true" />
+                        <ButtonBar prefHeight="64.0" prefWidth="34.0" translateX="500.0">
+                            <buttons>
+                                <ImageView fitHeight="31.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@images/settings-removebg-preview.png" />
+                                    </image>
+                                </ImageView>
+                            </buttons>
+                        </ButtonBar>
+                        <ButtonBar prefHeight="42.0" prefWidth="46.0" translateX="500.0">
+                            <buttons>
+                                <ImageView fitHeight="38.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@images/67c1111dd9ab1.png" />
+                                    </image>
+                                </ImageView>
+                            </buttons>
+                        </ButtonBar>
+                    </children>
+                </FlowPane>
+                <Label layoutX="57.0" layoutY="70.0" text="Ajouter un Collier">
+                    <font>
+                        <Font name="Century Gothic Bold" size="33.0" />
+                    </font>
+                </Label>
+
+                <VBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+                    <Pane prefHeight="0.0" prefWidth="0.0">
+                        <VBox alignment="CENTER" maxWidth="710.0" prefHeight="680.0" prefWidth="710.0" spacing="15.0" style="-fx-background-color: white; -fx-padding: 40; -fx-border-radius: 10; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+                            <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Ajouter un Collier" />
+
+                            <VBox spacing="15">
+                                <!-- Reference -->
+                                <VBox spacing="5">
+                                    <Label style="-fx-font-weight: bold;" text="Référence" />
+                                    <TextField fx:id="referenceField" minWidth="200" promptText="Entrez référence">
+                                        <tooltip>
+                                            <Tooltip text="Entrez la référence du collier" />
+                                        </tooltip>
+                                    </TextField>
+                                </VBox>
+
+                                <!-- Taille -->
+                                <VBox spacing="5">
+                                    <Label style="-fx-font-weight: bold;" text="Taille" />
+                                    <TextField fx:id="tailleField" minWidth="200" promptText="Entrez taille">
+                                        <tooltip>
+                                            <Tooltip text="Entrez la taille du collier en cm" />
+                                        </tooltip>
+                                    </TextField>
+                                </VBox>
+
+                                <!-- Température -->
+                                <VBox spacing="5">
+                                    <Label style="-fx-font-weight: bold;" text="Valeur Température" />
+                                    <TextField fx:id="valeurTemperatureField" minWidth="200" promptText="Entrez température">
+                                        <tooltip>
+                                            <Tooltip text="Entrez la température en degrés Celsius" />
+                                        </tooltip>
+                                    </TextField>
+                                </VBox>
+
+                                <!-- Agitation -->
+                                <VBox spacing="5">
+                                    <Label style="-fx-font-weight: bold;" text="Valeur Agitation" />
+                                    <TextField fx:id="valeurAgitationField" minWidth="200" promptText="Entrez agitation">
+                                        <tooltip>
+                                            <Tooltip text="Entrez le niveau d'agitation (0-100)" />
+                                        </tooltip>
+                                    </TextField>
+                                </VBox>
+
+                                <!-- Vache -->
+                                <VBox spacing="5">
+                                    <Label style="-fx-font-weight: bold;" text="Vache" />
+                                    <ComboBox fx:id="vacheComboBox" minWidth="200" promptText="Sélectionnez une vache">
+                                        <tooltip>
+                                            <Tooltip text="Sélectionnez la vache à laquelle le collier sera attaché" />
+                                        </tooltip>
+                                    </ComboBox>
+                                </VBox>
+                            </VBox>
+                     <VBox>
+                        <children>
+                           <HBox alignment="TOP_CENTER">
+                              <children>
+                                          <Button fx:id="saveButton" alignment="TOP_CENTER" contentDisplay="CENTER" onAction="#modifierCollier" prefHeight="42.0" prefWidth="122.0" style="-fx-background-color: #2E3244; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 25 10 25; -fx-font-weight: bold; -fx-background-radius: 5;" text="Modifier" />
+                              </children>
+                           </HBox>
+                                  <HBox alignment="TOP_RIGHT" spacing="10">
+                                      <children>
+                                          <Button fx:id="deleteButton" onAction="#supprimerCollier" style="-fx-background-color: white; -fx-text-fill: #e74c3c; -fx-font-size: 14px; -fx-padding: 10 25 10 25; -fx-font-weight: bold; -fx-background-radius: 5;" text="Supprimer" />
+                                          <Button fx:id="backButton" onAction="#retourALaListe" prefHeight="42.0" prefWidth="162.0" style="-fx-background-color: white; -fx-text-fill: #2E3244; -fx-font-size: 14px; -fx-padding: 10 25 10 25; -fx-font-weight: bold; -fx-background-radius: 5;" text="Retour à la liste" />
+                                      </children>
+                                  </HBox>
+                        </children>
+                     </VBox>
+                        </VBox>
+                    </Pane>
+                </VBox>
+            </children>
+        </Pane>
+    </children>
+</HBox>
