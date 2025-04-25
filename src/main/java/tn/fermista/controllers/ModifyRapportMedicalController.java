@@ -1,114 +1,173 @@
 package tn.fermista.controllers;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import tn.fermista.models.RapportMedical;
 import tn.fermista.services.ServiceRapportMedical;
-
-import java.net.URL;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
-import javafx.scene.control.DialogPane;
+import javafx.scene.paint.Color;
+import javafx.beans.value.ChangeListener;
+import javafx.scene.layout.VBox;
 
-public class ModifyRapportMedicalController implements Initializable {
+public class ModifyRapportMedicalController {
     @FXML
     private TextField numField;
-
     @FXML
     private TextField raceField;
-
     @FXML
-    private TextField historiqueField;
-
+    private TextArea historiqueField;
     @FXML
-    private TextField casMedicalField;
-
+    private TextArea casMedicalField;
     @FXML
-    private TextField solutionField;
+    private TextArea solutionField;
+    @FXML
+    private Label errorLabel;
+    @FXML
+    private Button saveButton;
 
-    private RapportMedical rapportMedical;
     private ServiceRapportMedical serviceRapportMedical;
-    private Stage stage;
+    private RapportMedical rapportMedical;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    @FXML
+    public void initialize() {
         serviceRapportMedical = new ServiceRapportMedical();
+        
+        // Initialiser le label d'erreur
+        errorLabel.setTextFill(Color.RED);
+        errorLabel.setVisible(false);
+        
+        // Ajouter les écouteurs de validation en temps réel
+        setupValidationListeners();
     }
 
-    public void setRapportMedical(RapportMedical rapportMedical) {
+    private void setupValidationListeners() {
+        // Validation du numéro (nombres uniquement)
+        numField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                numField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+            validateFields();
+        });
+
+        // Validation de la race (lettres et espaces uniquement)
+        raceField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("[a-zA-Z\\s]*")) {
+                raceField.setText(oldValue);
+            }
+            validateFields();
+        });
+
+        // Validation de la longueur minimale pour les champs texte
+        historiqueField.textProperty().addListener((observable, oldValue, newValue) -> validateFields());
+        casMedicalField.textProperty().addListener((observable, oldValue, newValue) -> validateFields());
+        solutionField.textProperty().addListener((observable, oldValue, newValue) -> validateFields());
+    }
+
+    private boolean validateFields() {
+        StringBuilder errorMessage = new StringBuilder();
+        boolean isValid = true;
+
+        // Validation du numéro
+        if (numField.getText().isEmpty()) {
+            errorMessage.append("Le numéro est requis\n");
+            isValid = false;
+        }
+
+        // Validation de la race
+        if (raceField.getText().isEmpty()) {
+            errorMessage.append("La race est requise\n");
+            isValid = false;
+        } else if (raceField.getText().length() < 3) {
+            errorMessage.append("La race doit contenir au moins 3 caractères\n");
+            isValid = false;
+        }
+
+        // Validation de l'historique
+        if (historiqueField.getText().isEmpty()) {
+            errorMessage.append("L'historique est requis\n");
+            isValid = false;
+        } else if (historiqueField.getText().length() < 10) {
+            errorMessage.append("L'historique doit contenir au moins 10 caractères\n");
+            isValid = false;
+        }
+
+        // Validation du cas médical
+        if (casMedicalField.getText().isEmpty()) {
+            errorMessage.append("Le cas médical est requis\n");
+            isValid = false;
+        } else if (casMedicalField.getText().length() < 10) {
+            errorMessage.append("Le cas médical doit contenir au moins 10 caractères\n");
+            isValid = false;
+        }
+
+        // Validation de la solution
+        if (solutionField.getText().isEmpty()) {
+            errorMessage.append("La solution est requise\n");
+            isValid = false;
+        } else if (solutionField.getText().length() < 10) {
+            errorMessage.append("La solution doit contenir au moins 10 caractères\n");
+            isValid = false;
+        }
+
+        // Mettre à jour l'interface utilisateur
+        errorLabel.setText(errorMessage.toString());
+        errorLabel.setVisible(!isValid);
+        saveButton.setDisable(!isValid);
+        return isValid;
+    }
+
+    public void initData(RapportMedical rapportMedical) {
         this.rapportMedical = rapportMedical;
-        // Remplir les champs avec les données du rapport
+        
+        // Remplir les champs avec les données existantes
         numField.setText(String.valueOf(rapportMedical.getNum()));
         raceField.setText(rapportMedical.getRace());
         historiqueField.setText(rapportMedical.getHistoriqueDeMaladie());
         casMedicalField.setText(rapportMedical.getCasMedical());
         solutionField.setText(rapportMedical.getSolution());
-    }
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
+        
+        // Valider les champs initiaux
+        validateFields();
     }
 
     @FXML
     private void handleSave() {
         try {
-            // Vérifier que tous les champs sont remplis
-            if (numField.getText().isEmpty() || raceField.getText().isEmpty() ||
-                historiqueField.getText().isEmpty() || casMedicalField.getText().isEmpty() ||
-                solutionField.getText().isEmpty()) {
-                showAlert("Erreur", "Veuillez remplir tous les champs", Alert.AlertType.ERROR);
-                return;
-            }
-
-            // Validation de la race (féminin ou masculin)
-            String race = raceField.getText().toLowerCase();
-            if (!race.equals("feminin") && !race.equals("masculin")) {
-                showAlert("Erreur", "La race doit être 'feminin' ou 'masculin'", Alert.AlertType.ERROR);
-                return;
-            }
-
-            // Validation de la longueur minimale (10 caractères)
-            if (historiqueField.getText().length() < 10) {
-                showAlert("Erreur", "L'historique médical doit contenir au moins 10 caractères", Alert.AlertType.ERROR);
-                return;
-            }
-            if (casMedicalField.getText().length() < 10) {
-                showAlert("Erreur", "Le cas médical doit contenir au moins 10 caractères", Alert.AlertType.ERROR);
-                return;
-            }
-            if (solutionField.getText().length() < 10) {
-                showAlert("Erreur", "La solution doit contenir au moins 10 caractères", Alert.AlertType.ERROR);
+            // Validation finale avant la sauvegarde
+            if (!validateFields()) {
                 return;
             }
 
             // Mettre à jour les données du rapport
             rapportMedical.setNum(Integer.parseInt(numField.getText()));
-            rapportMedical.setRace(race);
+            rapportMedical.setRace(raceField.getText());
             rapportMedical.setHistoriqueDeMaladie(historiqueField.getText());
             rapportMedical.setCasMedical(casMedicalField.getText());
             rapportMedical.setSolution(solutionField.getText());
 
-            // Mettre à jour dans la base de données
+            // Sauvegarder les modifications
             serviceRapportMedical.update(rapportMedical);
 
             // Afficher un message de succès
             showAlert("Succès", "Rapport médical modifié avec succès", Alert.AlertType.INFORMATION);
-
+            
             // Fermer la fenêtre
-            stage.close();
+            closeWindow();
         } catch (SQLException e) {
-            e.printStackTrace();
-            showAlert("Erreur", "Erreur lors de la modification du rapport", Alert.AlertType.ERROR);
+            showAlert("Erreur", "Erreur lors de la modification du rapport médical", Alert.AlertType.ERROR);
         } catch (NumberFormatException e) {
-            showAlert("Erreur", "Le numéro doit être un nombre entier", Alert.AlertType.ERROR);
+            showAlert("Erreur", "Le numéro doit être un nombre entier valide", Alert.AlertType.ERROR);
         }
     }
 
     @FXML
     private void handleCancel() {
+        closeWindow();
+    }
+
+    private void closeWindow() {
+        Stage stage = (Stage) numField.getScene().getWindow();
         stage.close();
     }
 
@@ -118,14 +177,13 @@ public class ModifyRapportMedicalController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(content);
         
-        // Ajout de style CSS
+        // Appliquer le style CSS personnalisé
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.getStylesheets().add(
-            getClass().getResource("/styles/alert.css").toExternalForm()
+            getClass().getResource("/styles/StyleCalendar.css").toExternalForm()
         );
         dialogPane.getStyleClass().add("custom-alert");
         
-        // Personnalisation des icônes selon le type d'alerte
         switch (type) {
             case ERROR:
                 dialogPane.getStyleClass().add("error-alert");
@@ -135,9 +193,6 @@ public class ModifyRapportMedicalController implements Initializable {
                 break;
             case WARNING:
                 dialogPane.getStyleClass().add("warning-alert");
-                break;
-            case CONFIRMATION:
-                dialogPane.getStyleClass().add("confirm-alert");
                 break;
         }
         

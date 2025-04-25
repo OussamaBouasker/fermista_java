@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="15" styleClass="popup-container" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.fermista.controllers.SearchResultsPopup">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <HBox alignment="CENTER_RIGHT" spacing="10">
+        <Button fx:id="exportPdfButton" text="Exporter PDF" styleClass="action-button"/>
+    </HBox>
+
+    <ScrollPane fitToWidth="true" styleClass="custom-scroll-pane">
+        <VBox fx:id="contentVBox" spacing="15" styleClass="content-container">
+            <!-- Le contenu sera ajouté dynamiquement -->
+        </VBox>
+    </ScrollPane>
+</VBox> 

@@ -4,12 +4,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox spacing="15" styleClass="popup-container" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.fermista.controllers.ModifyConsultationController">
+<VBox spacing="15" styleClass="popup-container" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.fermista.controllers.ConsultationPopupController">
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
 
-    <Label text="Modifier Consultation" styleClass="popup-title"/>
+    <Label text="Nouvelle Consultation" styleClass="popup-title"/>
 
     <GridPane vgap="15" hgap="10">
         <Label text="Nom:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
