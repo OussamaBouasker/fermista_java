@@ -76,4 +76,66 @@ public class EmailService {
             System.err.println("Erreur lors de l'envoi de l'email : " + e.getMessage());
         }
     }
+
+    public static void sendUrgentRendezVousNotification(RendezVous rendezVous) {
+        try {
+            // Configuration des propriétés SMTP
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", MAILTRAP_HOST);
+            props.put("mail.smtp.port", MAILTRAP_PORT);
+
+            // Création de la session
+            Session session = Session.getInstance(props, new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(MAILTRAP_USER, MAILTRAP_PASSWORD);
+                }
+            });
+
+            // Création du message
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("noreply@fermista.com"));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(rendezVous.getVeterinaire().getEmail()));
+            message.setSubject("RENDEZ-VOUS URGENT - Fermista");
+
+            // Formatage de la date et l'heure
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+            String formattedDate = rendezVous.getDate().toLocalDate().format(dateFormatter);
+            String formattedTime = rendezVous.getHeure().toLocalTime().format(timeFormatter);
+
+            // Construction du contenu de l'email
+            String content = String.format(
+                "Bonjour Dr. %s,\n\n" +
+                "Un rendez-vous URGENT a été automatiquement accepté pour l'agriculteur %s %s.\n\n" +
+                "Détails du rendez-vous URGENT :\n" +
+                "- Date : %s\n" +
+                "- Heure : %s\n" +
+                "- Sexe de l'animal : %s\n" +
+                "- Cause : %s\n\n" +
+                "Ce rendez-vous a été automatiquement accepté en raison de son caractère urgent.\n" +
+                "Veuillez consulter votre liste de rendez-vous pour plus de détails.\n\n" +
+                "Cordialement,\n" +
+                "L'équipe Fermista",
+                rendezVous.getVeterinaire().getLastName(),
+                rendezVous.getAgriculteur().getFirstName(),
+                rendezVous.getAgriculteur().getLastName(),
+                formattedDate,
+                formattedTime,
+                rendezVous.getSex(),
+                rendezVous.getCause()
+            );
+
+            message.setText(content);
+
+            // Envoi de l'email
+            Transport.send(message);
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors de l'envoi de l'email urgent : " + e.getMessage());
+        }
+    }
 } 

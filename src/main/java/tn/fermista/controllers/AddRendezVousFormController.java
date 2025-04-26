@@ -8,6 +8,7 @@ import tn.fermista.services.ServiceRendezVous;
 import tn.fermista.utils.UserSession;
 import tn.fermista.services.ServiceAgriculteur;
 import tn.fermista.utils.EmailService;
+import tn.fermista.utils.SMSService;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -16,6 +17,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.sql.SQLException;
 
 public class AddRendezVousFormController {
     @FXML private DatePicker datePicker;
@@ -68,6 +70,44 @@ public class AddRendezVousFormController {
 
     public void setVeterinaire(Veterinaire veterinaire) {
         this.selectedVeterinaire = veterinaire;
+    }
+
+    private boolean isUrgentRendezVous(String cause) {
+        String[] urgentKeywords = {"danger", "malade", "urgent"};
+        String causeLower = cause.toLowerCase();
+        for (String keyword : urgentKeywords) {
+            if (causeLower.contains(keyword)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void handleUrgentRendezVous(RendezVous rendezVous) throws SQLException {
+        // Vérifier les rendez-vous existants à la même date et heure
+        List<RendezVous> existingRendezVous = serviceRendezVous.showAll();
+        for (RendezVous existing : existingRendezVous) {
+            if (existing.getDate().equals(rendezVous.getDate()) && 
+                existing.getHeure().equals(rendezVous.getHeure()) &&
+                !isUrgentRendezVous(existing.getCause())) {
+                
+                // Décaler le rendez-vous non urgent d'une heure
+                LocalTime newTime = existing.getHeure().toLocalTime().plusHours(1);
+                if (newTime.isAfter(LocalTime.of(18, 0))) {
+                    // Si après 18h, décaler au lendemain à 9h
+                    existing.setDate(Date.valueOf(existing.getDate().toLocalDate().plusDays(1)));
+                    existing.setHeure(Time.valueOf(LocalTime.of(9, 0)));
+                } else {
+                    existing.setHeure(Time.valueOf(newTime));
+                }
+                
+                // Mettre à jour le rendez-vous décalé
+                serviceRendezVous.update(existing);
+                
+                // Envoyer un SMS à l'agriculteur du rendez-vous décalé
+                SMSService.sendRendezVousDeplacementNotification(existing);
+            }
+        }
     }
 
     @FXML
@@ -129,16 +169,36 @@ public class AddRendezVousFormController {
             rendezVous.setHeure(Time.valueOf(time));
             rendezVous.setSex(sex);
             rendezVous.setCause(causeField.getText());
-            rendezVous.setStatus(statusField.getText());
+
+            // Vérifier si c'est un rendez-vous urgent
+            boolean isUrgent = isUrgentRendezVous(causeField.getText());
+            if (isUrgent) {
+                rendezVous.setStatus("accepté");
+                // Gérer les décalages des autres rendez-vous
+                handleUrgentRendezVous(rendezVous);
+            } else {
+                rendezVous.setStatus("en attente");
+            }
 
             // Ajout dans la base de données
             serviceRendezVous.insert(rendezVous);
 
-            // Envoi de l'email de notification au vétérinaire
-            EmailService.sendRendezVousNotification(rendezVous);
+            // Envoi des notifications
+            if (isUrgent) {
+                // Email au vétérinaire pour un rendez-vous urgent
+                EmailService.sendUrgentRendezVousNotification(rendezVous);
+                // SMS à l'agriculteur pour confirmer l'acceptation automatique
+                SMSService.sendUrgentRendezVousConfirmation(rendezVous);
+            } else {
+                // Email normal au vétérinaire
+                EmailService.sendRendezVousNotification(rendezVous);
+            }
 
             // Message de succès
-            showAlert("Succès", "Rendez-vous ajouté avec succès. Veuillez attender la confirmation du vétérinaire ", Alert.AlertType.INFORMATION);
+            String message = isUrgent ? 
+                "Rendez-vous urgent ajouté et accepté automatiquement. Un SMS de confirmation vous sera envoyé." :
+                "Rendez-vous ajouté avec succès. Veuillez attendre la confirmation du vétérinaire.";
+            showAlert("Succès", message, Alert.AlertType.INFORMATION);
 
             // Fermer la fenêtre
             stage.close();
