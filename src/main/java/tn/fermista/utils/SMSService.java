@@ -9,9 +9,9 @@ import java.time.format.DateTimeFormatter;
 
 public class SMSService {
     // Remplacez ces valeurs par vos identifiants Twilio
-    private static final String ACCOUNT_SID = System.getenv("TWILIO_ACCOUNT_SID");
-    private static final String AUTH_TOKEN = System.getenv("TWILIO_AUTH_TOKEN");
-    private static final String TWILIO_PHONE_NUMBER = System.getenv("TWILIO_PHONE_NUMBER");
+    private static final String ACCOUNT_SID = "ACe54fd14a5a126cd641203f3baa63b514";
+    private static final String AUTH_TOKEN = "005b6d36b067d4324eb5140042c3805d";
+    private static final String TWILIO_PHONE_NUMBER = "+14846625835";
  // Format international sans espaces
 
     static {

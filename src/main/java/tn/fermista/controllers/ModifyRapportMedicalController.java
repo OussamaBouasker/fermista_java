@@ -32,8 +32,9 @@ public class ModifyRapportMedicalController {
 
     @FXML
     public void initialize() {
+        // Configurer les boutons
         saveButton.setOnAction(e -> handleSave());
-        cancelButton.setOnAction(e -> stage.close());
+        cancelButton.setOnAction(e -> handleCancel());
     }
 
     public void setStage(Stage stage) {
@@ -77,6 +78,11 @@ public class ModifyRapportMedicalController {
         } catch (NumberFormatException e) {
             showAlert("Erreur", "Le numéro doit être un nombre valide");
         }
+    }
+
+    @FXML
+    private void handleCancel() {
+        stage.close();
     }
 
     private void showAlert(String title, String content) {

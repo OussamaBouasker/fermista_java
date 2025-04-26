@@ -328,7 +328,7 @@ public class ControlMedicalFront {
                 updateCalendarCellFactory();
             });
             
-            stage.show();
+            stage.showAndWait(); // Utiliser showAndWait au lieu de show pour attendre la fermeture
         } catch (Exception e) {
             showAlert("Erreur", "Erreur lors de la modification de la consultation", Alert.AlertType.ERROR);
         }
@@ -362,7 +362,7 @@ public class ControlMedicalFront {
                 updateCalendarCellFactory();
             });
             
-            stage.show();
+            stage.showAndWait(); // Utiliser showAndWait au lieu de show pour attendre la fermeture
         } catch (Exception e) {
             showAlert("Erreur", "Erreur lors de la modification du rapport médical", Alert.AlertType.ERROR);
         }

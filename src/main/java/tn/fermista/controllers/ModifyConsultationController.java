@@ -23,6 +23,7 @@ import java.util.ResourceBundle;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Button;
 
 public class ModifyConsultationController implements Initializable {
     @FXML
@@ -42,6 +43,12 @@ public class ModifyConsultationController implements Initializable {
 
     @FXML
     private ComboBox<Vache> vacheComboBox;
+
+    @FXML
+    private Button saveButton;
+
+    @FXML
+    private Button cancelButton;
 
     private ServiceConsultation serviceConsultation;
     private ServiceVache serviceVache;
@@ -69,6 +76,13 @@ public class ModifyConsultationController implements Initializable {
         } catch (SQLException e) {
             showAlert("Erreur", "Erreur lors du chargement des données", Alert.AlertType.ERROR);
         }
+
+        // Configurer les boutons
+        saveButton.setOnAction(e -> handleSave());
+        cancelButton.setOnAction(e -> handleCancel());
+
+        // Initialize stage reference
+        stage = (Stage) nomField.getScene().getWindow();
     }
 
     public void setConsultation(Consultation consultation) {
