@@ -7,6 +7,7 @@ import tn.fermista.models.*;
 import tn.fermista.services.ServiceRendezVous;
 import tn.fermista.utils.UserSession;
 import tn.fermista.services.ServiceAgriculteur;
+import tn.fermista.utils.EmailService;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -133,8 +134,11 @@ public class AddRendezVousFormController {
             // Ajout dans la base de données
             serviceRendezVous.insert(rendezVous);
 
+            // Envoi de l'email de notification au vétérinaire
+            EmailService.sendRendezVousNotification(rendezVous);
+
             // Message de succès
-            showAlert("Succès", "Rendez-vous ajouté avec succès", Alert.AlertType.INFORMATION);
+            showAlert("Succès", "Rendez-vous ajouté avec succès. Veuillez attender la confirmation du vétérinaire ", Alert.AlertType.INFORMATION);
 
             // Fermer la fenêtre
             stage.close();

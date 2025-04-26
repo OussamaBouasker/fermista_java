@@ -19,6 +19,7 @@ import tn.fermista.models.Veterinaire;
 import tn.fermista.models.Roles;
 import tn.fermista.services.ServiceRendezVous;
 import tn.fermista.utils.UserSession;
+import tn.fermista.utils.SMSService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -90,17 +91,30 @@ public class ListRendezVous implements Initializable {
                         accepterBtn.setOnAction(event -> {
                             RendezVous rdv = getTableView().getItems().get(getIndex());
                             accepterRendezVous(rdv);
+                            // Désactiver tous les boutons après l'action
+                            disableButtons();
                         });
                         
                         modifierBtn.setOnAction(event -> {
                             RendezVous rdv = getTableView().getItems().get(getIndex());
                             modifierRendezVous(rdv);
+                            // Désactiver tous les boutons après l'action
+                            disableButtons();
                         });
                         
                         refuserBtn.setOnAction(event -> {
                             RendezVous rdv = getTableView().getItems().get(getIndex());
                             refuserRendezVous(rdv);
+                            // Désactiver tous les boutons après l'action
+                            disableButtons();
                         });
+                    }
+
+                    private void disableButtons() {
+                        accepterBtn.setDisable(true);
+                        modifierBtn.setDisable(true);
+                        refuserBtn.setDisable(true);
+                        buttons.setVisible(false); // Cacher complètement les boutons
                     }
                     
                     @Override
@@ -110,6 +124,13 @@ public class ListRendezVous implements Initializable {
                             setGraphic(null);
                             setText(null);
                         } else {
+                            RendezVous rdv = getTableView().getItems().get(getIndex());
+                            // Vérifier si le rendez-vous a déjà un statut
+                            if (rdv.getStatus() != null && !rdv.getStatus().equals("en attente")) {
+                                buttons.setVisible(false); // Cacher les boutons si le statut n'est pas "en attente"
+                            } else {
+                                buttons.setVisible(true);
+                            }
                             setGraphic(buttons);
                             setText(null);
                         }
@@ -169,8 +190,15 @@ public class ListRendezVous implements Initializable {
     
     private void accepterRendezVous(RendezVous rdv) {
         try {
+            String oldStatus = rdv.getStatus();
             rdv.setStatus("accepté");
             serviceRendezVous.update(rdv);
+            
+            // Envoi du SMS de notification seulement si le statut a changé
+            if (!"accepté".equals(oldStatus)) {
+                SMSService.sendRendezVousStatusUpdate(rdv, oldStatus);
+            }
+            
             loadRendezVous(); // Refresh the table
             showAlert("Succès", "Le rendez-vous a été accepté.");
         } catch (SQLException e) {
@@ -202,7 +230,15 @@ public class ListRendezVous implements Initializable {
     
     public void updateRendezVous(RendezVous rdv) {
         try {
+            String oldStatus = rdv.getStatus();
+            rdv.setStatus("modifié");
             serviceRendezVous.update(rdv);
+            
+            // Envoi du SMS de notification seulement si le statut a changé
+            if (!"modifié".equals(oldStatus)) {
+                SMSService.sendRendezVousStatusUpdate(rdv, oldStatus);
+            }
+            
             loadRendezVous(); // Refresh the table
             showAlert("Succès", "Le rendez-vous a été modifié avec succès.");
         } catch (SQLException e) {
@@ -212,8 +248,15 @@ public class ListRendezVous implements Initializable {
     
     private void refuserRendezVous(RendezVous rdv) {
         try {
+            String oldStatus = rdv.getStatus();
             rdv.setStatus("refusé");
             serviceRendezVous.update(rdv);
+            
+            // Envoi du SMS de notification seulement si le statut a changé
+            if (!"refusé".equals(oldStatus)) {
+                SMSService.sendRendezVousStatusUpdate(rdv, oldStatus);
+            }
+            
             loadRendezVous(); // Refresh the table
             showAlert("Succès", "Le rendez-vous a été refusé.");
         } catch (SQLException e) {
