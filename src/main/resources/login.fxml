@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<ScrollPane prefWidth="702.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.fermista.controllers.LoginController">
+    <AnchorPane prefHeight="400.0" prefWidth="700.0" stylesheets="@style.css">
+        <TextField id="email" fx:id="loginEmail" layoutX="330.4" prefHeight="38.0" prefWidth="320.0" promptText="Email" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="136.0" />
+
+        <PasswordField id="password" fx:id="loginPasswd" layoutX="331.2" prefHeight="38.0" prefWidth="319.0" promptText="Password" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="200.0" />
+        <TextField id="password" fx:id="VloginPasswd" layoutX="331.2" prefHeight="38.0" prefWidth="319.0" promptText="visable Password" visible="false" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="200.0" />
+        <Button fx:id="login" mnemonicParsing="false" onAction="#login" prefHeight="42.0" prefWidth="300.0" text="Login" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="315.0">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </Button>
+        <Text fx:id="welcome" layoutX="423.0" layoutY="63.0" text="Welcome" AnchorPane.leftAnchor="423.0" AnchorPane.topAnchor="36.0224609375">
+         <font>
+            <Font name="System Bold Italic" size="25.0" />
+         </font></Text>
+        <Text layoutX="356.0" layoutY="119.0" text="Please login here" AnchorPane.leftAnchor="356.0" AnchorPane.topAnchor="103.892578125">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Text>
+        <CheckBox id="rememberMe" layoutX="350.4" layoutY="251.0" text="Remember Me" AnchorPane.bottomAnchor="127.20000000000002" AnchorPane.leftAnchor="350.4" AnchorPane.topAnchor="251.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></CheckBox>
+        <Text fx:id="forgotPass" layoutX="356.0" layoutY="302.0" onMouseClicked="#forgetPass" text="Forgot password" AnchorPane.leftAnchor="356.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Text>
+        <Text id="signUP" fx:id="signUP" fill="#c11d1d" layoutX="613.0" layoutY="270.0" onMouseClicked="#signUp" text="Don't Have an Account?  SignUP" AnchorPane.bottomAnchor="127.20000000000002" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="251.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Text>
+        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="320.0" AnchorPane.topAnchor="145.0">
+            <Image url="@images/mailIcon-removebg.png" />
+        </ImageView>
+        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="320.0" AnchorPane.topAnchor="209.0">
+            <Image url="@images/lock-removebg.png" />
+        </ImageView>
+        <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="619.0" layoutY="209.0" onMouseClicked="#togglePasswordVisibility" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="60.0">
+            <Image url="@images/hide-removebg.png" />
+        </ImageView>
+        <Pane layoutX="-1.0" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: #CAE1A9">
+            <ImageView fitHeight="243.0" fitWidth="275.0" layoutX="35.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@images/fermistaLogin.jpg" />
+            </ImageView>
+        </Pane>
+    </AnchorPane>
+</ScrollPane>

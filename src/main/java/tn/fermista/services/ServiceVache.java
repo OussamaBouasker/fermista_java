@@ -53,7 +53,7 @@ public class ServiceVache implements CRUD<Vache> {
 
             // Supprimer d'abord les colliers liés à cette vache
 //String deleteColliers = "DELETE FROM collier WHERE vache_id = " + vache.getId();
-          //  st.executeUpdate(deleteColliers);
+            //  st.executeUpdate(deleteColliers);
 
             // Puis supprimer la vache
             String deleteVache = "DELETE FROM vache WHERE id = " + vache.getId();
@@ -64,7 +64,6 @@ public class ServiceVache implements CRUD<Vache> {
             System.out.println("Erreur lors de la suppression : " + e.getMessage());
         }
     }
-
 
     @Override
     public List<Vache> showAll() {
@@ -86,6 +85,33 @@ public class ServiceVache implements CRUD<Vache> {
             System.out.println("Erreur lors de la recherche : " + e.getMessage());
         }
         return vaches;
+    }
+
+
+    public Vache findById(int id) throws SQLException {
+        String req = "SELECT * FROM vache WHERE id = ?";
+        PreparedStatement ps = cnx.prepareStatement(req);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            Vache vache = new Vache(
+                    rs.getInt("id"),
+                    rs.getString("name")
+            );
+
+            // Optionnel : récupérer d'autres informations comme l'âge, la race, l'état médical
+            vache.setAge(rs.getInt("age"));
+            vache.setRace(rs.getString("race"));
+            vache.setEtat_medical(rs.getString("etat_medical"));
+
+            // Récupérer d'autres objets associés comme "collier", si nécessaire
+            // vache.setCollier(new Collier(...));
+
+            return vache;
+        }
+
+        return null;
     }
 
     public List<Vache> getAll() {
@@ -114,4 +140,8 @@ public class ServiceVache implements CRUD<Vache> {
         return vaches;
     }
 
+
 }
+
+
+

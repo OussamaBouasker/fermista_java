@@ -21,7 +21,7 @@ public class ServiceRendezVous implements CRUD<RendezVous> {
 
     @Override
     public void insert(RendezVous rendezVous) throws SQLException {
-        String req = "INSERT INTO rendezvous (date, heure, sex, cause, veterinaire_id, agriculteur_id, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String req = "INSERT INTO rendez_vous (date, heure, sex, cause, veterinaire_id, agriculteur_id, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pst = cnx.prepareStatement(req)) {
             pst.setDate(1, new java.sql.Date(rendezVous.getDate().getTime()));
             pst.setTime(2, new java.sql.Time(rendezVous.getHeure().getTime()));
@@ -36,7 +36,7 @@ public class ServiceRendezVous implements CRUD<RendezVous> {
 
     @Override
     public void update(RendezVous rendezVous) throws SQLException {
-        String req = "UPDATE rendezvous SET date = ?, heure = ?, sex = ?, cause = ?, veterinaire_id = ?, agriculteur_id = ?, status = ? WHERE id = ?";
+        String req = "UPDATE rendez_vous SET date = ?, heure = ?, sex = ?, cause = ?, veterinaire_id = ?, agriculteur_id = ?, status = ? WHERE id = ?";
         try (PreparedStatement pst = cnx.prepareStatement(req)) {
             pst.setDate(1, new java.sql.Date(rendezVous.getDate().getTime()));
             pst.setTime(2, new java.sql.Time(rendezVous.getHeure().getTime()));
@@ -52,7 +52,7 @@ public class ServiceRendezVous implements CRUD<RendezVous> {
 
     @Override
     public void delete(RendezVous rendezVous) throws SQLException {
-        String req = "DELETE FROM rendezvous WHERE id = ?";
+        String req = "DELETE FROM rendez_vous WHERE id = ?";
         try (PreparedStatement pst = cnx.prepareStatement(req)) {
             pst.setInt(1, rendezVous.getId());
             pst.executeUpdate();
@@ -62,7 +62,7 @@ public class ServiceRendezVous implements CRUD<RendezVous> {
     @Override
     public List<RendezVous> showAll() throws SQLException {
         List<RendezVous> list = new ArrayList<>();
-        String req = "SELECT * FROM rendezvous";
+        String req = "SELECT * FROM rendez_vous";
         try (Statement st = cnx.createStatement();
              ResultSet rs = st.executeQuery(req)) {
 

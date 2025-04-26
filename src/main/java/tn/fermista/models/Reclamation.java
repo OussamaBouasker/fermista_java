@@ -5,7 +5,6 @@ import java.util.Objects;
 
 public class Reclamation {
 
-
     private Integer id;
     private String titre;
     private String description;
