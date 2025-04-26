@@ -109,9 +109,7 @@ public class ServiceUser implements CRUD<User> {
 
     public User signIn(String email, String password) {
         User user = null;
-        // Hacher le mot de passe pour la comparaison
         String hashedPassword = PasswordUtils.hashPassword(password);
-
         String req = "SELECT * FROM user WHERE email = ? AND password = ?";
 
         try (PreparedStatement st = cnx.prepareStatement(req)) {
@@ -131,20 +129,27 @@ public class ServiceUser implements CRUD<User> {
                     user.setVerified(rs.getBoolean("is_verified"));
                     user.setImage(rs.getString("image"));
 
-                    // Déterminer le rôle de l'utilisateur
                     String roleStr = rs.getString("roles");
-                    if (roleStr != null && !roleStr.isEmpty()) {
+                    System.out.println("roleStr récupéré : " + roleStr);
+
+                    if (roleStr != null && !roleStr.trim().isEmpty()) {
                         try {
-                            user.setRoles(Roles.valueOf(roleStr));
+                            // 👉 Nettoyer si c'est une liste comme ["ROLE_ADMIN"]
+                            if (roleStr.startsWith("[") && roleStr.endsWith("]")) {
+                                roleStr = roleStr.substring(1, roleStr.length() - 1); // enlever les crochets [ ]
+                                roleStr = roleStr.replace("\"", ""); // enlever les guillemets "
+                            }
+                            user.setRoles(Roles.valueOf(roleStr.trim().toUpperCase()));
                         } catch (IllegalArgumentException e) {
-                            // Si le rôle n'est pas valide, définir un rôle par défaut
+                            System.out.println("Role invalide, rôle par défaut appliqué.");
                             user.setRoles(Roles.ROLE_CLIENT);
                         }
                     } else {
                         user.setRoles(Roles.ROLE_CLIENT);
                     }
 
-                    System.out.println("User logged in: " + user.getEmail());
+
+                    System.out.println("User logged in: " + user.getEmail() + " avec le rôle : " + user.getRoles());
                 } else {
                     System.out.println("No user found with the provided credentials.");
                 }
@@ -155,4 +160,5 @@ public class ServiceUser implements CRUD<User> {
 
         return user;
     }
+
 }

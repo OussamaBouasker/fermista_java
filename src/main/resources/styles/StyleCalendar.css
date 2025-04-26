@@ -15,14 +15,14 @@
     -fx-text-fill: white;
     -fx-font-size: 16px;
     -fx-padding: 12px 24px;
-
+    fx-background-radius: 5px;
     -fx-cursor: hand;
     -fx-min-width: 180px;
 }
 
 .search-button:hover, .action-button:hover {
     -fx-background-color: #90EE90;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0, 0, 0);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 0);
 }
 
 .text-field {
@@ -284,6 +284,7 @@
 
 .delete-button:hover {
     -fx-background-color: #c82333;
+    -fx-background-radius: 5px;
 }
 
 .section-title {
@@ -349,7 +350,8 @@
 }
 
 .action-button:hover {
-    -fx-background-color: rgb(66, 134, 71);
+    -fx-background-color:  #90EE90;
+    -fx-background-radius: 5px;
 }
 
 .date-picker-popup {
@@ -387,7 +389,7 @@
 
 .has-consultation {
     -fx-background-color: rgb(129, 196, 8);
-    -fx-text-fill: rgb(66, 134, 71);
+    -fx-text-fill:  #90EE90;
     -fx-font-weight: bold;
 }
 
@@ -400,11 +402,12 @@
 
 .combo-box:hover {
     -fx-border-color: rgb(129, 196, 8);
+    -fx-border-radius: 4px;
 }
 
 .combo-box:focused {
     -fx-border-color: rgb(129, 196, 8);
-    -fx-effect: dropshadow(gaussian, rgb(66, 134, 71), 0, 0, 0, 0);
+    -fx-effect: dropshadow(gaussian,  #90EE90, 0, 0, 0, 0);
 }
 
 .text-field {
@@ -420,7 +423,7 @@
 
 .text-field:focused {
     -fx-border-color: rgb(129, 196, 8);
-    -fx-effect: dropshadow(gaussian, rgb(66, 134, 71), 0, 0, 0, 0);
+    -fx-effect: dropshadow(gaussian,  #90EE90, 0, 0, 0, 0);
 }
 
 .custom-alert {
@@ -520,7 +523,7 @@
 
 .input-field:focused {
     -fx-border-color: rgb(129, 196, 8);
-    -fx-effect: dropshadow(gaussian, rgba(129, 196, 8, 0.25), 0, 0, 0, 0);
+    -fx-effect: dropshadow(gaussian,  #90EE90, 0, 0, 0, 0);
 }
 
 .input-field:hover {
@@ -537,11 +540,11 @@
 
 .text-area-field:focused {
     -fx-border-color: rgb(129, 196, 8);
-    -fx-effect: dropshadow(gaussian, rgba(129, 196, 8, 0.25), 0, 0, 0, 0);
+    -fx-effect: dropshadow(gaussian, #90EE90, 0, 0, 0, 0);
 }
 
 .text-area-field:hover {
-    -fx-border-color: #80bdff;
+    -fx-border-color:  #90EE90;
 }
 
 .text-area-field .content {
