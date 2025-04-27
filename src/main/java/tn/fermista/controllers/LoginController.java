@@ -8,11 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -24,9 +20,9 @@ public class LoginController {
     public Text forgotPass;
     public TextField VloginPasswd;
     public CheckBox rememberMe;
-    
+
     ServiceUser serviceUser = new ServiceUser();
-    
+
     @FXML
     private Button login;
     @FXML
@@ -42,52 +38,42 @@ public class LoginController {
         // Vérifier si un utilisateur est déjà connecté
         User savedUser = UserSession.loadUser();
         if (savedUser != null && rememberMe != null) {
-            // Pré-remplir les champs si l'utilisateur a choisi "Remember Me"
             loginEmail.setText(savedUser.getEmail());
-            // Ne pas pré-remplir le mot de passe pour des raisons de sécurité
             rememberMe.setSelected(true);
         }
     }
 
     @FXML
     private void login() throws IOException {
-        // Vérifier si les champs sont vides
         if (loginEmail.getText().isEmpty() || loginPasswd.getText().isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez remplir tous les champs");
             return;
         }
 
-        // Récupérer le mot de passe en fonction de sa visibilité
-        String password;
-        if (isPasswordVisible) {
-            password = VloginPasswd.getText();
-        } else {
-            password = loginPasswd.getText();
-        }
+        String password = isPasswordVisible ? VloginPasswd.getText() : loginPasswd.getText();
 
-        // Tenter de connecter l'utilisateur
         User user = serviceUser.signIn(loginEmail.getText(), password);
-        
+
         if (user != null) {
-            // Sauvegarder la session si "Remember Me" est coché
+            UserSession.setCurrentUser(user);
+
             if (rememberMe != null && rememberMe.isSelected()) {
                 UserSession.saveUser(user);
             } else {
-                // Effacer la session précédente si "Remember Me" n'est pas coché
-                UserSession.clearUser();
+                UserSession.clearSavedUser();
             }
-            
-            // Définir l'utilisateur courant pour le NavigationController
-            NavigationController.setCurrentUser(user);
-            
-            // Rediriger vers la page appropriée selon le rôle
-            String fxmlPath = getFxmlPathForRole(user.getRoles());
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) login.getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
+
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/HomePage.fxml"));
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) login.getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger la page d'accueil");
+            }
         } else {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Email ou mot de passe incorrect");
         }
@@ -96,13 +82,9 @@ public class LoginController {
     private String getFxmlPathForRole(Roles role) {
         switch (role) {
             case ROLE_ADMIN:
-                return "/DashboardTemplate.fxml";
             case ROLE_CLIENT:
-                return "/DashboardTemplate.fxml";
             case ROLE_FORMATEUR:
-                return "/DashboardTemplate.fxml";
             case ROLE_AGRICULTOR:
-                return "/DashboardTemplate.fxml";
             case ROLE_VETERINAIR:
                 return "/DashboardTemplate.fxml";
             default:
@@ -122,7 +104,6 @@ public class LoginController {
 
     @FXML
     private void forgetPass() throws IOException {
-        // Redirection vers la page de récupération de mot de passe
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/forgot-password.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -154,4 +135,3 @@ public class LoginController {
         alert.showAndWait();
     }
 }
-

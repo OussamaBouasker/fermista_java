@@ -123,34 +123,34 @@
                             </Button>
                         </buttons>
                     </ButtonBar>
-                  <ButtonBar layoutX="8.0" layoutY="137.0" prefHeight="40.0" prefWidth="200.0">
-                     <buttons>
-                        <ImageView fitHeight="21.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/home-removebg-preview (1).png" />
-                           </image>
-                        </ImageView>
-                        <Button fx:id="btn_workbench114" mnemonicParsing="false" onAction="#DashboardTemplate" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="home" textFill="WHITE">
-                           <font>
-                              <Font name="Century Gothic Bold" size="16.0" />
-                           </font>
-                        </Button>
-                     </buttons>
-                  </ButtonBar>
-                  <ButtonBar layoutX="12.0" layoutY="421.0" prefHeight="40.0" prefWidth="200.0">
-                     <buttons>
-                        <ImageView fitHeight="33.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/event1-removebg-preview.png" />
-                           </image>
-                        </ImageView>
-                        <Button fx:id="btn_workbench1122" mnemonicParsing="false" onAction="#ShowReservations" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="Gestion Réservations" textFill="WHITE">
-                           <font>
-                              <Font name="Century Gothic Bold" size="13.0" />
-                           </font>
-                        </Button>
-                     </buttons>
-                  </ButtonBar>
+                    <ButtonBar layoutX="8.0" layoutY="137.0" prefHeight="40.0" prefWidth="200.0">
+                        <buttons>
+                            <ImageView fitHeight="21.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@images/home-removebg-preview (1).png" />
+                                </image>
+                            </ImageView>
+                            <Button fx:id="btn_workbench114" mnemonicParsing="false" onAction="#DashboardTemplate" prefHeight="26.0" prefWidth="134.0" styleClass="btn" stylesheets="@style.css" text="home" textFill="WHITE">
+                                <font>
+                                    <Font name="Century Gothic Bold" size="16.0" />
+                                </font>
+                            </Button>
+                        </buttons>
+                    </ButtonBar>
+                    <ButtonBar layoutX="12.0" layoutY="421.0" prefHeight="40.0" prefWidth="200.0">
+                        <buttons>
+                            <ImageView fitHeight="33.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@images/event1-removebg-preview.png" />
+                                </image>
+                            </ImageView>
+                            <Button fx:id="btn_workbench1122" mnemonicParsing="false" onAction="#ShowReservations" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="Gestion Réservations" textFill="WHITE">
+                                <font>
+                                    <Font name="Century Gothic Bold" size="13.0" />
+                                </font>
+                            </Button>
+                        </buttons>
+                    </ButtonBar>
                 </children>
             </AnchorPane>
         </children>
@@ -403,33 +403,35 @@
                             <Font name="Century Gothic" size="14.0" />
                         </font>
                     </Label>
-                    <ButtonBar fx:id="btn_workbench6" layoutX="10.0" layoutY="165.0" prefHeight="40.0" prefWidth="200.0" styleClass="btn_workbench" stylesheets="@style.css">
-                        <buttons>
-                            <ImageView fitHeight="29.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
-                                <image>
-                                    <Image url="@images/home-removebg-preview (1).png" />
-                                </image>
-                            </ImageView>
-                            <Text fill="#fcfafa" strokeType="OUTSIDE" strokeWidth="0.0" text="Home" wrappingWidth="110.13676186799967">
-                                <font>
-                                    <Font name="Century Gothic Bold" size="15.0" />
-                                </font>
-                            </Text>
-                        </buttons>
-                    </ButtonBar>
+                    <Button fx:id="btn_home"  style="-fx-background-color: rgb(129, 196, 8);" layoutX="10.0" layoutY="165.0" prefHeight="40.0" prefWidth="200.0" styleClass="btn_workbench" stylesheets="@style.css" onAction="#NavigateToHomePage">
+                        <graphic>
+                            <HBox alignment="CENTER_LEFT" spacing="10">
+                                <ImageView fitHeight="29.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@images/home-removebg-preview (1).png" />
+                                    </image>
+                                </ImageView>
+                                <Text fill="#fcfafa" strokeType="OUTSIDE" strokeWidth="0.0" text="Home" wrappingWidth="110.13676186799967">
+                                    <font>
+                                        <Font name="Century Gothic Bold" size="15.0" />
+                                    </font>
+                                </Text>
+                            </HBox>
+                        </graphic>
+                    </Button>
                 </children>
             </Pane>
-              <Label fx:id="userNameLabel" layoutX="591.0" layoutY="82.0" prefHeight="18.0" prefWidth="113.0" style="-fx-text-fill: #333333;" text="Hello, ">
-                  <font>
-                      <Font name="Century Gothic Bold" size="14.0" />
-                  </font>
-              </Label>
-        <!-- Ajouter ce code après le userNameLabel -->
-        <Button fx:id="logoutButton" layoutX="586.0" layoutY="122.0" mnemonicParsing="false" onAction="#handleLogout" styleClass="btn" text="Se déconnecter">
-            <font>
-                <Font name="Century Gothic Bold" size="12.0" />
-            </font>
-        </Button>
+            <Label fx:id="userNameLabel" layoutX="591.0" layoutY="82.0" prefHeight="18.0" prefWidth="113.0" style="-fx-text-fill: #333333;" text="Hello, ">
+                <font>
+                    <Font name="Century Gothic Bold" size="14.0" />
+                </font>
+            </Label>
+            <!-- Ajouter ce code après le userNameLabel -->
+            <Button fx:id="logoutButton" layoutX="586.0" layoutY="122.0" mnemonicParsing="false" onAction="#handleLogout" styleClass="btn" text="Se déconnecter">
+                <font>
+                    <Font name="Century Gothic Bold" size="12.0" />
+                </font>
+            </Button>
         </children>
     </Pane>
 </children>
