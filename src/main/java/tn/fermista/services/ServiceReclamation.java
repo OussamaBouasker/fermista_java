@@ -55,7 +55,7 @@ public class ServiceReclamation implements CRUD<Reclamation> {
     @Override
     public List<Reclamation> showAll() throws SQLException {
         List<Reclamation> list = new ArrayList<>();
-        String sql = "SELECT r.*, u.email, u.first_name, u.last_name FROM reclamation r JOIN user u ON r.user_id = u.id";
+        String sql = "SELECT r.*, u.email, u.first_name, u.last_name, u.number FROM reclamation r JOIN user u ON r.user_id = u.id";
         Statement st = cnx.createStatement();
         ResultSet rs = st.executeQuery(sql);
 
@@ -73,6 +73,7 @@ public class ServiceReclamation implements CRUD<Reclamation> {
             u.setEmail(rs.getString("email"));
             u.setFirstName(rs.getString("first_name"));
             u.setLastName(rs.getString("last_name"));
+            u.setNumber(rs.getString("number"));
             r.setUser(u);
 
             list.add(r);

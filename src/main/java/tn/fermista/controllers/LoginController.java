@@ -11,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 
 import java.io.IOException;
 
@@ -31,6 +33,8 @@ public class LoginController {
     private PasswordField loginPasswd;
     @FXML
     private Text welcome;
+    @FXML
+    private Button togglePasswordButton;
     private boolean isPasswordVisible = false;
 
     @FXML
@@ -41,6 +45,10 @@ public class LoginController {
             loginEmail.setText(savedUser.getEmail());
             rememberMe.setSelected(true);
         }
+        
+        // Initialize password fields
+        VloginPasswd.setVisible(false);
+        loginPasswd.setVisible(true);
     }
 
     @FXML
@@ -104,7 +112,7 @@ public class LoginController {
 
     @FXML
     private void forgetPass() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/forgot-password.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/MailVerification.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         Stage stage = (Stage) forgotPass.getScene().getWindow();
@@ -117,13 +125,23 @@ public class LoginController {
         isPasswordVisible = !isPasswordVisible;
 
         if (isPasswordVisible) {
+            // Copier le texte du PasswordField vers le TextField
             VloginPasswd.setText(loginPasswd.getText());
+            // Afficher le TextField et cacher le PasswordField
             VloginPasswd.setVisible(true);
             loginPasswd.setVisible(false);
+            // Mettre le focus sur le TextField
+            VloginPasswd.requestFocus();
+            VloginPasswd.positionCaret(VloginPasswd.getText().length());
         } else {
+            // Copier le texte du TextField vers le PasswordField
             loginPasswd.setText(VloginPasswd.getText());
+            // Afficher le PasswordField et cacher le TextField
             loginPasswd.setVisible(true);
             VloginPasswd.setVisible(false);
+            // Mettre le focus sur le PasswordField
+            loginPasswd.requestFocus();
+            loginPasswd.positionCaret(loginPasswd.getText().length());
         }
     }
 

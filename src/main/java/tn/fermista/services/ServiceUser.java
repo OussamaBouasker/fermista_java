@@ -161,4 +161,28 @@ public class ServiceUser implements CRUD<User> {
         return user;
     }
 
+    public boolean emailExists(String email) {
+        String req = "SELECT COUNT(*) FROM user WHERE email = ?";
+        try (PreparedStatement st = cnx.prepareStatement(req)) {
+            st.setString(1, email);
+            try (ResultSet rs = st.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void updatePassword(String email, String newPassword) throws SQLException {
+        String sql = "UPDATE user SET password = ? WHERE email = ?";
+        try (PreparedStatement pst = cnx.prepareStatement(sql)) {
+            pst.setString(1, newPassword);
+            pst.setString(2, email);
+            pst.executeUpdate();
+        }
+    }
+
 }

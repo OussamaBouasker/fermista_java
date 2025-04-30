@@ -24,6 +24,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class NavigationController implements Initializable {
+    public Button btn_workbench11212;
     @FXML
     private Button btn_workbench11;
 
@@ -348,5 +349,18 @@ public class NavigationController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.show();
+    }
+
+    public void StatTemplate(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/StatTemplate.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de StatTemplate.fxml: " + e.getMessage());
+        }
     }
 }

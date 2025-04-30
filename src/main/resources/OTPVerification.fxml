@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="778.0" prefWidth="1130.0" style="-fx-background-color: #f5f2ed;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.fermista.controllers.OTPVerificationController">
+    <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Pane prefHeight="600" prefWidth="1050" style="-fx-background-color: transparent;">
+            <AnchorPane layoutX="262.0" layoutY="71.0" prefWidth="500" style="-fx-background-color: white; -fx-background-radius: 12px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 4); -fx-padding: 40px;">
+                <VBox alignment="CENTER" spacing="30" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="40.0">
+                    <Text fx:id="title" style="-fx-font-size: 45px; -fx-font-weight: bold; -fx-fill: rgb(129,196,8);" text="Verify OTP" />
+                    
+                    <Text style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #333;" text="Please enter the OTP sent to your email" />
+                    
+                    <TextField fx:id="otpField" prefHeight="45.0" prefWidth="350.0" promptText="Enter OTP" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: rgb(129,196,8); -fx-border-width: 2px; -fx-font-size: 14px; -fx-padding: 10px;" />
+                    
+                    <HBox alignment="CENTER" spacing="20">
+                        <Button fx:id="backButton" onAction="#handleBack" prefHeight="45.0" prefWidth="150.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-font-size: 16px;" text="Retour" />
+                                
+                        <Button fx:id="validateButton" onAction="#handleValidate" prefHeight="45.0" prefWidth="150.0" style="-fx-background-color: rgb(129,196,8); -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-font-size: 16px;" text="Validate" />
+                    </HBox>
+                    
+                    <Text fx:id="errorText" style="-fx-fill: red; -fx-font-size: 14px;" visible="false" />
+                    
+                    <Text fx:id="loginLink" onMouseClicked="#navigateToLogin" style="-fx-fill: rgb(129,196,8); -fx-cursor: hand; -fx-font-size: 16px;" text="Retour à la page de connexion" />
+                </VBox>
+            </AnchorPane>
+        </Pane>
+    </VBox>
+</AnchorPane>
