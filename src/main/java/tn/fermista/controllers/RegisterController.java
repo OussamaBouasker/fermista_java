@@ -38,6 +38,8 @@ import java.io.IOException;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import javax.imageio.ImageIO;
+import javafx.scene.control.DialogPane;
+import javafx.scene.control.ButtonType;
 
 public class RegisterController extends Application {
 
@@ -178,6 +180,14 @@ public class RegisterController extends Application {
             rolesComboBox.getValue() == null ||
             captchaInput.getText().isEmpty()) {
             showAlert(AlertType.ERROR, "Erreur", "Veuillez remplir tous les champs");
+            return;
+        }
+
+        // Vérification si l'email existe déjà
+        if (serviceUser.emailExists(email.getText())) {
+            showAlert(AlertType.ERROR, "Erreur", "Cet email est déjà utilisé. Veuillez utiliser un autre email.");
+            email.clear();
+            email.requestFocus();
             return;
         }
 
@@ -352,6 +362,19 @@ public class RegisterController extends Application {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(content);
+        
+        // Style personnalisé pour l'alerte
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setStyle("-fx-background-color: #FFF0F5;"); // Rose pastel clair
+        dialogPane.getStyleClass().add("custom-alert");
+        
+        // Style pour le contenu
+        Label contentLabel = new Label(content);
+        contentLabel.setStyle("-fx-text-fill: #333333; -fx-font-size: 14px; -fx-font-family: 'Segoe UI';");
+        dialogPane.setContent(contentLabel);
+        
+
+        
         alert.showAndWait();
     }
 }

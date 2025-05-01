@@ -21,7 +21,7 @@
         <HBox alignment="CENTER" maxWidth="1130.0">
             <VBox prefHeight="680.0" prefWidth="205.0">
                 <children>
-                    <AnchorPane fx:id="side_ankerpane" prefHeight="680.0" prefWidth="253.0" styleClass="side_ankerpane" stylesheets="@style.css">
+                    <AnchorPane fx:id="side_ankerpane" prefHeight="778.0" prefWidth="216.0" styleClass="side_ankerpane" stylesheets="@style.css">
                         <children>
                             <Pane fx:id="inner_pane" layoutX="17.0" layoutY="26.0" prefHeight="64.0" prefWidth="186.0" styleClass="inner_pane" stylesheets="@style.css">
                                 <children>
@@ -171,9 +171,9 @@
                     </AnchorPane>
                 </children>
             </VBox>
-            <Pane prefHeight="680.0" prefWidth="709.0">
+            <Pane prefHeight="812.0" prefWidth="914.0">
                 <children>
-                    <FlowPane layoutY="14.0" prefHeight="60.0" prefWidth="710.0">
+                    <FlowPane layoutX="142.0" layoutY="14.0" prefHeight="64.0" prefWidth="784.0">
                         <children>
                             <Pane prefHeight="50.0" prefWidth="200.0" translateX="350.0">
                                 <children>
@@ -210,19 +210,19 @@
                             </ButtonBar>
                         </children>
                     </FlowPane>
-                    <Label layoutX="140.0" layoutY="137.0" text="Gestion des Reclamations">
+                    <Label layoutX="249.0" layoutY="114.0" text="Gestion des Reclamations">
                         <font>
                             <Font name="Century Gothic Bold" size="33.0" />
                         </font>
                     </Label>
                     <!-- TableView des réclamations -->
-                    <TableView fx:id="reclamationTable" layoutX="26.0" layoutY="211.0" prefHeight="400.0" prefWidth="643.0">
+                    <TableView fx:id="reclamationTable" layoutX="48.0" layoutY="200.0" prefHeight="489.0" prefWidth="819.0">
                         <columns>
-                            <TableColumn fx:id="titreColumn" prefWidth="103.19994831085205" text="Titre" />
-                            <TableColumn fx:id="statusColumn" prefWidth="112.0" text="Status" />
-                            <TableColumn fx:id="dateSoumissionColumn" prefWidth="166.3999481201172" text="Date Soumission" />
-                            <TableColumn fx:id="userColumn" maxWidth="3000.0" prefWidth="179.20001220703125" text="Utilisateur" />
-                            <TableColumn fx:id="actionsColumn" prefWidth="256.00006103515625" text="Actions" />
+                            <TableColumn fx:id="titreColumn" prefWidth="121.0" text="Titre" />
+                            <TableColumn fx:id="statusColumn" prefWidth="95.0" text="Status" />
+                            <TableColumn fx:id="dateSoumissionColumn" prefWidth="192.0" text="Date Soumission" />
+                            <TableColumn fx:id="userColumn" maxWidth="3000.0" prefWidth="179.0" text="Utilisateur" />
+                            <TableColumn fx:id="actionsColumn" prefWidth="233.0" text="Actions" />
                         </columns>
                     </TableView>
 

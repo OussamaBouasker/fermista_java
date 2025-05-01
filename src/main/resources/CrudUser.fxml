@@ -22,7 +22,7 @@
             <children>
                 <VBox prefHeight="680.0" prefWidth="205.0">
                     <children>
-                        <AnchorPane fx:id="side_ankerpane" prefHeight="680.0" prefWidth="253.0" styleClass="side_ankerpane" stylesheets="@style.css">
+                        <AnchorPane fx:id="side_ankerpane" prefHeight="781.0" prefWidth="216.0" styleClass="side_ankerpane" stylesheets="@style.css">
                             <children>
                                 <Pane fx:id="inner_pane" layoutX="17.0" layoutY="26.0" prefHeight="64.0" prefWidth="186.0" styleClass="inner_pane" stylesheets="@style.css">
                                     <children>
@@ -172,9 +172,9 @@
                         </AnchorPane>
                     </children>
                 </VBox>
-                <Pane prefHeight="680.0" prefWidth="709.0">
+                <Pane prefHeight="778.0" prefWidth="916.0">
                     <children>
-                        <FlowPane layoutY="14.0" prefHeight="60.0" prefWidth="710.0">
+                        <FlowPane layoutX="138.0" layoutY="14.0" prefHeight="64.0" prefWidth="776.0">
                             <children>
                                 <Pane prefHeight="50.0" prefWidth="200.0" translateX="350.0">
                                     <children>
@@ -211,14 +211,14 @@
                                 </ButtonBar>
                             </children>
                         </FlowPane>
-                        <Label layoutX="172.0" layoutY="119.0" text="Gestion des Utilisateurs">
+                        <Label layoutX="275.0" layoutY="119.0" text="Gestion des Utilisateurs">
                             <font>
                                 <Font name="Century Gothic Bold" size="33.0" />
                             </font>
                         </Label>
 
                         <!-- Bouton Ajouter -->
-                        <Button fx:id="btnAdd" layoutX="631.0" layoutY="179.0" onAction="#handleAddUser" prefHeight="26.0" prefWidth="35.0" styleClass="btn-primary" />
+                        <Button fx:id="btnAdd" layoutX="783.0" layoutY="161.0" onAction="#handleAddUser" prefHeight="26.0" prefWidth="35.0" styleClass="btn-primary" />
 
                         <!-- Formulaire de saisie -->
                         <VBox fx:id="formContainer" layoutX="38.0" layoutY="140.0" spacing="10.0" visible="false">
@@ -281,7 +281,7 @@
                         </VBox>
 
                         <!-- TableView des utilisateurs -->
-                        <TableView fx:id="userTable" layoutX="19.0" layoutY="246.0" prefHeight="352.0" prefWidth="671.0">
+                        <TableView fx:id="userTable" layoutX="60.0" layoutY="222.0" prefHeight="473.0" prefWidth="776.0">
                             <columns>
                                 <TableColumn fx:id="emailColumn" prefWidth="134.3999538421631" text="Email" />
                                 <TableColumn fx:id="firstNameColumn" prefWidth="102.4000244140625" text="First Name" />
@@ -291,7 +291,7 @@
                                 <TableColumn fx:id="actionsColumn" prefWidth="173.60009765625" text="Actions" />
                             </columns>
                         </TableView>
-                        <ImageView fitHeight="40.0" fitWidth="35.0" layoutX="631.0" layoutY="197.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="40.0" fitWidth="35.0" layoutX="783.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@images/plus-removebg-preview.png" />
                             </image>

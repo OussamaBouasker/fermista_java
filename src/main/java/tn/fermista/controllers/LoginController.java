@@ -150,6 +150,24 @@ public class LoginController {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(content);
+        // Style pour le contenu
+
+        // Style personnalisé pour l'alerte
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setStyle("-fx-background-color: #FFF0F5;"); // Rose pastel clair
+        dialogPane.getStyleClass().add("custom-alert");
+
+        // Style pour le contenu
+        Label contentLabel = new Label(content);
+        contentLabel.setStyle("-fx-text-fill: #333333; -fx-font-size: 14px; -fx-font-family: 'Segoe UI';");
+        dialogPane.setContent(contentLabel);
+
+        // Style pour les boutons
+        ButtonType buttonType = alert.getButtonTypes().get(0);
+        Button button = (Button) dialogPane.lookupButton(buttonType);
+        button.setStyle("-fx-background-color: #bd454f; -fx-text-fill: white; -fx-font-weight: bold;");
+
+
         alert.showAndWait();
     }
 }
