@@ -15,6 +15,8 @@ import tn.fermista.models.User;
 import tn.fermista.services.ServiceAgriculteur;
 import tn.fermista.services.ServiceClient;
 import tn.fermista.services.ServiceFormateur;
+import tn.fermista.services.ServiceVeterinaire;
+
 import tn.fermista.services.ServiceReclamation;
 import tn.fermista.utils.UserSession;
 
@@ -52,6 +54,8 @@ public class NavigationController implements Initializable {
     @FXML
     private Label nbrReclamation;
     @FXML
+    private Label nbrVeterinaire;
+    @FXML
     private Label nbrePendingReclamation;
     @FXML
     private Label nbreCancelledReclamation;
@@ -62,6 +66,7 @@ public class NavigationController implements Initializable {
     private ServiceClient serviceClient;
     private ServiceAgriculteur serviceAgriculteur;
     private ServiceReclamation serviceReclamation;
+    private ServiceVeterinaire serviceveterinaire;
 
     public static void naviguerVersSuiviMedical(Button sourceButton) {
         try {
@@ -86,7 +91,7 @@ public class NavigationController implements Initializable {
         serviceClient = new ServiceClient();
         serviceAgriculteur = new ServiceAgriculteur();
         serviceReclamation = new ServiceReclamation();
-
+        serviceveterinaire = new ServiceVeterinaire();
         try {
             // Nombre de formateurs
             int formateurCount = serviceFormateur.rechercher().size();
@@ -99,6 +104,9 @@ public class NavigationController implements Initializable {
             // Nombre d'agriculteurs
             int agriculteurCount = serviceAgriculteur.rechercher().size();
             nbreAgriculteur.setText(String.valueOf(agriculteurCount));
+
+            int veterinaireCount = serviceveterinaire.rechercher().size();
+            nbrVeterinaire.setText(String.valueOf(veterinaireCount));
 
             // Nombre de réclamations
             // Count reclamations by status
@@ -137,6 +145,9 @@ public class NavigationController implements Initializable {
             // Nombre d'agriculteurs
             int agriculteurCount = serviceAgriculteur.rechercher().size();
             nbreAgriculteur.setText(String.valueOf(agriculteurCount));
+
+            int veterinaireCount = serviceveterinaire.rechercher().size();
+            nbrVeterinaire.setText(String.valueOf(veterinaireCount));
 
             // Nombre de réclamations
             int reclamationCount = serviceReclamation.showAll().size();
@@ -361,6 +372,19 @@ public class NavigationController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Erreur lors du chargement de StatTemplate.fxml: " + e.getMessage());
+        }
+    }
+
+    public void test(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Statistiques_Evenement.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ShowWorkshops.fxml: " + e.getMessage());
         }
     }
 }

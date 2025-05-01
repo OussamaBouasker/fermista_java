@@ -96,7 +96,7 @@ public class ServiceUser implements CRUD<User> {
         // 2. Détacher chaque workshop de l'utilisateur
         for (Workshop workshop : workshops) {
             workshop.setUser(null);
-            serviceWorkshop.update1(workshop); // mettre à jour le workshop dans la base
+            serviceWorkshop.update(workshop); // mettre à jour le workshop dans la base
         }
 
         // 3. Supprimer l'utilisateur
@@ -183,6 +183,44 @@ public class ServiceUser implements CRUD<User> {
             pst.setString(2, email);
             pst.executeUpdate();
         }
+    }
+
+    public User getById(int id) throws SQLException {
+        String sql = "SELECT * FROM user WHERE id = ?";
+        PreparedStatement pst = cnx.prepareStatement(sql);
+        pst.setInt(1, id);
+        ResultSet rs = pst.executeQuery();
+
+        if (rs.next()) {
+            User user = new User();
+            user.setId(rs.getInt("id"));
+            user.setEmail(rs.getString("email"));
+            user.setPassword(rs.getString("password"));
+            user.setFirstName(rs.getString("first_name"));
+            user.setLastName(rs.getString("last_name"));
+            user.setNumber(rs.getString("number"));
+            user.setState(rs.getBoolean("state"));
+            user.setVerified(rs.getBoolean("is_verified"));
+            user.setImage(rs.getString("image"));
+
+            String roleStr = rs.getString("roles");
+            if (roleStr != null && !roleStr.trim().isEmpty()) {
+                try {
+                    if (roleStr.startsWith("[") && roleStr.endsWith("]")) {
+                        roleStr = roleStr.substring(1, roleStr.length() - 1);
+                        roleStr = roleStr.replace("\"", "");
+                    }
+                    user.setRoles(Roles.valueOf(roleStr.trim().toUpperCase()));
+                } catch (IllegalArgumentException e) {
+                    user.setRoles(Roles.ROLE_CLIENT);
+                }
+            } else {
+                user.setRoles(Roles.ROLE_CLIENT);
+            }
+
+            return user;
+        }
+        return null;
     }
 
 }

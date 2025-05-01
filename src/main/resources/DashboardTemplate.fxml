@@ -166,6 +166,20 @@
                                   </Button>
                               </buttons>
                           </ButtonBar>
+                  <ButtonBar layoutX="8.0" layoutY="660.0" prefHeight="40.0" prefWidth="200.0">
+                     <buttons>
+                        <ImageView fitHeight="35.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/statLogo.png" />
+                           </image>
+                        </ImageView>
+                        <Button fx:id="btn_workbench112121" mnemonicParsing="false" onAction="#test" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="Statistiques events" textFill="WHITE">
+                           <font>
+                              <Font name="Century Gothic Bold" size="13.0" />
+                           </font>
+                        </Button>
+                     </buttons>
+                  </ButtonBar>
                       </children>
                   </AnchorPane>
                 <VBox prefHeight="680.0" prefWidth="205.0" />

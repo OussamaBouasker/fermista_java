@@ -12,6 +12,7 @@ import tn.fermista.models.Reservation;
 import tn.fermista.models.User;
 import tn.fermista.services.ServiceReservation;
 import tn.fermista.utils.EmailSender;
+import tn.fermista.utils.EmailSender2;
 import tn.fermista.utils.UserSession;
 import java.time.LocalDateTime;
 import java.sql.SQLException;
@@ -186,7 +187,7 @@ public class WorkshopDetailsController {
 
     private void sendConfirmationEmail(Reservation reservation) {
         try {
-            EmailSender.sendNewReservationEmail(reservation);
+            EmailSender2.sendNewReservationEmail(reservation);
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Erreur lors de l'envoi de l'email de confirmation", e);
             System.err.println("Erreur lors de l'envoi de l'email: " + e.getMessage());

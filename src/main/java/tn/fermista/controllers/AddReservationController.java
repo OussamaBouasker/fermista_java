@@ -12,7 +12,7 @@ import tn.fermista.services.ServiceWorkshop;
 import tn.fermista.services.ServiceClient;
 import tn.fermista.services.ServiceAgriculteur;
 import tn.fermista.services.ServiceUser;
-import tn.fermista.utils.EmailSender;
+import tn.fermista.utils.EmailSender2;
 import tn.fermista.utils.QRCodeGenerator;
 
 import java.net.URL;
@@ -231,7 +231,7 @@ public class AddReservationController implements Initializable {
                         }
                     }
                     
-                    EmailSender.sendReservationStatusEmail(
+                    EmailSender2.sendReservationStatusEmail(
                         reservation.getEmail(),
                         selectedWorkshop.getTitre(),
                         newStatus,

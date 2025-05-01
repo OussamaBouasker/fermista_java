@@ -110,7 +110,7 @@ public class NavbarController {
     // ========== Navigation autres boutons ==========
     @FXML private void handleHome() { navigateTo("/HomePage.fxml"); }
 
-    @FXML private void handleWorkshops() { navigateTo("/WorkshopsPage.fxml"); }
+    @FXML private void handleWorkshops() { navigateTo("/Front-Office/showworkshops.fxml"); }
     @FXML private void handleControlMedical() { navigateTo("/ControlMedicalFront.fxml"); }
     @FXML private void handleRendezVous() { navigateTo("/ListVet.fxml"); }
     @FXML private void handleListeRendezVous(ActionEvent actionEvent) { navigateTo("/ListRendezVous.fxml"); }
