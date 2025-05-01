@@ -1,28 +1,46 @@
 package tn.fermista.models;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Commande {
     private int id;
-    private Date date_commander;
-    private String statut;
-    private int montant_total;
-    private Livraison livcom_id;
+    private LocalDate date;
+    private double total;
+    private String status;
+    private int livraisonId;
+    
+    // Nouveaux champs pour le formulaire de commande
+    private String nomClient;
+    private String email;
+    private String telephone;
+    private String adresse;
+    private String notes;
 
     public Commande() {
         // constructeur vide
     }
-    public Commande(int id) {
-        this.id = id;
 
+    public Commande(int id, LocalDate date, double total, String status, int livraisonId) {
+        this.id = id;
+        this.date = date;
+        this.total = total;
+        this.status = status;
+        this.livraisonId = livraisonId;
     }
-
-    public Commande(int id, Date date_commander, String statut, int montant_total, Livraison livcom_id) {
+    
+    // Constructeur complet avec les nouveaux champs
+    public Commande(int id, LocalDate date, double total, String status, int livraisonId, 
+                   String nomClient, String email, String telephone, String adresse, String notes) {
         this.id = id;
-        this.date_commander = date_commander;
-        this.statut = statut;
-        this.montant_total = montant_total;
-        this.livcom_id = livcom_id;
+        this.date = date;
+        this.total = total;
+        this.status = status;
+        this.livraisonId = livraisonId;
+        this.nomClient = nomClient;
+        this.email = email;
+        this.telephone = telephone;
+        this.adresse = adresse;
+        this.notes = notes;
     }
 
     public int getId() {
@@ -33,46 +51,92 @@ public class Commande {
         this.id = id;
     }
 
-    public Date getDate_commander() {
-        return date_commander;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDate_commander(Date date_commander) {
-        this.date_commander = date_commander;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
-    public String getStatut() {
-        return statut;
+    public double getTotal() {
+        return total;
     }
 
-    public void setStatut(String statut) {
-        this.statut = statut;
+    public void setTotal(double total) {
+        this.total = total;
     }
 
-    public int getMontant_total() {
-        return montant_total;
+    public String getStatus() {
+        return status;
     }
 
-    public void setMontant_total(int montant_total) {
-        this.montant_total = montant_total;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public Livraison getLivcom_id() {
-        return livcom_id;
+    public int getLivraisonId() {
+        return livraisonId;
     }
 
-    public void setLivcom_id(Livraison livcom_id) {
-        this.livcom_id = livcom_id;
+    public void setLivraisonId(int livraisonId) {
+        this.livraisonId = livraisonId;
+    }
+    
+    // Getters et setters pour les nouveaux champs
+    public String getNomClient() {
+        return nomClient;
+    }
+
+    public void setNomClient(String nomClient) {
+        this.nomClient = nomClient;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     @Override
     public String toString() {
         return "Commande{" +
                 "id=" + id +
-                ", date_commander=" + date_commander +
-                ", statut='" + statut + '\'' +
-                ", montant_total=" + montant_total +
-                ", livcom_id=" + livcom_id +
+                ", date=" + date +
+                ", total=" + total +
+                ", status='" + status + '\'' +
+                ", livraisonId=" + livraisonId +
+                ", nomClient='" + nomClient + '\'' +
+                ", email='" + email + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", adresse='" + adresse + '\'' +
+                ", notes='" + notes + '\'' +
                 '}';
     }
 }

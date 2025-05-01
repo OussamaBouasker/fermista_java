@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.web.*?>
+<?import javafx.geometry.Insets?>
+
+<?import java.lang.String?>
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="tn.fermista.controllers.MapViewController" styleClass="map-container">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+    
+    <top>
+        <HBox spacing="10" alignment="CENTER_LEFT" styleClass="map-header">
+            <Label text="SÉLECTIONNEZ VOTRE LOCALISATION" styleClass="map-title"/>
+            <Region HBox.hgrow="ALWAYS" />
+            <TextField fx:id="searchField" promptText="Rechercher une adresse" styleClass="search-field" prefWidth="250"/>
+            <Button text="RECHERCHER" styleClass="search-button" onAction="#handleSearch"/>
+        </HBox>
+    </top>
+    
+    <center>
+        <BorderPane styleClass="map-view-container">
+            <center>
+                <WebView fx:id="webView" prefHeight="500" prefWidth="700" minHeight="500" minWidth="600" />
+            </center>
+            <bottom>
+                <HBox alignment="CENTER_RIGHT" spacing="10" styleClass="map-controls">
+                    <Label fx:id="locationDetailsLabel" styleClass="location-details" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    <Button text="CONFIRMER" styleClass="confirm-button" onAction="#handleConfirm"/>
+                    <Button text="ANNULER" styleClass="cancel-button" onAction="#handleCancel"/>
+                </HBox>
+            </bottom>
+        </BorderPane>
+    </center>
+    
+    <stylesheets>
+        <String fx:value="@/styles.css"/>
+    </stylesheets>
+</BorderPane> 

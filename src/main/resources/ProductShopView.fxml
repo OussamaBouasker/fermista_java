@@ -8,8 +8,8 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.geometry.Insets?>
 
-<BorderPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" 
-      fx:controller="tn.fermista.controllers.ProductShopViewController" stylesheets="@styles.css">
+<BorderPane prefHeight="680.0" prefWidth="930.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" 
+      fx:controller="tn.fermista.controllers.ProductShopViewController" stylesheets="styles.css">
     
     <!-- HEADER -->
     <top>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Formulaire de paiement Stripe</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            padding: 0;
+            margin: 0;
+            background-color: #f8f8f8;
+        }
+        
+        .container {
+            padding: 10px;
+        }
+        
+        #payment-form {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        #payment-element {
+            margin-bottom: 20px;
+        }
+        
+        button {
+            background: #4CAF50;
+            color: white;
+            border: 0;
+            border-radius: 4px;
+            padding: 12px 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s ease;
+        }
+        
+        button:hover {
+            filter: brightness(1.1);
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: default;
+        }
+        
+        .error-message {
+            color: rgb(220, 39, 39);
+            margin-top: 8px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        /* Pour les cartes de test */
+        .test-cards {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .test-cards h4 {
+            margin-bottom: 5px;
+        }
+        
+        .test-card {
+            padding: 3px 0;
+            border-bottom: 1px dotted #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form id="payment-form">
+            <div id="payment-element">
+                <!-- Le formulaire Stripe Elements sera injecté ici -->
+            </div>
+            
+            <button id="submit-button" type="submit" disabled>
+                <span id="button-text">Payer maintenant</span>
+                <div id="spinner" class="hidden"></div>
+            </button>
+            
+            <div id="payment-message" class="error-message hidden"></div>
+        </form>
+        
+        <div class="test-cards">
+            <h4>Cartes de test Stripe:</h4>
+            <div class="test-card">✅ Paiement réussi: <strong>4242 4242 4242 4242</strong></div>
+            <div class="test-card">❌ Paiement refusé: <strong>4000 0000 0000 0002</strong></div>
+            <div class="test-card">🔄 Authentification requise: <strong>4000 0027 6000 3184</strong></div>
+            <p>Pour toutes ces cartes, utilisez une date future (ex: 12/25) et n'importe quel CVC (ex: 123).</p>
+        </div>
+    </div>
+    
+    <!-- Chargement de Stripe.js -->
+    <script src="https://js.stripe.com/v3/"></script>
+    
+    <script>
+        // Ces variables seront remplies par le code Java
+        const stripePublicKey = "STRIPE_PUBLIC_KEY";
+        const paymentIntentClientSecret = "PAYMENT_INTENT_CLIENT_SECRET";
+        
+        // Initialisation de Stripe
+        const stripe = Stripe(stripePublicKey);
+        
+        let elements;
+        let paymentElement;
+        
+        // Initialisation de Stripe Elements
+        const initializeStripe = async () => {
+            elements = stripe.elements({
+                clientSecret: paymentIntentClientSecret,
+                appearance: {
+                    theme: 'stripe',
+                    variables: {
+                        colorPrimary: '#4CAF50',
+                    },
+                },
+            });
+
+            // Création et montage du formulaire de paiement
+            paymentElement = elements.create("payment");
+            paymentElement.mount("#payment-element");
+            
+            // Écouter les changements dans le formulaire pour activer/désactiver le bouton
+            paymentElement.on('change', (event) => {
+                const submitButton = document.querySelector("#submit-button");
+                
+                // Vérifier si le formulaire est complet
+                const {complete, empty, value} = event;
+                
+                // Journaliser l'état du formulaire (utile pour le débogage)
+                console.log("Form state:", {complete, empty, value});
+                
+                // Activer le bouton si tous les champs sont remplis correctement
+                if (complete) {
+                    submitButton.removeAttribute('disabled');
+                } else {
+                    submitButton.setAttribute('disabled', true);
+                }
+                
+                // Afficher des messages d'erreur si nécessaire
+                if (event.error) {
+                    const paymentMessage = document.querySelector("#payment-message");
+                    paymentMessage.textContent = event.error.message;
+                    paymentMessage.classList.remove("hidden");
+                } else {
+                    const paymentMessage = document.querySelector("#payment-message");
+                    paymentMessage.classList.add("hidden");
+                }
+            });
+            
+            document.querySelector("#submit-button").addEventListener("click", handleSubmit);
+        };
+        
+        // Gestion de la soumission du formulaire
+        const handleSubmit = async (e) => {
+            e.preventDefault();
+            
+            const submitButton = document.querySelector("#submit-button");
+            const buttonText = document.querySelector("#button-text");
+            const spinner = document.querySelector("#spinner");
+            const paymentMessage = document.querySelector("#payment-message");
+            
+            // Désactiver le bouton pendant le traitement
+            submitButton.disabled = true;
+            buttonText.classList.add("hidden");
+            spinner.classList.remove("hidden");
+            
+            try {
+                // Confirmer le paiement
+                const { error, paymentIntent } = await stripe.confirmPayment({
+                    elements,
+                    confirmParams: {
+                        return_url: "https://example.com/success", // Cette URL n'est pas utilisée en réalité
+                    },
+                    redirect: "if_required"
+                });
+                
+                if (error) {
+                    // Afficher l'erreur
+                    paymentMessage.textContent = error.message;
+                    paymentMessage.classList.remove("hidden");
+                    
+                    console.error("Erreur de paiement:", error.message);
+                    
+                    // Envoyer le message d'erreur à l'application Java
+                    if (window.javaConnector) {
+                        window.javaConnector.onPaymentError(error.message);
+                    } else {
+                        console.error("Connecteur Java non disponible");
+                    }
+                } else {
+                    // Paiement réussi
+                    console.log("Paiement réussi!", paymentIntent);
+                    
+                    paymentMessage.textContent = "Paiement réussi! Redirection...";
+                    paymentMessage.classList.remove("hidden");
+                    paymentMessage.style.color = "#4CAF50";
+                    
+                    // Envoyer le message de succès à l'application Java
+                    if (window.javaConnector) {
+                        window.javaConnector.onPaymentSuccess();
+                    } else {
+                        console.error("Connecteur Java non disponible");
+                    }
+                }
+            } catch (e) {
+                console.error("Erreur inattendue:", e);
+                paymentMessage.textContent = "Une erreur inattendue s'est produite.";
+                paymentMessage.classList.remove("hidden");
+                
+                if (window.javaConnector) {
+                    window.javaConnector.onPaymentError(e.message || "Une erreur inattendue s'est produite.");
+                } else {
+                    console.error("Connecteur Java non disponible");
+                }
+            } finally {
+                // Réactiver le bouton
+                submitButton.disabled = false;
+                buttonText.classList.remove("hidden");
+                spinner.classList.add("hidden");
+            }
+        };
+        
+        // Initialiser Stripe quand la page est chargée
+        document.addEventListener("DOMContentLoaded", initializeStripe);
+    </script>
+</body>
+</html> 

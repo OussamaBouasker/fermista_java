@@ -5,13 +5,14 @@ public class Produit {
     private String nom;
     private String description;
     private String image;
-    private int Prix;
-    private String Categorie;
+    private double prix;
+    private String categorie;
     private String etat;
     private Commande commande_id;
+    private int quantite;
 
     public Produit() {
-        // constructeur vide
+        this.quantite = 1;
     }
 
     public Produit(int id, String nom, String description, String image, double prix, String categorie, String etat) {
@@ -19,21 +20,23 @@ public class Produit {
         this.nom = nom;
         this.description = description;
         this.image = image;
-        this.Prix = (int) prix;
-        this.Categorie = categorie;
+        this.prix = prix;
+        this.categorie = categorie;
         this.etat = etat;
         this.commande_id = null;
+        this.quantite = 1;
     }
 
-    public Produit(int id, String nom, String description, String image, int prix, String categorie, String etat, Commande commande_id) {
+    public Produit(int id, String nom, String description, String image, double prix, String categorie, String etat, Commande commande_id) {
         this.id = id;
         this.nom = nom;
         this.description = description;
         this.image = image;
-        this.Prix = prix;
-        this.Categorie = categorie;
+        this.prix = prix;
+        this.categorie = categorie;
         this.etat = etat;
         this.commande_id = commande_id;
+        this.quantite = 1;
     }
 
     public int getId() {
@@ -68,20 +71,20 @@ public class Produit {
         this.image = image;
     }
 
-    public int getPrix() {
-        return Prix;
+    public double getPrix() {
+        return prix;
     }
 
-    public void setPrix(int prix) {
-        Prix = prix;
+    public void setPrix(double prix) {
+        this.prix = prix;
     }
 
     public String getCategorie() {
-        return Categorie;
+        return categorie;
     }
 
     public void setCategorie(String categorie) {
-        Categorie = categorie;
+        this.categorie = categorie;
     }
 
     public String getEtat() {
@@ -100,18 +103,26 @@ public class Produit {
         this.commande_id = commande_id;
     }
 
+    public int getQuantite() {
+        return quantite;
+    }
+
+    public void setQuantite(int quantite) {
+        this.quantite = quantite;
+    }
+
     @Override
     public String toString() {
         return "Produit{" +
-                "commande_id=" + commande_id +
-                ", etat='" + etat + '\'' +
-                ", Categorie='" + Categorie + '\'' +
-                ", Prix=" + Prix +
-                ", image='" + image + '\'' +
-                ", description='" + description + '\'' +
+                "id=" + id +
                 ", nom='" + nom + '\'' +
-                ", id=" + id +
+                ", description='" + description + '\'' +
+                ", image='" + image + '\'' +
+                ", prix=" + prix +
+                ", categorie='" + categorie + '\'' +
+                ", etat='" + etat + '\'' +
+                ", commande_id=" + commande_id +
+                ", quantite=" + quantite +
                 '}';
     }
-
 }

@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServiceProduit implements CRUD2<Produit> {
+public class ServiceProduit implements CRUD<Produit> {
 
     private Connection cnx;
 
@@ -24,7 +24,7 @@ public class ServiceProduit implements CRUD2<Produit> {
         ps.setString(2, produit.getNom());
         ps.setString(3, produit.getDescription());
         ps.setString(4, produit.getImage());
-        ps.setInt(5, produit.getPrix());
+        ps.setInt(5, (int) produit.getPrix());
         ps.setString(6, produit.getCategorie());
         ps.setString(7, produit.getEtat());
         if (produit.getCommande_id() != null) {
@@ -45,17 +45,17 @@ public class ServiceProduit implements CRUD2<Produit> {
             ps.setString(1, produit.getNom());
             ps.setString(2, produit.getDescription());
             ps.setString(3, produit.getImage());
-            ps.setInt(4, produit.getPrix());
+            ps.setInt(4, (int) produit.getPrix());
             ps.setString(5, produit.getCategorie());
             ps.setString(6, produit.getEtat());
             ps.setInt(7, produit.getId());
-
+            
             System.out.println("Executing update for product ID: " + produit.getId());
             System.out.println("SQL Query: " + req);
-
+            
             int rowsAffected = ps.executeUpdate();
             System.out.println("Rows affected: " + rowsAffected);
-
+            
             return rowsAffected > 0;
         } catch (SQLException e) {
             System.err.println("Erreur SQL lors de la mise à jour: " + e.getMessage());
@@ -126,14 +126,14 @@ public class ServiceProduit implements CRUD2<Produit> {
             rs = pst.executeQuery();
             if (rs.next()) {
                 return new Produit(
-                        rs.getInt("id"),
-                        rs.getString("nom"),
-                        rs.getString("description"),
-                        rs.getString("image"),
-                        rs.getInt("prix"),
-                        rs.getString("categorie"),
-                        rs.getString("etat"),
-                        null
+                    rs.getInt("id"),
+                    rs.getString("nom"),
+                    rs.getString("description"),
+                    rs.getString("image"),
+                    rs.getInt("prix"),
+                    rs.getString("categorie"),
+                    rs.getString("etat"),
+                    null
                 );
             }
         } catch (SQLException e) {

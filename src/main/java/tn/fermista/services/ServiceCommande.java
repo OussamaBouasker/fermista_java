@@ -5,6 +5,7 @@ import tn.fermista.models.Livraison;
 import tn.fermista.utils.MyDbConnexion;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,13 +23,13 @@ public class ServiceCommande implements CRUD2<Commande> {
         if (commande == null) {
             throw new SQLException("La commande ne peut pas être null");
         }
-        if (commande.getDate_commander() == null) {
+        if (commande.getDate() == null) {
             throw new SQLException("La date de commande est obligatoire");
         }
-        if (commande.getStatut() == null || commande.getStatut().trim().isEmpty()) {
+        if (commande.getStatus() == null || commande.getStatus().trim().isEmpty()) {
             throw new SQLException("Le statut est obligatoire");
         }
-        if (commande.getMontant_total() <= 0) {
+        if (commande.getTotal() <= 0) {
             throw new SQLException("Le montant total doit être supérieur à zéro");
         }
 
@@ -36,21 +37,31 @@ public class ServiceCommande implements CRUD2<Commande> {
         PreparedStatement ps = null;
         
         try {
-            ps = cnx.prepareStatement(req);
-            ps.setDate(1, new java.sql.Date(commande.getDate_commander().getTime()));
-            ps.setString(2, commande.getStatut());
-            ps.setInt(3, commande.getMontant_total());
+            ps = cnx.prepareStatement(req, Statement.RETURN_GENERATED_KEYS);
+            ps.setDate(1, java.sql.Date.valueOf(commande.getDate()));
+            ps.setString(2, commande.getStatus());
+            ps.setDouble(3, commande.getTotal());
 
-            if (commande.getLivcom_id() != null) {
-                ps.setInt(4, commande.getLivcom_id().getId());
+            if (commande.getLivraisonId() != 0) {
+                ps.setInt(4, commande.getLivraisonId());
             } else {
                 ps.setNull(4, Types.INTEGER);
             }
+            
+            // Les informations client sont stockées dans l'objet Commande mais pas dans la base de données
+            // pour le moment, sauf si on modifie la structure de la table
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected == 0) {
                 throw new SQLException("Échec de l'insertion, aucune ligne affectée");
             }
+            
+            // Récupérer l'ID généré automatiquement
+            ResultSet generatedKeys = ps.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                commande.setId(generatedKeys.getInt(1));
+            }
+            
             return true;
         } catch (SQLException e) {
             throw new SQLException("Erreur lors de l'insertion de la commande: " + e.getMessage(), e);
@@ -70,12 +81,12 @@ public class ServiceCommande implements CRUD2<Commande> {
         String req = "UPDATE commande SET date_commande = ?, statut = ?, montant_total = ?, livcom_id = ? WHERE id = ?";
         PreparedStatement ps = cnx.prepareStatement(req);
 
-        ps.setDate(1, new java.sql.Date(commande.getDate_commander().getTime()));
-        ps.setString(2, commande.getStatut());
-        ps.setInt(3, commande.getMontant_total());
+        ps.setDate(1, java.sql.Date.valueOf(commande.getDate()));
+        ps.setString(2, commande.getStatus());
+        ps.setDouble(3, commande.getTotal());
 
-        if (commande.getLivcom_id() != null) {
-            ps.setInt(4, commande.getLivcom_id().getId());
+        if (commande.getLivraisonId() != 0) {
+            ps.setInt(4, commande.getLivraisonId());
         } else {
             ps.setNull(4, Types.INTEGER);
         }
@@ -102,21 +113,17 @@ public class ServiceCommande implements CRUD2<Commande> {
         ResultSet rs = st.executeQuery(req);
 
         while (rs.next()) {
-            int id = rs.getInt("id");
-            Date date_commander = rs.getDate("date_commande");
-            String statut = rs.getString("statut");
-            int montant_total = rs.getInt("montant_total");
+            Commande commande = new Commande();
+            commande.setId(rs.getInt("id"));
+            commande.setDate(rs.getDate("date_commande").toLocalDate());
+            commande.setStatus(rs.getString("statut"));
+            commande.setTotal(rs.getDouble("montant_total"));
             
-            // Gérer le cas où livcom_id est NULL
-            Integer livcomId = rs.getInt("livcom_id");
-            Livraison livraison = null;
-            
+            int livcomId = rs.getInt("livcom_id");
             if (!rs.wasNull()) {
-                livraison = new Livraison();
-                livraison.setId(livcomId);
+                commande.setLivraisonId(livcomId);
             }
 
-            Commande commande = new Commande(id, date_commander, statut, montant_total, livraison);
             list.add(commande);
         }
 
@@ -130,21 +137,18 @@ public class ServiceCommande implements CRUD2<Commande> {
         ResultSet rs = ps.executeQuery();
         
         if (rs.next()) {
-            int id = rs.getInt("id");
-            Date date_commander = rs.getDate("date_commande");
-            String statut = rs.getString("statut");
-            int montant_total = rs.getInt("montant_total");
+            Commande commande = new Commande();
+            commande.setId(rs.getInt("id"));
+            commande.setDate(rs.getDate("date_commande").toLocalDate());
+            commande.setStatus(rs.getString("statut"));
+            commande.setTotal(rs.getDouble("montant_total"));
             
-            // Gérer le cas où livcom_id est NULL
-            Integer livcomId = rs.getInt("livcom_id");
-            Livraison livraison = null;
-            
+            int livcomId = rs.getInt("livcom_id");
             if (!rs.wasNull()) {
-                livraison = new Livraison();
-                livraison.setId(livcomId);
+                commande.setLivraisonId(livcomId);
             }
 
-            return new Commande(id, date_commander, statut, montant_total, livraison);
+            return commande;
         }
         
         return null;

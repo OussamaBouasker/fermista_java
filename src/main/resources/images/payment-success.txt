@@ -1,0 +1,7 @@
+Remplacez ce fichier texte par une image PNG nommée 'succespayer.png'
+
+Cette image sera affichée sur la page de confirmation de paiement.
+Vous pouvez utiliser n'importe quelle image montrant une coche verte, un smiley heureux,
+ou tout autre symbole qui représente un succès ou une confirmation.
+
+Taille recommandée: 200x200 pixels 

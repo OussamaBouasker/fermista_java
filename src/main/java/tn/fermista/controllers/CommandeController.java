@@ -63,11 +63,11 @@ public class CommandeController implements Initializable {
             }
         });
         
-        // Validation du montant (nombres entiers positifs uniquement)
+        // Validation du montant (nombres positifs uniquement)
         montantField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.isEmpty()) {
                 try {
-                    int value = Integer.parseInt(newValue);
+                    double value = Double.parseDouble(newValue);
                     if (value < 0) {
                         montantField.setText(oldValue);
                     }
@@ -87,7 +87,7 @@ public class CommandeController implements Initializable {
 
             @Override
             public Livraison fromString(String string) {
-                return null; // Non utilisé pour la conversion inverse
+                return null;
             }
         });
     }
@@ -104,18 +104,15 @@ public class CommandeController implements Initializable {
                 // Initialiser avec une liste vide si aucune livraison n'est disponible
                 livraisonComboBox.setItems(FXCollections.observableArrayList());
                 // Informer l'utilisateur qu'aucune livraison n'est disponible
-                showAlert("Information", "Aucune livraison n'est disponible actuellement. Veuillez d'abord créer une livraison.");
+                showAlert("Information", "Aucune livraison n'est disponible actuellement.");
             }
         } catch (Exception e) {
             // Gérer l'exception mais ne pas empêcher le chargement du formulaire
             livraisonComboBox.setItems(FXCollections.observableArrayList());
             // Afficher un message d'information au lieu d'une erreur bloquante
-            showAlert("Information", "Impossible de charger les livraisons. Veuillez d'abord créer une livraison.");
+            showAlert("Information", "Impossible de charger les livraisons.");
             // Journaliser l'erreur pour le débogage
-            System.err.println("Erreur lors du chargement des livraisons: " + (e.getMessage() != null ? e.getMessage() : "Erreur inconnue"));
-            if (e.getCause() != null) {
-                System.err.println("Cause: " + e.getCause());
-            }
+            e.printStackTrace();
         }
     }
 
@@ -140,41 +137,26 @@ public class CommandeController implements Initializable {
     private void handleAddCommande() {
         try {
             if (validateInputs()) {
-                LocalDate localDate = datePicker.getValue();
-                Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-                String statut = statutComboBox.getValue();
-                int montantTotal = Integer.parseInt(montantField.getText());
-                Livraison livraison = livraisonComboBox.getValue(); // Peut être null
-    
-                System.out.println("Création d'une commande avec les données suivantes:");
-                System.out.println("- Date: " + date);
-                System.out.println("- Statut: " + statut);
-                System.out.println("- Montant: " + montantTotal);
-                System.out.println("- Livraison: " + (livraison != null ? livraison.getId() : "aucune"));
-    
-                Commande commande = new Commande(0, date, statut, montantTotal, livraison);
+                Commande commande = new Commande();
+                commande.setDate(datePicker.getValue());
+                commande.setStatus(statutComboBox.getValue());
+                commande.setTotal(Double.parseDouble(montantField.getText()));
+                
+                Livraison selectedLivraison = livraisonComboBox.getValue();
+                if (selectedLivraison != null) {
+                    commande.setLivraisonId(selectedLivraison.getId());
+                }
+
                 try {
-                    boolean success = serviceCommande.insert(commande);
-                    if (success) {
-                        clearFields();
-                        showAlert("Succès", "Commande ajoutée avec succès!");
-                    } else {
-                        showAlert("Erreur", "Échec de l'ajout de la commande: opération non effectuée");
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace(); // Affiche la trace complète dans la console
-                    showAlert("Erreur", "Échec de l'ajout de la commande: " + 
-                            (e.getMessage() != null ? e.getMessage() : "Erreur inconnue de base de données"));
+                    serviceCommande.insert(commande);
+                    clearFields();
+                    showAlert("Succès", "Commande ajoutée avec succès!");
                 } catch (Exception e) {
-                    e.printStackTrace(); // Affiche la trace complète dans la console
-                    showAlert("Erreur", "Échec de l'ajout de la commande: " + 
-                            (e.getMessage() != null ? e.getMessage() : "Erreur inconnue"));
+                    showAlert("Erreur", "Échec de l'ajout de la commande: " + e.getMessage());
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace(); // Affiche la trace complète dans la console
-            showAlert("Erreur", "Erreur lors de l'ajout de la commande: " + 
-                    (e.getMessage() != null ? e.getMessage() : "Erreur inconnue"));
+            showAlert("Erreur", "Erreur lors de l'ajout de la commande: " + e.getMessage());
         }
     }
 
@@ -183,7 +165,6 @@ public class CommandeController implements Initializable {
     private void handleUpdateCommande() {
         try {
             if (validateInputs()) {
-                // Pour une mise à jour, l'ID est nécessaire
                 String idText = showInputDialog("ID de la commande", "Entrez l'ID de la commande à mettre à jour:");
                 if (idText == null || idText.isEmpty()) {
                     showAlert("Annulé", "Mise à jour annulée");
@@ -192,13 +173,17 @@ public class CommandeController implements Initializable {
                 
                 try {
                     int id = Integer.parseInt(idText);
-                    LocalDate localDate = datePicker.getValue();
-                    Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-                    String statut = statutComboBox.getValue();
-                    int montantTotal = Integer.parseInt(montantField.getText());
-                    Livraison livraison = livraisonComboBox.getValue(); // Peut être null
+                    Commande commande = new Commande();
+                    commande.setId(id);
+                    commande.setDate(datePicker.getValue());
+                    commande.setStatus(statutComboBox.getValue());
+                    commande.setTotal(Double.parseDouble(montantField.getText()));
                     
-                    Commande commande = new Commande(id, date, statut, montantTotal, livraison);
+                    Livraison selectedLivraison = livraisonComboBox.getValue();
+                    if (selectedLivraison != null) {
+                        commande.setLivraisonId(selectedLivraison.getId());
+                    }
+
                     try {
                         serviceCommande.update(commande);
                         clearFields();
@@ -227,7 +212,8 @@ public class CommandeController implements Initializable {
             
             try {
                 int id = Integer.parseInt(idText);
-                Commande commande = new Commande(id);
+                Commande commande = new Commande();
+                commande.setId(id);
                 
                 try {
                     serviceCommande.delete(commande);
@@ -295,35 +281,12 @@ public class CommandeController implements Initializable {
             errorMessage.append("Le montant total est obligatoire\n");
         } else {
             try {
-                int montant = Integer.parseInt(montantField.getText());
+                double montant = Double.parseDouble(montantField.getText());
                 if (montant <= 0) {
                     errorMessage.append("Le montant total doit être supérieur à 0\n");
                 }
             } catch (NumberFormatException e) {
                 errorMessage.append("Le montant total doit être un nombre valide\n");
-            }
-        }
-        
-        // Vérification de la livraison uniquement si le ComboBox n'est pas vide
-        if (livraisonComboBox.getItems().isEmpty()) {
-            // Aucune livraison disponible, mais ne pas bloquer l'opération
-            // Informer l'utilisateur que la commande sera créée sans livraison associée
-            if (errorMessage.length() == 0) {
-                boolean confirm = showConfirmationDialog("Aucune livraison", 
-                    "Aucune livraison disponible. Voulez-vous continuer sans associer cette commande à une livraison?");
-                if (!confirm) {
-                    return false;
-                }
-            }
-        } else if (livraisonComboBox.getValue() != null) {
-            // Livraison est sélectionnée (optionnelle), vérifier la compatibilité des dates
-            Livraison livraison = livraisonComboBox.getValue();
-            
-            // Utiliser la méthode utilitaire pour convertir en toute sécurité
-            LocalDate livraisonDate = convertToLocalDate(livraison.getDate());
-            
-            if (livraisonDate != null && datePicker.getValue().isAfter(livraisonDate)) {
-                errorMessage.append("La date de commande ne peut pas être postérieure à la date de livraison\n");
             }
         }
         
@@ -350,6 +313,7 @@ public class CommandeController implements Initializable {
         statutComboBox.setValue(null);
         montantField.clear();
         livraisonComboBox.setValue(null);
+        currentCommandeId = null;
     }
 
     // Méthode pour afficher des alertes
@@ -401,7 +365,7 @@ public class CommandeController implements Initializable {
                     showAlert("Erreur", "La date est obligatoire");
                     return;
                 }
-                commande.setDate_commander(Date.from(selectedDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                commande.setDate(selectedDate);
                 
                 // Statut - obligatoire
                 String statut = statutComboBox.getValue();
@@ -409,16 +373,16 @@ public class CommandeController implements Initializable {
                     showAlert("Erreur", "Le statut est obligatoire");
                     return;
                 }
-                commande.setStatut(statut);
+                commande.setStatus(statut);
                 
                 // Montant - obligatoire et > 0
                 try {
-                    int montant = Integer.parseInt(montantField.getText());
+                    double montant = Double.parseDouble(montantField.getText());
                     if (montant <= 0) {
                         showAlert("Erreur", "Le montant total doit être supérieur à 0");
                         return;
                     }
-                    commande.setMontant_total(montant);
+                    commande.setTotal(montant);
                 } catch (NumberFormatException e) {
                     showAlert("Erreur", "Le montant total doit être un nombre valide");
                     return;
@@ -426,13 +390,15 @@ public class CommandeController implements Initializable {
                 
                 // Livraison - optionnelle
                 Livraison selectedLivraison = livraisonComboBox.getValue();
-                commande.setLivcom_id(selectedLivraison); // Peut être null
+                if (selectedLivraison != null) {
+                    commande.setLivraisonId(selectedLivraison.getId());
+                }
                 
                 System.out.println("Tentative d'enregistrement de la commande:");
-                System.out.println("- Date: " + commande.getDate_commander());
-                System.out.println("- Statut: " + commande.getStatut());
-                System.out.println("- Montant: " + commande.getMontant_total());
-                System.out.println("- Livraison: " + (commande.getLivcom_id() != null ? commande.getLivcom_id().getId() : "aucune"));
+                System.out.println("- Date: " + commande.getDate());
+                System.out.println("- Statut: " + commande.getStatus());
+                System.out.println("- Montant: " + commande.getTotal());
+                System.out.println("- Livraison: " + (commande.getLivraisonId() != 0 ? commande.getLivraisonId() : "aucune"));
                 
                 // Enregistrement en base de données
                 if (currentCommandeId != null) {

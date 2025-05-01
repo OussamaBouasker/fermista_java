@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carte de Localisation</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        #map {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        .location-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-top: 1px solid #ccc;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div class="location-info" id="locationInfo">Cliquez sur la carte pour sélectionner votre localisation</div>
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Initialiser la carte
+        var map = L.map('map', {
+            zoomControl: true,
+            attributionControl: true
+        }).setView([36.8065, 10.1815], 8);
+        
+        var marker = null;
+        
+        // Ajouter une couche de tuiles OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            minZoom: 2,
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        
+        // Forcer un redimensionnement après chargement complet
+        setTimeout(function() {
+            map.invalidateSize(true);
+        }, 400);
+        
+        // Fonction pour centrer la carte sur des coordonnées
+        function centerMap(lat, lng, zoom) {
+            if (lat && lng) {
+                map.setView([lat, lng], zoom || 16);
+                // Forcer un redimensionnement
+                setTimeout(function() {
+                    map.invalidateSize(true);
+                }, 200);
+            }
+        }
+        
+        // Fonction pour mettre à jour ou créer un marqueur
+        function updateMarker(lat, lng) {
+            // Si un marqueur existe déjà, le supprimer
+            if (marker) {
+                map.removeLayer(marker);
+            }
+            
+            // Créer un nouveau marqueur
+            marker = L.marker([lat, lng], {
+                draggable: true
+            }).addTo(map);
+            
+            // Obtenir les informations d'adresse via Nominatim
+            getAddressInfo(lat, lng);
+            
+            // Gérer le déplacement du marqueur
+            marker.on('dragend', function(event) {
+                var latlng = marker.getLatLng();
+                getAddressInfo(latlng.lat, latlng.lng);
+            });
+            
+            // Garantir que le marqueur est exposé globalement
+            window.marker = marker;
+        }
+        
+        // Fonction pour obtenir les informations d'adresse à partir des coordonnées
+        function getAddressInfo(lat, lng) {
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.display_name) {
+                        // Extraire les informations détaillées
+                        var address = data.display_name;
+                        var city = data.address.city || data.address.town || data.address.village || data.address.hamlet || '';
+                        var state = data.address.state || data.address.county || '';
+                        var country = data.address.country || 'Tunisie';
+                        
+                        // Mettre à jour l'info de localisation
+                        document.getElementById('locationInfo').textContent = address;
+                        
+                        // Appeler le callback Java
+                        if (window.locationCallback) {
+                            try {
+                                console.log("Calling Java callback with address:", address);
+                                window.locationCallback.onLocationSelected(lat, lng, address, city, state, country);
+                            } catch (e) {
+                                console.error("Error calling Java callback:", e);
+                                // Sauvegarder les données dans le cas où le callback échoue
+                                window.lastSelectedLocation = {
+                                    lat: lat,
+                                    lng: lng,
+                                    address: address,
+                                    city: city,
+                                    state: state,
+                                    country: country
+                                };
+                            }
+                        } else {
+                            console.error("locationCallback not found in window");
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching address:", error);
+                    // En cas d'erreur, appeler quand même le callback avec les coordonnées
+                    if (window.locationCallback) {
+                        try {
+                            var simpleAddress = `Latitude: ${lat.toFixed(6)}, Longitude: ${lng.toFixed(6)}`;
+                            document.getElementById('locationInfo').textContent = simpleAddress;
+                            window.locationCallback.onLocationSelected(lat, lng, simpleAddress, "", "", "Tunisie");
+                        } catch (e) {
+                            console.error("Error calling Java callback in error handler:", e);
+                        }
+                    }
+                });
+        }
+        
+        // Gérer les clics sur la carte
+        map.on('click', function(e) {
+            var lat = e.latlng.lat;
+            var lng = e.latlng.lng;
+            updateMarker(lat, lng);
+        });
+
+        // Fonction pour récupérer la position actuelle du marqueur
+        function getMarkerPosition() {
+            if (marker) {
+                var pos = marker.getLatLng();
+                return [pos.lat, pos.lng];
+            }
+            return null;
+        }
+
+        // Redimensionner la carte quand la fenêtre change de taille
+        window.addEventListener('resize', function() {
+            map.invalidateSize(true);
+        });
+
+        // Exposer les fonctions au conteneur JavaFX
+        window.centerMap = centerMap;
+        window.updateMarker = updateMarker;
+        window.getMarkerPosition = getMarkerPosition;
+    </script>
+</body>
+</html> 
