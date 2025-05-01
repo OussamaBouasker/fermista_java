@@ -1,62 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="680.0" prefWidth="930.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" 
-      fx:controller="tn.fermista.controllers.ProductShopViewController" stylesheets="styles.css">
-    
+<BorderPane prefHeight="680.0" prefWidth="930.0" style="-fx-background-color: #f5f2ed" stylesheets="styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.fermista.controllers.ProductShopViewController">
+
+
     <!-- HEADER -->
     <top>
         <VBox>
-            <!-- Top navigation bar -->
-            <HBox alignment="CENTER_LEFT" style="-fx-background-color: #2A2A2A;" spacing="15">
-                <padding>
-                    <Insets top="10" right="20" bottom="10" left="20" />
-                </padding>
-                
-                <Label text="Fermista" style="-fx-text-fill: white; -fx-font-weight: bold;">
-                    <font>
-                        <Font name="System Bold" size="24.0"/>
-                    </font>
-                </Label>
-                
-                <Region HBox.hgrow="ALWAYS" />
-                
-                <Button fx:id="buttonRetourGestion" text="Retour à la gestion" onAction="#handleBackToManager"
-                        style="-fx-background-color: #4a90e2; -fx-text-fill: white;" />
-            </HBox>
-            
+            <fx:include source="Navbar.fxml" />
             <!-- Page title and filters -->
-            <HBox alignment="CENTER_LEFT" style="-fx-background-color: #f5f5f5; -fx-border-color: #e0e0e0; -fx-border-width: 0 0 1 0;">
+            <HBox alignment="CENTER_LEFT" style="-fx-background-color: #f5f2ed; -fx-border-color: #e0e0e0; -fx-border-width: 0 0 1 0;">
                 <padding>
-                    <Insets top="20" right="30" bottom="20" left="30" />
+                    <Insets bottom="20" left="30" right="30" top="20" />
                 </padding>
                 
                 <VBox>
-                    <Label text="Collection de Produits Laitiers" style="-fx-font-weight: bold;">
+                    <Label style="-fx-font-weight: bold;" text="Collection de Produits Laitiers">
                         <font>
-                            <Font name="System Bold" size="28.0"/>
+                            <Font name="System Bold" size="28.0" />
                         </font>
                     </Label>
-                    <Label text="Découvrez notre large sélection de produits frais et de qualité" style="-fx-text-fill: #555555;">
+                    <Label style="-fx-text-fill: #555555;" text="Découvrez notre large sélection de produits frais et de qualité">
                         <font>
-                            <Font size="14.0"/>
+                            <Font size="14.0" />
                         </font>
                     </Label>
                 </VBox>
                 
                 <Region HBox.hgrow="ALWAYS" />
                 
-                <HBox spacing="10" alignment="CENTER">
-                    <ComboBox fx:id="categorieFilter" promptText="Catégorie" prefWidth="150" />
-                    <ComboBox fx:id="etatFilter" promptText="État" prefWidth="120" />
-                    <TextField fx:id="searchField" promptText="Rechercher..." prefWidth="200" />
+                <HBox alignment="CENTER" spacing="10">
+                    <ComboBox fx:id="categorieFilter" prefWidth="150" promptText="Catégorie" />
+                    <ComboBox fx:id="etatFilter" prefWidth="120" promptText="État" />
+                    <TextField fx:id="searchField" prefWidth="200" promptText="Rechercher..." />
                 </HBox>
             </HBox>
         </VBox>
@@ -64,25 +51,12 @@
     
     <!-- CONTENT - PRODUCT CARDS -->
     <center>
-        <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: white;">
-            <FlowPane fx:id="productCardsContainer" hgap="20" vgap="20" style="-fx-background-color: white;">
+        <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: #f5f2ed;">
+            <FlowPane fx:id="productCardsContainer" hgap="20" style="-fx-background-color: #f5f2ed" vgap="20">
                 <padding>
-                    <Insets top="30" right="30" bottom="30" left="30" />
+                    <Insets bottom="30" left="30" right="30" top="30" />
                 </padding>
             </FlowPane>
         </ScrollPane>
     </center>
-    
-    <!-- FOOTER -->
-    <bottom>
-        <HBox alignment="CENTER" style="-fx-background-color: #f5f5f5; -fx-border-color: #e0e0e0; -fx-border-width: 1 0 0 0;">
-            <padding>
-                <Insets top="15" right="20" bottom="15" left="20" />
-            </padding>
-            
-            <Button onAction="#refreshProductList" text="Rafraîchir" 
-                    style="-fx-background-color: #4CAF50; -fx-text-fill: white;"
-                    prefWidth="120" />
-        </HBox>
-    </bottom>
-</BorderPane> 
+</BorderPane>

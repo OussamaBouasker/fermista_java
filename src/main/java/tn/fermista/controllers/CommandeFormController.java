@@ -16,10 +16,7 @@ import tn.fermista.controllers.MapViewController.LocationCallback;
 import tn.fermista.models.Commande;
 import tn.fermista.models.Panier;
 import tn.fermista.services.ServiceCommande;
-import tn.fermista.utils.FullScreenUtil;
-import tn.fermista.utils.WebViewUtils;
-import tn.fermista.utils.EmailService;
-import tn.fermista.utils.SMSService;
+import tn.fermista.utils.*;
 import tn.fermista.controllers.PaiementController;
 
 import java.io.IOException;
@@ -260,7 +257,7 @@ public class CommandeFormController implements Initializable {
                 // Essayer d'envoyer un email, mais ne pas bloquer le processus en cas d'échec
                 boolean emailEnvoye = false;
                 try {
-                    emailEnvoye = EmailService.envoyerEmailConfirmation(commande);
+                    emailEnvoye = EmailService2.envoyerEmailConfirmation(commande);
                 } catch (Exception emailEx) {
                     System.err.println("Exception lors de l'envoi de l'email (ignorée): " + emailEx.getMessage());
                     emailEx.printStackTrace();
@@ -270,8 +267,8 @@ public class CommandeFormController implements Initializable {
                 boolean smsEnvoye = false;
                 try {
                     // Vérifier d'abord si le service SMS est configuré
-                    if (SMSService.isConfigured()) {
-                        smsEnvoye = SMSService.envoyerSMSConfirmation(commande);
+                    if (SMSService2.isConfigured()) {
+                        smsEnvoye = SMSService2.envoyerSMSConfirmation(commande);
                     } else {
                         System.out.println("Service SMS non configuré - SMS non envoyé");
                     }

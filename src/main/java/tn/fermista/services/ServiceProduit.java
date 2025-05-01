@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServiceProduit implements CRUD<Produit> {
+public class ServiceProduit implements CRUD2<Produit> {
 
     private Connection cnx;
 

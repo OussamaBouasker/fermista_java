@@ -109,13 +109,12 @@ public class NavbarController {
 
     // ========== Navigation autres boutons ==========
     @FXML private void handleHome() { navigateTo("/HomePage.fxml"); }
-    @FXML private void handleShop() { navigateTo("/ShopPage.fxml"); }
-    @FXML private void handleCollier() { navigateTo("/CollierPage.fxml"); }
+
     @FXML private void handleWorkshops() { navigateTo("/WorkshopsPage.fxml"); }
     @FXML private void handleControlMedical() { navigateTo("/ControlMedicalFront.fxml"); }
     @FXML private void handleRendezVous() { navigateTo("/ListVet.fxml"); }
     @FXML private void handleListeRendezVous(ActionEvent actionEvent) { navigateTo("/ListRendezVous.fxml"); }
-    @FXML private void handleProduits() { navigateTo("/ProduitsPage.fxml"); }
+    @FXML private void handleProduits() { navigateTo("/ProductShopView.fxml"); }
     @FXML private void handleMesVaches() { navigateTo("/MesVachesPage.fxml"); }
     @FXML private void handleMesColliers() { navigateTo("/MesColliersPage.fxml"); }
 }

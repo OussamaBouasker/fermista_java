@@ -8,7 +8,7 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="tn.fermista.controllers.ListRendezVous"
-            prefHeight="600.0" prefWidth="800.0"
+            prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #f5f2ed"
             stylesheets="@styles/ListRendezVous.css">
             
     <!-- Navbar -->

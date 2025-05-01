@@ -49,12 +49,12 @@ public class PaiementController implements Initializable {
     @FXML private Label statusLabel;
     @FXML private Button payButton;
     @FXML private Button cancelButton;
-    
+
     private Commande commande;
     private final Panier panier = Panier.getInstance();
     private PaymentIntent paymentIntent;
     private WebEngine webEngine;
-    
+
     /**
      * Définit la commande à payer
      * @param commande La commande à payer
@@ -62,7 +62,7 @@ public class PaiementController implements Initializable {
     public void setCommande(Commande commande) {
         this.commande = commande;
     }
-    
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Configuration des colonnes du tableau
@@ -70,34 +70,34 @@ public class PaiementController implements Initializable {
             Produit produit = cellData.getValue().getProduit();
             return new SimpleStringProperty(produit.getNom());
         });
-        
+
         quantiteColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        
+
         prixColumn.setCellValueFactory(cellData -> {
             Produit produit = cellData.getValue().getProduit();
             return new SimpleStringProperty(String.format("%.2f €", produit.getPrix()));
         });
-        
+
         totalColumn.setCellValueFactory(cellData -> {
             PanierItem item = cellData.getValue();
             double total = item.getProduit().getPrix() * item.getQuantity();
             return new SimpleStringProperty(String.format("%.2f €", total));
         });
-        
+
         // Charger les éléments du panier
         refreshPanierItems();
-        
+
         // Initialiser le WebView
         webEngine = webView.getEngine();
-        
+
         // Désactiver le bouton de paiement jusqu'à ce que Stripe soit chargé
         payButton.setDisable(true);
-        
+
         // Afficher l'indicateur de progression pendant le chargement
         progressBar.setVisible(true);
         statusLabel.setText("Chargement du formulaire de paiement...");
         statusLabel.setVisible(true);
-        
+
         // Appliquer le mode plein écran
         javafx.application.Platform.runLater(() -> {
             Stage stage = (Stage) panierTableView.getScene().getWindow();
@@ -106,7 +106,7 @@ public class PaiementController implements Initializable {
             }
         });
     }
-    
+
     /**
      * Rafraîchit les éléments du panier dans le tableau
      */
@@ -114,48 +114,48 @@ public class PaiementController implements Initializable {
         panierTableView.setItems(FXCollections.observableArrayList(panier.getItems()));
         totalLabel.setText(String.format("%.2f €", panier.getTotal()));
     }
-    
+
     /**
      * Initialise le formulaire de paiement Stripe
      */
     public void initializeStripeForm() {
         if (!StripeService.isConfigured()) {
-            showAlert(CustomAlert.AlertType.ERROR, "Erreur de configuration", 
+            showAlert(CustomAlert.AlertType.ERROR, "Erreur de configuration",
                     "La configuration Stripe n'est pas disponible. Veuillez configurer vos clés API.");
             return;
         }
-        
+
         // Attendre un court instant pour laisser JavaFX terminer son initialisation
         CompletableFuture.delayedExecutor(500, TimeUnit.MILLISECONDS).execute(() -> {
             try {
                 // Créer une intention de paiement
                 paymentIntent = StripeService.createPaymentIntent(commande);
-                
+
                 // Charger le fichier HTML
                 String htmlTemplate = loadHtmlTemplate();
-                
+
                 // Remplacer les variables dans le template
                 String html = htmlTemplate
-                    .replace("STRIPE_PUBLIC_KEY", StripeService.getPublishableKey())
-                    .replace("PAYMENT_INTENT_CLIENT_SECRET", paymentIntent.getClientSecret());
-                
+                        .replace("STRIPE_PUBLIC_KEY", StripeService.getPublishableKey())
+                        .replace("PAYMENT_INTENT_CLIENT_SECRET", paymentIntent.getClientSecret());
+
                 // Charger le HTML dans le WebView (sur le thread JavaFX)
                 javafx.application.Platform.runLater(() -> {
                     // Charger le HTML dans le WebView
                     webEngine.loadContent(html);
-                    
+
                     // Ajouter un écouteur pour le chargement de la page
                     webEngine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
                         if (newValue == Worker.State.SUCCEEDED) {
                             // Obtenir l'objet window du JavaScript
                             JSObject window = (JSObject) webEngine.executeScript("window");
-                            
+
                             // Ajouter un connecteur Java au JavaScript
                             window.setMember("javaConnector", new JavaConnector());
-                            
+
                             // Activer le bouton de paiement
                             payButton.setDisable(false);
-                            
+
                             // Masquer l'indicateur de progression
                             progressBar.setVisible(false);
                             statusLabel.setVisible(false);
@@ -167,14 +167,14 @@ public class PaiementController implements Initializable {
                         }
                     });
                 });
-                
+
             } catch (StripeException e) {
                 javafx.application.Platform.runLater(() -> {
                     progressBar.setVisible(false);
                     statusLabel.setText("Erreur: " + e.getMessage());
                     statusLabel.setVisible(true);
-                    
-                    showAlert(CustomAlert.AlertType.ERROR, "Erreur Stripe", 
+
+                    showAlert(CustomAlert.AlertType.ERROR, "Erreur Stripe",
                             "Une erreur est survenue lors de l'initialisation du paiement: " + e.getMessage());
                     e.printStackTrace();
                 });
@@ -183,15 +183,15 @@ public class PaiementController implements Initializable {
                     progressBar.setVisible(false);
                     statusLabel.setText("Erreur: " + e.getMessage());
                     statusLabel.setVisible(true);
-                    
-                    showAlert(CustomAlert.AlertType.ERROR, "Erreur de chargement", 
+
+                    showAlert(CustomAlert.AlertType.ERROR, "Erreur de chargement",
                             "Impossible de charger le formulaire de paiement: " + e.getMessage());
                     e.printStackTrace();
                 });
             }
         });
     }
-    
+
     /**
      * Charge le template HTML pour le formulaire Stripe
      * @return Le contenu du fichier HTML
@@ -202,12 +202,12 @@ public class PaiementController implements Initializable {
         if (is == null) {
             throw new IOException("Le fichier stripe-form.html est introuvable");
         }
-        
+
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
             return reader.lines().collect(Collectors.joining("\n"));
         }
     }
-    
+
     /**
      * Gère le clic sur le bouton de paiement
      */
@@ -217,41 +217,41 @@ public class PaiementController implements Initializable {
             // Cacher le bouton de paiement et désactiver le bouton d'annulation
             payButton.setVisible(false);
             cancelButton.setDisable(true);
-            
+
             // Vider le panier
             panier.viderPanier();
-            
+
             // Récupérer la fenêtre actuelle
             Stage currentStage = (Stage) payButton.getScene().getWindow();
-            
+
             // Rediriger directement vers la page de confirmation sans attendre la fermeture de l'alerte
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/SuccessPaymentView.fxml"));
             Parent root = loader.load();
-            
+
             // Créer une scène avec dimensions standard
             Scene scene = FullScreenUtil.createStandardScene(root);
-            
+
             // Ajouter explicitement la feuille de style
             scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
-            
+
             currentStage.setScene(scene);
             FullScreenUtil.setFullScreen(currentStage);
             currentStage.show();
-            
+
             // Afficher le message de confirmation APRÈS avoir changé de scène
             // pour ne pas bloquer la redirection
             Stage stage = currentStage;
-            CustomAlert.showInformation(stage, "Paiement réussi", 
+            CustomAlert.showInformation(stage, "Paiement réussi",
                     "Merci pour votre confiance. Votre commande a été confirmée et sera traitée dans les plus brefs délais.");
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             Stage stage = (Stage) payButton.getScene().getWindow();
-            CustomAlert.showError(stage, "Erreur", 
+            CustomAlert.showError(stage, "Erreur",
                     "Impossible de rediriger vers la page de confirmation: " + e.getMessage());
         }
     }
-    
+
     /**
      * Gère le clic sur le bouton d'annulation
      */
@@ -261,26 +261,26 @@ public class PaiementController implements Initializable {
             // Retourner à la vue du panier
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/PanierView.fxml"));
             Parent root = loader.load();
-            
+
             Stage stage = (Stage) cancelButton.getScene().getWindow();
-            
+
             // Créer une scène avec les dimensions standard
             Scene scene = FullScreenUtil.createStandardScene(root);
-            
+
             // Ajouter explicitement la feuille de style
             String cssPath = getClass().getResource("/styles.css").toExternalForm();
             scene.getStylesheets().add(cssPath);
-            
+
             stage.setScene(scene);
             FullScreenUtil.setFullScreen(stage);
             stage.show();
         } catch (IOException e) {
             Stage stage = (Stage) cancelButton.getScene().getWindow();
-            CustomAlert.showError(stage, "Erreur", 
+            CustomAlert.showError(stage, "Erreur",
                     "Impossible de retourner à la vue du panier: " + e.getMessage());
         }
     }
-    
+
     /**
      * Affiche une boîte de dialogue d'alerte
      * @param type Le type d'alerte
@@ -304,7 +304,7 @@ public class PaiementController implements Initializable {
                 break;
         }
     }
-    
+
     /**
      * Gère le succès du paiement
      */
@@ -313,40 +313,40 @@ public class PaiementController implements Initializable {
             progressBar.setVisible(false);
             statusLabel.setText("Paiement réussi! Redirection vers la page de confirmation...");
             statusLabel.setVisible(true);
-            
+
             // Cacher le bouton de paiement et désactiver le bouton d'annulation
             payButton.setVisible(false);
             cancelButton.setDisable(true);
-            
+
             // Vider le panier
             panier.viderPanier();
-            
+
             // Rediriger vers la page de confirmation
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/SuccessPaymentView.fxml"));
             Parent root = loader.load();
-            
+
             // Créer une scène avec dimensions standard
             Scene scene = FullScreenUtil.createStandardScene(root);
-            
+
             // Ajouter explicitement la feuille de style
             scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
-            
+
             Stage stage = (Stage) payButton.getScene().getWindow();
             stage.setScene(scene);
             FullScreenUtil.setFullScreen(stage);
             stage.show();
-            
+
             // Afficher le message de confirmation APRÈS avoir changé de scène
-            CustomAlert.showInformation(stage, "Paiement réussi", 
+            CustomAlert.showInformation(stage, "Paiement réussi",
                     "Merci pour votre confiance. Votre commande a été confirmée et sera traitée dans les plus brefs délais.");
-            
+
         } catch (IOException e) {
             Stage stage = (Stage) payButton.getScene().getWindow();
-            CustomAlert.showError(stage, "Erreur", 
+            CustomAlert.showError(stage, "Erreur",
                     "Impossible de rediriger vers la page de confirmation: " + e.getMessage());
         }
     }
-    
+
     /**
      * Gère l'erreur de paiement
      * @param errorMessage Le message d'erreur
@@ -355,11 +355,11 @@ public class PaiementController implements Initializable {
         progressBar.setVisible(false);
         statusLabel.setText("Erreur de paiement: " + errorMessage);
         statusLabel.setVisible(true);
-        
+
         Stage stage = (Stage) payButton.getScene().getWindow();
         CustomAlert.showError(stage, "Erreur de paiement", errorMessage);
     }
-    
+
     /**
      * Classe pour connecter Java et JavaScript
      */
@@ -375,37 +375,37 @@ public class PaiementController implements Initializable {
                     // Cacher le bouton de paiement et désactiver le bouton d'annulation
                     payButton.setVisible(false);
                     cancelButton.setDisable(true);
-                    
+
                     // Vider le panier
                     panier.viderPanier();
-                    
+
                     // Rediriger vers la page de confirmation
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/SuccessPaymentView.fxml"));
                     Parent root = loader.load();
-                    
+
                     // Créer une scène avec dimensions standard
                     Scene scene = FullScreenUtil.createStandardScene(root);
-                    
+
                     // Ajouter explicitement la feuille de style
                     scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
-                    
+
                     Stage stage = (Stage) payButton.getScene().getWindow();
                     stage.setScene(scene);
                     FullScreenUtil.setFullScreen(stage);
                     stage.show();
-                    
+
                     // Afficher le message de confirmation APRÈS avoir changé de scène
-                    CustomAlert.showInformation(stage, "Paiement réussi", 
+                    CustomAlert.showInformation(stage, "Paiement réussi",
                             "Merci pour votre confiance. Votre commande a été confirmée et sera traitée dans les plus brefs délais.");
                 } catch (Exception e) {
                     e.printStackTrace();
                     Stage stage = (Stage) payButton.getScene().getWindow();
-                    CustomAlert.showError(stage, "Erreur", 
+                    CustomAlert.showError(stage, "Erreur",
                             "Impossible de rediriger vers la page de confirmation: " + e.getMessage());
                 }
             });
         }
-        
+
         /**
          * Appelé par JavaScript quand le paiement échoue
          * @param errorMessage Le message d'erreur

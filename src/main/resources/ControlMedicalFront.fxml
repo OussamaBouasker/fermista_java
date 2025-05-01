@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.control.ScrollPane?>
 
-<AnchorPane prefHeight="683.0" prefWidth="1324.0" stylesheets="@styles/StyleNavbar.css, @styles/StyleCalendar.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.fermista.controllers.ControlMedicalFront">
+<AnchorPane prefHeight="683.0" prefWidth="1324.0" style="-fx-background-color: #f5f2ed" stylesheets="@styles/StyleNavbar.css, @styles/StyleCalendar.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.fermista.controllers.ControlMedicalFront">
 
     <fx:include source="Navbar.fxml" />
     

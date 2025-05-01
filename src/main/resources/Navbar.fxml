@@ -22,8 +22,7 @@
             <HBox spacing="10.0" alignment="CENTER_LEFT">
                 <children>
                     <Button text="Home" onAction="#handleHome"/>
-                    <Button text="Shop" onAction="#handleShop"/>
-                    <Button text="Collier" onAction="#handleCollier"/>
+
                     <Button text="Workshops" onAction="#handleWorkshops"/>
                     <Button text="Contrôle Médical" onAction="#handleControlMedical"/>
                     <Button text="Rendez-vous" onAction="#handleRendezVous"/>
