@@ -112,9 +112,9 @@ public class NavbarController {
     @FXML private void handleShop() { navigateTo("/ShopPage.fxml"); }
     @FXML private void handleCollier() { navigateTo("/CollierPage.fxml"); }
     @FXML private void handleWorkshops() { navigateTo("/WorkshopsPage.fxml"); }
-    @FXML private void handleControlMedical() { navigateTo("/ControlMedicalPage.fxml"); }
-    @FXML private void handleRendezVous() { navigateTo("/RendezVousPage.fxml"); }
-    @FXML private void handleListeRendezVous(ActionEvent actionEvent) { navigateTo("/ListeRendezVousPage.fxml"); }
+    @FXML private void handleControlMedical() { navigateTo("/ControlMedicalFront.fxml"); }
+    @FXML private void handleRendezVous() { navigateTo("/ListVet.fxml"); }
+    @FXML private void handleListeRendezVous(ActionEvent actionEvent) { navigateTo("/ListRendezVous.fxml"); }
     @FXML private void handleProduits() { navigateTo("/ProduitsPage.fxml"); }
     @FXML private void handleMesVaches() { navigateTo("/MesVachesPage.fxml"); }
     @FXML private void handleMesColliers() { navigateTo("/MesColliersPage.fxml"); }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="tn.fermista.controllers.ListRendezVous"
+            prefHeight="600.0" prefWidth="800.0"
+            stylesheets="@styles/ListRendezVous.css">
+            
+    <!-- Navbar -->
+    <fx:include source="Navbar.fxml" AnchorPane.topAnchor="0.0" 
+                AnchorPane.leftAnchor="0.0" 
+                AnchorPane.rightAnchor="0.0"/>
+    
+    <!-- Main Content -->
+    <VBox spacing="20" alignment="TOP_CENTER"
+          AnchorPane.topAnchor="80.0" 
+          AnchorPane.leftAnchor="0.0" 
+          AnchorPane.rightAnchor="0.0" 
+          AnchorPane.bottomAnchor="0.0">
+        
+        <!-- Title -->
+        <Label text="Mes Rendez-vous" styleClass="title-label">
+            <font>
+                <Font name="System Bold" size="24.0"/>
+            </font>
+        </Label>
+        
+        <!-- Table View -->
+        <TableView fx:id="rendezVousTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="dateColumn" text="Date" prefWidth="100"/>
+                <TableColumn fx:id="heureColumn" text="Heure" prefWidth="100"/>
+                <TableColumn fx:id="sexColumn" text="Sexe" prefWidth="100"/>
+                <TableColumn fx:id="causeColumn" text="Cause" prefWidth="200"/>
+                <TableColumn fx:id="statusColumn" text="Statut" prefWidth="100"/>
+                <TableColumn fx:id="actionsColumn" text="Actions" prefWidth="150"/>
+            </columns>
+        </TableView>
+        
+    </VBox>
+    
+</AnchorPane>

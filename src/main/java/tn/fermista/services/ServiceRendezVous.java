@@ -14,9 +14,13 @@ import java.util.List;
 public class ServiceRendezVous implements CRUD<RendezVous> {
 
     private Connection cnx;
+    private ServiceAgriculteur serviceAgriculteur;
+    private ServiceVeterinaire serviceVeterinaire;
 
     public ServiceRendezVous() {
         cnx = MyDbConnexion.getInstance().getCnx();
+        serviceAgriculteur = new ServiceAgriculteur();
+        serviceVeterinaire = new ServiceVeterinaire();
     }
 
     @Override
@@ -75,15 +79,27 @@ public class ServiceRendezVous implements CRUD<RendezVous> {
                 rdv.setCause(rs.getString("cause"));
                 rdv.setStatus(rs.getString("status"));
 
-                // Pour les relations, tu peux créer des objets Vétérinaire/Agriculteur vides avec juste l'ID
-                // ou faire un vrai fetch si tu veux les charger complètement
-                var veterinaire = new Veterinaire();
-                veterinaire.setId(rs.getInt("veterinaire_id"));
-                rdv.setVeterinaire(veterinaire);
+                // Charger les informations complètes de l'agriculteur
+                int agriculteurId = rs.getInt("agriculteur_id");
+                List<Agriculteur> agriculteurs = serviceAgriculteur.rechercher();
+                Agriculteur agriculteur = agriculteurs.stream()
+                    .filter(a -> a.getId().equals(agriculteurId))
+                    .findFirst()
+                    .orElse(null);
+                if (agriculteur != null) {
+                    rdv.setAgriculteur(agriculteur);
+                }
 
-                var agriculteur = new Agriculteur();
-                agriculteur.setId(rs.getInt("agriculteur_id"));
-                rdv.setAgriculteur(agriculteur);
+                // Charger les informations complètes du vétérinaire
+                int veterinaireId = rs.getInt("veterinaire_id");
+                List<Veterinaire> veterinaires = serviceVeterinaire.rechercher();
+                Veterinaire veterinaire = veterinaires.stream()
+                    .filter(v -> v.getId().equals(veterinaireId))
+                    .findFirst()
+                    .orElse(null);
+                if (veterinaire != null) {
+                    rdv.setVeterinaire(veterinaire);
+                }
 
                 list.add(rdv);
             }

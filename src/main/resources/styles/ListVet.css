@@ -1,0 +1,75 @@
+.title-label {
+    -fx-padding: 20;
+    -fx-text-fill: #2c3e50;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+}
+
+.scroll-pane {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.vet-container {
+    -fx-background-color: #f4f4f4;
+    -fx-alignment: center;
+    -fx-padding: 20;
+}
+
+.veterinaire-card {
+    -fx-background-color: white;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+    -fx-background-radius: 5;
+    -fx-min-width: 300;
+    -fx-max-width: 300;
+    -fx-spacing: 15;
+    -fx-alignment: center;
+}
+
+.veterinaire-card .label {
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+}
+
+.veterinaire-card .name-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.veterinaire-card .info-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #7f8c8d;
+}
+
+.veterinaire-card:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 15, 0, 0, 0);
+    -fx-translate-y: -2;
+    -fx-cursor: hand;
+}
+
+.rdv-button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-padding: 12 24;
+    -fx-cursor: hand;
+    -fx-background-radius: 5;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+}
+
+.rdv-button:hover {
+    -fx-background-color: #45a049;
+}
+
+.rdv-button:pressed {
+    -fx-background-color: #3d8b40;
+} 

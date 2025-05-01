@@ -1,0 +1,314 @@
+.title-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-padding: 20px 0 10px 0;
+}
+
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 5px;
+    -fx-pref-width: 900px;
+    -fx-pref-height: 500px;
+    -fx-max-width: 900px;
+    -fx-max-height: 500px;
+    -fx-alignment: center;
+}
+
+.table-view .column-header {
+    -fx-background-color: #f5f5f5;
+    -fx-font-weight: bold;
+    -fx-pref-height: 40px;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #333333;
+    -fx-alignment: center;
+}
+
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-cell-size: 40px;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #f8f9fa;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: rgb(129, 196, 8);
+    -fx-text-fill: white;
+}
+
+.table-column {
+    -fx-alignment: center;
+}
+
+.button {
+    -fx-background-color: rgb(129, 196, 8);
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+    -fx-padding: 5 10;
+    -fx-background-radius: 3px;
+    -fx-min-width: 80px;
+    -fx-max-width: 80px;
+}
+
+.button:hover {
+    -fx-background-color: rgb(161, 211, 78);
+}
+
+/* Style spécifique pour le bouton Accepter */
+.button.accept-button {
+    -fx-background-color: rgb(129, 196, 8);
+    -fx-text-fill: #000000;
+}
+
+/* Style spécifique pour le bouton Modifier */
+.button.update-button {
+    -fx-background-color: rgb(129, 196, 8);
+    -fx-text-fill: #000000;
+}
+
+/* Style spécifique pour le bouton Supprimer */
+.button.delete-button {
+    -fx-background-color: rgb(129, 196, 8);
+    -fx-text-fill: #000000;
+}
+
+/* Ajuster la largeur de la colonne des actions */
+#actionsColumn {
+    -fx-pref-width: 250px;
+}
+
+/* Centrer le contenu dans les cellules */
+.table-cell {
+    -fx-alignment: center-left;
+    -fx-padding: 10px;
+}
+
+/* Ajuster la largeur des colonnes */
+#dateColumn {
+    -fx-pref-width: 120px;
+}
+
+#heureColumn {
+    -fx-pref-width: 100px;
+}
+
+#sexColumn {
+    -fx-pref-width: 100px;
+}
+
+#causeColumn {
+    -fx-pref-width: 200px;
+}
+
+#statusColumn {
+    -fx-pref-width: 120px;
+}
+
+
+/* Dialog styles */
+.dialog-pane {
+    -fx-background-color: white;
+    -fx-padding: 20px;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 15, 0, 0, 0);
+    -fx-min-width: 400px;
+    -fx-min-height: 300px;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: linear-gradient(to right, rgb(129, 196, 8), rgb(161, 211, 78));
+    -fx-padding: 20px;
+    -fx-background-radius: 15px 15px 0 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 2);
+}
+
+.dialog-pane .header-panel .label {
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 2, 0, 0, 1);
+}
+
+.dialog-pane .content {
+    -fx-padding: 30px;
+    -fx-background-color: white;
+}
+
+.dialog-pane .button-bar {
+    -fx-padding: 20px;
+    -fx-background-color: #f8f9fa;
+    -fx-background-radius: 0 0 15px 15px;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0 0 1 0;
+}
+
+.dialog-pane .button-bar .button {
+    -fx-background-color: linear-gradient(to right, rgb(129, 196, 8), rgb(161, 211, 78));
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-min-width: 130px;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 3, 0, 0, 1);
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.dialog-pane .button-bar .button:hover {
+    -fx-background-color: linear-gradient(to right, rgb(161, 211, 78), rgb(129, 196, 8));
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.dialog-pane .button-bar .button:focused {
+    -fx-effect: dropshadow(gaussian, rgba(129, 196, 8, 0.4), 8, 0, 0, 0);
+}
+
+.dialog-pane .button-bar .button:pressed {
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
+}
+
+.date-picker {
+    -fx-pref-width: 200px;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+    -fx-padding: 8px;
+    -fx-font-size: 14px;
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.date-picker:focused {
+    -fx-border-color: rgb(129, 196, 8);
+    -fx-effect: dropshadow(gaussian, rgba(129, 196, 8, 0.3), 8, 0, 0, 0);
+    -fx-border-width: 2px;
+}
+
+.date-picker .arrow-button {
+    -fx-background-color: rgb(129, 196, 8);
+    -fx-background-radius: 0 8px 8px 0;
+}
+
+.date-picker .arrow-button:hover {
+    -fx-background-color: rgb(161, 211, 78);
+}
+
+.spinner {
+    -fx-pref-width: 90px;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+    -fx-padding: 8px;
+    -fx-font-size: 14px;
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.spinner:focused {
+    -fx-border-color: rgb(129, 196, 8);
+    -fx-effect: dropshadow(gaussian, rgba(129, 196, 8, 0.3), 8, 0, 0, 0);
+    -fx-border-width: 2px;
+}
+
+.spinner .increment-arrow-button, .spinner .decrement-arrow-button {
+    -fx-background-color: rgb(129, 196, 8);
+    -fx-background-radius: 0;
+}
+
+.spinner .increment-arrow-button:hover, .spinner .decrement-arrow-button:hover {
+    -fx-background-color: rgb(161, 211, 78);
+}
+
+.dialog-grid {
+    -fx-alignment: center;
+    -fx-hgap: 25;
+    -fx-vgap: 25;
+    -fx-padding: 15px;
+}
+
+.dialog-label {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-padding: 5px 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 1, 0, 0, 0);
+}
+
+/* Style pour le conteneur des spinners d'heure */
+.dialog-grid .hbox {
+    -fx-spacing: 12px;
+    -fx-alignment: center-left;
+    -fx-padding: 5px;
+    -fx-background-color: #f8f9fa;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+}
+
+/* Style pour le séparateur d'heure (:) */
+.dialog-grid .hbox .label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-padding: 0 8px;
+}
+
+/* Animation pour l'apparition de la boîte de dialogue */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.dialog-pane {
+    -fx-opacity: 0;
+    -fx-animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+/* Button styling */
+.button-accept {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 10px;
+    -fx-background-radius: 3px;
+}
+
+.button-accept:hover {
+    -fx-background-color: #45a049;
+}
+
+.button-edit {
+    -fx-background-color: #2196F3;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 10px;
+    -fx-background-radius: 3px;
+}
+
+.button-edit:hover {
+    -fx-background-color: #0b7dda;
+}
+
+.button-reject {
+    -fx-background-color: #f44336;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 10px;
+    -fx-background-radius: 3px;
+}
+
+.button-reject:hover {
+    -fx-background-color: #d32f2f;
+}

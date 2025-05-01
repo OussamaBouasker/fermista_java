@@ -433,7 +433,7 @@ public class ControlMedicalShow implements Initializable {
 
             // Obtenir le contrôleur
             ModifyRapportMedicalController controller = loader.getController();
-            controller.setRapportMedical(rapportMedical);
+            controller.initData(rapportMedical);
 
             // Créer la scène
             Scene scene = new Scene(root);

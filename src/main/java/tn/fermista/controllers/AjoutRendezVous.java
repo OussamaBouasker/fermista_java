@@ -92,6 +92,11 @@ public class AjoutRendezVous implements Initializable {
         this.stage = stage;
     }
 
+    public void preSelectVeterinaire(Veterinaire veterinaire) {
+        veterinaireCombo.setValue(veterinaire);
+        veterinaireCombo.setDisable(true); // Désactiver la modification du vétérinaire
+    }
+
     @FXML
     private void handleSubmit() {
         try {

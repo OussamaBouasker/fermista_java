@@ -1,0 +1,54 @@
+.form-container {
+    -fx-background-color: white;
+    -fx-padding: 20;
+    -fx-spacing: 15;
+}
+
+.title-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-padding: 0 0 10 0;
+}
+
+.label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #34495e;
+}
+
+.text-field, .text-area, .date-picker {
+    -fx-pref-height: 35px;
+    -fx-font-size: 14px;
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+}
+
+.text-area {
+    -fx-pref-height: 100px;
+}
+
+.submit-button {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-background-radius: 4px;
+}
+
+.cancel-button {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-background-radius: 4px;
+}
+
+.submit-button:hover {
+    -fx-background-color: #27ae60;
+}
+
+.cancel-button:hover {
+    -fx-background-color: #c0392b;
+} 

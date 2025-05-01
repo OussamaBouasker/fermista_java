@@ -8,8 +8,8 @@ import java.util.Properties;
 public class EmailSender {
     private static final String SMTP_HOST = "sandbox.smtp.mailtrap.io";
     private static final String SMTP_PORT = "2525";
-    private static final String USERNAME = "278d606d6668d8";
-    private static final String PASSWORD = "9733dcc0a8f095";
+    private static final String USERNAME = "b6fe749b4fd202";
+    private static final String PASSWORD = "7a242d24e6ee74";
 
     public static void sendOTP(String recipientEmail, String otp) throws MessagingException {
         Properties props = new Properties();

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="tn.fermista.controllers.AddRendezVousFormController"
+      spacing="10"
+      styleClass="form-container"
+      prefWidth="400"
+      prefHeight="500"
+      stylesheets="@styles/AddRendezVousForm.css">
+    
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- Title -->
+    <Label text="Nouveau Rendez-vous" styleClass="title-label">
+        <font>
+            <Font name="System Bold" size="18"/>
+        </font>
+    </Label>
+
+    <!-- Date Picker -->
+    <VBox spacing="5">
+        <Label text="Date du rendez-vous"/>
+        <DatePicker fx:id="datePicker" promptText="Sélectionnez une date"/>
+    </VBox>
+
+    <!-- Time Field -->
+    <VBox spacing="5">
+        <Label text="Heure du rendez-vous (HH:mm)"/>
+        <TextField fx:id="heureField" promptText="Ex: 14:30"/>
+    </VBox>
+
+    <!-- Sex Field -->
+    <VBox spacing="5">
+        <Label text="Sexe de l'animal"/>
+        <TextField fx:id="sexField" promptText="male ou female"/>
+    </VBox>
+
+    <!-- Cause Field -->
+    <VBox spacing="5">
+        <Label text="Cause du rendez-vous"/>
+        <TextArea fx:id="causeField" promptText="Décrivez la raison du rendez-vous" 
+                 prefRowCount="4" wrapText="true"/>
+    </VBox>
+
+    <!-- Status Field -->
+    <VBox spacing="5">
+        <Label text="Statut du rendez-vous"/>
+        <TextField fx:id="statusField" promptText="Ex: en attente"/>
+    </VBox>
+
+    <!-- Buttons -->
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Annuler" onAction="#handleCancel" styleClass="cancel-button"/>
+        <Button text="Valider" onAction="#handleSubmit" styleClass="submit-button"/>
+    </HBox>
+
+</VBox> 

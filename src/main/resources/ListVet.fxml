@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="tn.fermista.controllers.ListVet"
+            prefHeight="600.0" prefWidth="800.0"
+            stylesheets="@styles/ListVet.css">
+            
+    <!-- Navbar -->
+    <fx:include source="Navbar.fxml" AnchorPane.topAnchor="0.0" 
+                AnchorPane.leftAnchor="0.0" 
+                AnchorPane.rightAnchor="0.0"/>
+    
+    <!-- Main Content -->
+    <VBox spacing="20" alignment="TOP_CENTER"
+          AnchorPane.topAnchor="80.0" 
+          AnchorPane.leftAnchor="0.0" 
+          AnchorPane.rightAnchor="0.0" 
+          AnchorPane.bottomAnchor="0.0">
+        
+        <!-- Title -->
+        <Label text="Liste des Vétérinaires" styleClass="title-label">
+            <font>
+                <Font name="System Bold" size="24.0"/>
+            </font>
+        </Label>
+        
+        <!-- Scrollable Content -->
+        <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" styleClass="scroll-pane">
+            <FlowPane fx:id="veterinairesContainer" 
+                      hgap="20" vgap="20" 
+                      alignment="CENTER"
+                      styleClass="vet-container">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+            </FlowPane>
+        </ScrollPane>
+        
+    </VBox>
+    
+</AnchorPane>

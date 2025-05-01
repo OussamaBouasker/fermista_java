@@ -6,9 +6,9 @@ import com.twilio.type.PhoneNumber;
 
 public class SMSSender {
     // Twilio credentials - replace with your actual credentials
-    private static final String ACCOUNT_SID = "";
-    private static final String AUTH_TOKEN = "";
-    private static final String TWILIO_PHONE_NUMBER = "";
+    private static final String ACCOUNT_SID = "ACcafa8d82a7a3ce702e28e8d13c84f92b";
+    private static final String AUTH_TOKEN = "e5007a7812f62c0fe0e312108cec0b86";
+    private static final String TWILIO_PHONE_NUMBER = "+16592469825";
 
     static {
         System.out.println("Initializing Twilio...");

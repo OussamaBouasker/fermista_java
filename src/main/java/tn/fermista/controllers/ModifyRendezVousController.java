@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import tn.fermista.models.Agriculteur;
@@ -167,7 +168,7 @@ public class ModifyRendezVousController implements Initializable {
             showAlert("Succès", "Rendez-vous modifié avec succès", Alert.AlertType.INFORMATION);
 
             // Fermer la fenêtre
-            stage.close();
+            closeWindow();
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert("Erreur", "Erreur lors de la modification du rendez-vous", Alert.AlertType.ERROR);
@@ -176,7 +177,22 @@ public class ModifyRendezVousController implements Initializable {
 
     @FXML
     private void handleCancel() {
-        stage.close();
+        closeWindow();
+    }
+
+    private void closeWindow() {
+        if (stage != null) {
+            stage.close();
+        } else {
+            // Si stage est null, essayer de fermer la fenêtre parente
+            Node node = saveButton.getScene().getRoot();
+            if (node != null) {
+                Stage currentStage = (Stage) node.getScene().getWindow();
+                if (currentStage != null) {
+                    currentStage.close();
+                }
+            }
+        }
     }
 
     private void showAlert(String title, String content, Alert.AlertType type) {
