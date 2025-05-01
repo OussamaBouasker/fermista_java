@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="778.0" prefWidth="1130.0" styleClass="main-scroll-pane" stylesheets="@/Front-Office/StyleWorkshops.css" vbarPolicy="AS_NEEDED" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.fermista.controllers.Front.ShowWorkshop">
+    <VBox prefHeight="778.0" prefWidth="1130.0" spacing="20" styleClass="main-container">
+        <!-- Navbar -->
+        <fx:include source="../Navbar.fxml" />
+
+        <!-- Main Content -->
+        <VBox spacing="20" styleClass="content-container">
+            <!-- Title and Search -->
+            <HBox alignment="CENTER" styleClass="title-search-container">
+                <Label styleClass="page-title" text="Liste des Workshops" />
+                <TextField fx:id="searchField" promptText="Rechercher un workshop..." styleClass="search-field" />
+            </HBox>
+
+            <!-- Filter Buttons -->
+            <HBox alignment="CENTER" spacing="15" styleClass="filter-buttons">
+                <Button fx:id="allWorkshopsButton" styleClass="filter-button" text="All Workshops" />
+                <Button fx:id="atelierLiveButton" styleClass="filter-button" text="Atelier Live" />
+                <Button fx:id="formationAutonomeButton" styleClass="filter-button" text="Autoformation" />
+                <Button fx:id="myReservationsButton" styleClass="reservation-button">
+                    <graphic>
+                        <HBox alignment="CENTER" spacing="5">
+                            <ImageView>
+                                <Image url="@../images/Nouveau dossier/icon-reservations.png" />
+                                <fitWidth>20</fitWidth>
+                                <fitHeight>20</fitHeight>
+                                <preserveRatio>true</preserveRatio>
+                            </ImageView>
+                            <Label styleClass="reservation-text" text="MES RÉSERVATIONS" />
+                        </HBox>
+                    </graphic>
+                </Button>
+            </HBox>
+
+            <!-- Workshops Grid -->
+            <HBox alignment="CENTER">
+                <FlowPane fx:id="workshopsContainer" alignment="CENTER" columnHalignment="CENTER" hgap="30" prefWrapLength="1050" rowValignment="TOP" styleClass="workshops-container" vgap="30">
+                    <padding>
+                        <Insets bottom="30" left="0" right="0" top="20" />
+                    </padding>
+                </FlowPane>
+            </HBox>
+
+            <!-- Pagination -->
+            <HBox alignment="CENTER" spacing="20" styleClass="pagination-controls">
+                <Button fx:id="prevPageButton" onAction="#handlePrevPage" styleClass="pagination-button" text="Précédent" />
+                <Label fx:id="pageInfoLabel" styleClass="page-info" />
+                <Button fx:id="nextPageButton" onAction="#handleNextPage" styleClass="pagination-button" text="Suivant" />
+                <padding>
+                    <Insets bottom="20" top="10" />
+                </padding>
+            </HBox>
+        </VBox>
+    </VBox>
+</ScrollPane>

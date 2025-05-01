@@ -41,6 +41,7 @@ public class ShowWorkshopsController implements Initializable {
     @FXML private TableColumn<Workshop, String> formateurColumn;
     @FXML private TableColumn<Workshop, Void> actionsColumn;
     @FXML private Button addButton;
+    @FXML private TextField searchField;
 
     private ServiceWorkshop serviceWorkshop;
     private ObservableList<Workshop> workshopList;
@@ -50,6 +51,11 @@ public class ShowWorkshopsController implements Initializable {
         try {
             serviceWorkshop = new ServiceWorkshop();
             workshopList = FXCollections.observableArrayList();
+
+            // Add this search listener
+            searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+                filterTable(newValue);
+            });
 
             // Initialize columns
             idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -106,7 +112,7 @@ public class ShowWorkshopsController implements Initializable {
             loadWorkshops();
         } catch (Exception e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors de l'initialisation: " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur l'initialisation: " + e.getMessage());
         }
     }
 
@@ -299,39 +305,34 @@ public class ShowWorkshopsController implements Initializable {
 
     private void filterTable(String searchText) {
         try {
-            List<Workshop> allWorkshops = serviceWorkshop.showAll();
-            List<Workshop> filteredWorkshops = new ArrayList<>();
-
-            if (searchText == null || searchText.isEmpty()) {
-                workshopTable.setItems(FXCollections.observableArrayList(allWorkshops));
+            if (searchText == null || searchText.trim().isEmpty()) {
+                workshopTable.setItems(workshopList);
                 return;
             }
 
-            String searchLower = searchText.toLowerCase();
+            String searchLower = searchText.toLowerCase().trim();
+            ObservableList<Workshop> filteredList = workshopList.filtered(workshop -> 
+                matchesSearch(workshop, searchLower)
+            );
             
-            for (Workshop workshop : allWorkshops) {
-                if (matchesSearch(workshop, searchLower)) {
-                    filteredWorkshops.add(workshop);
-                }
-            }
-
-            workshopTable.setItems(FXCollections.observableArrayList(filteredWorkshops));
-        } catch (SQLException e) {
+            workshopTable.setItems(filteredList);
+        } catch (Exception e) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors de la recherche: " + e.getMessage());
         }
     }
 
     private boolean matchesSearch(Workshop workshop, String searchText) {
         return String.valueOf(workshop.getId()).contains(searchText) ||
-               workshop.getTitre().toLowerCase().contains(searchText) ||
-               workshop.getDate().toString().toLowerCase().contains(searchText) ||
-               workshop.getPrix().toLowerCase().contains(searchText) ||
-               workshop.getTheme().toLowerCase().contains(searchText) ||
-               workshop.getType().toLowerCase().contains(searchText) ||
+               (workshop.getTitre() != null && workshop.getTitre().toLowerCase().contains(searchText)) ||
+               (workshop.getDate() != null && workshop.getDate().toString().toLowerCase().contains(searchText)) ||
+               (workshop.getPrix() != null && workshop.getPrix().toLowerCase().contains(searchText)) ||
+               (workshop.getTheme() != null && workshop.getTheme().toLowerCase().contains(searchText)) ||
+               (workshop.getType() != null && workshop.getType().toLowerCase().contains(searchText)) ||
                String.valueOf(workshop.getNbrPlacesRestantes()).contains(searchText) ||
-               workshop.getDuration().toString().toLowerCase().contains(searchText) ||
-               (workshop.getUser() != null && 
-                (workshop.getUser().getFirstName().toLowerCase().contains(searchText) ||
-                 workshop.getUser().getLastName().toLowerCase().contains(searchText)));
+               (workshop.getDuration() != null && workshop.getDuration().toString().toLowerCase().contains(searchText)) ||
+               (workshop.getUser() != null && (
+                   (workshop.getUser().getFirstName() != null && workshop.getUser().getFirstName().toLowerCase().contains(searchText)) ||
+                   (workshop.getUser().getLastName() != null && workshop.getUser().getLastName().toLowerCase().contains(searchText))
+               ));
     }
-} 
+}

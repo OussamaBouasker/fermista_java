@@ -11,6 +11,9 @@ import tn.fermista.services.ServiceReservation;
 import tn.fermista.services.ServiceWorkshop;
 import tn.fermista.services.ServiceClient;
 import tn.fermista.services.ServiceAgriculteur;
+import tn.fermista.services.ServiceUser;
+import tn.fermista.utils.EmailSender;
+import tn.fermista.utils.QRCodeGenerator;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -34,6 +37,7 @@ public class AddReservationController implements Initializable {
     private ServiceWorkshop serviceWorkshop;
     private ServiceClient serviceClient;
     private ServiceAgriculteur serviceAgriculteur;
+    private ServiceUser serviceUser;
     private ShowReservationsController parentController;
     private Reservation reservationToEdit;
     private boolean isEditMode = false;
@@ -44,6 +48,7 @@ public class AddReservationController implements Initializable {
         serviceWorkshop = new ServiceWorkshop();
         serviceClient = new ServiceClient();
         serviceAgriculteur = new ServiceAgriculteur();
+        serviceUser = new ServiceUser();
 
         // Initialize status options
         statusComboBox.getItems().addAll("En attente", "Confirmé", "Annulé");
@@ -56,6 +61,7 @@ public class AddReservationController implements Initializable {
             // Load users (both clients and agriculteurs)
             var clients = serviceClient.showAll();
             var agriculteurs = serviceAgriculteur.showAll();
+            userComboBox.getItems().clear(); // Clear existing items
             userComboBox.getItems().addAll(clients);
             userComboBox.getItems().addAll(agriculteurs);
             
@@ -86,7 +92,10 @@ public class AddReservationController implements Initializable {
         userComboBox.setConverter(new javafx.util.StringConverter<User>() {
             @Override
             public String toString(User user) {
-                return user == null ? "" : user.getFirstName() + " " + user.getLastName();
+                if (user == null) return "";
+                String name = user.getFirstName() + " " + user.getLastName();
+                System.out.println("Converting user to string: " + name); // Debug print
+                return name;
             }
 
             @Override
@@ -127,25 +136,31 @@ public class AddReservationController implements Initializable {
             // Set workshop
             Workshop workshop = reservation.getWorkshop();
             if (workshop != null) {
-                // Refresh workshop from database to ensure all properties are loaded
                 workshop = serviceWorkshop.getById(workshop.getId());
                 workshopComboBox.setValue(workshop);
             }
             
-            // Set user
+            // Set user using ServiceUser
             User user = reservation.getUser();
             if (user != null) {
-                // Try to find the user in both client and agriculteur services
+                System.out.println("Trying to find user with ID: " + user.getId());
                 try {
-                    user = serviceClient.getById(user.getId());
-                } catch (Exception e) {
-                    try {
-                        user = serviceAgriculteur.getById(user.getId());
-                    } catch (Exception ex) {
-                        System.out.println("User not found in either service");
+                    // Utiliser directement ServiceUser pour récupérer l'utilisateur
+                    User fullUser = serviceUser.getById(user.getId());
+                    if (fullUser != null) {
+                        System.out.println("Found user: " + fullUser.getFirstName() + " " + fullUser.getLastName());
+                        // Mettre à jour la liste des utilisateurs si nécessaire
+                        if (!userComboBox.getItems().contains(fullUser)) {
+                            userComboBox.getItems().add(fullUser);
+                        }
+                        userComboBox.setValue(fullUser);
+                    } else {
+                        System.out.println("User not found in database");
                     }
+                } catch (SQLException e) {
+                    System.out.println("Error finding user: " + e.getMessage());
+                    e.printStackTrace();
                 }
-                userComboBox.setValue(user);
             }
             
             emailField.setText(reservation.getEmail());
@@ -169,7 +184,9 @@ public class AddReservationController implements Initializable {
             LocalDateTime dateTime = LocalDateTime.of(datePicker.getValue(), LocalTime.now());
             reservation.setReservationDate(dateTime);
             
-            reservation.setStatus(statusComboBox.getValue());
+            String oldStatus = isEditMode ? reservationToEdit.getStatus() : null;
+            String newStatus = statusComboBox.getValue();
+            reservation.setStatus(newStatus);
             reservation.setPrix(prixField.getText());
 
             // Get selected workshop and user
@@ -189,6 +206,38 @@ public class AddReservationController implements Initializable {
 
             if (isEditMode) {
                 serviceReservation.update(reservation);
+                
+                // Send email notification if status has changed
+                if (oldStatus != null && !oldStatus.equals(newStatus)) {
+                    String accessLink = null;
+                    
+                    if ("Confirmé".equals(newStatus)) {
+                        if ("Atelier Live".equalsIgnoreCase(selectedWorkshop.getType())) {
+                            // Utiliser le lien de réunion pour les ateliers live
+                            accessLink = selectedWorkshop.getMeetlink();
+                        } else if ("Formation Autonome".equalsIgnoreCase(selectedWorkshop.getType())) {
+                            // Générer le lien vers la formation dans Google Drive
+                            // Convertir l'ID en String et s'assurer qu'il est dans le bon format
+                            String workshopId = String.valueOf(selectedWorkshop.getId());
+                            if (workshopId != null && !workshopId.isEmpty()) {
+                                // Si l'ID ne commence pas par "1", utiliser l'ID de base
+                                if (!workshopId.startsWith("1")) {
+                                    workshopId = "1J3I6cPYY0JbFZRivLL5ssfbbZHt7b6FN";
+                                }
+                                accessLink = QRCodeGenerator.getFormationLink(workshopId);
+                            } else {
+                                accessLink = QRCodeGenerator.getFormationLink(null);
+                            }
+                        }
+                    }
+                    
+                    EmailSender.sendReservationStatusEmail(
+                        reservation.getEmail(),
+                        selectedWorkshop.getTitre(),
+                        newStatus,
+                        accessLink
+                    );
+                }
             } else {
                 serviceReservation.insert(reservation);
             }

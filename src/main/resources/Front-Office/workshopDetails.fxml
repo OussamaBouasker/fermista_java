@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.effect.*?>
+
+<VBox stylesheets="@/styles/workshopDetails.css" prefHeight="800.0" prefWidth="1000.0" spacing="0" styleClass="details-container" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.fermista.controllers.Front.WorkshopDetailsController">
+
+
+    <HBox styleClass="header-container">
+        <Button onAction="#goBack" styleClass="back-button" text="←" />
+        <Region HBox.hgrow="ALWAYS" />
+    </HBox>
+
+    <ScrollPane fitToWidth="true" styleClass="details-scroll-pane" VBox.vgrow="ALWAYS">
+        <VBox spacing="30">
+            <padding>
+                <Insets bottom="40" left="40" right="40" top="20" />
+            </padding>
+
+            <!-- Workshop Image with Overlay -->
+            <StackPane styleClass="image-container">
+                <ImageView fx:id="workshopImage" fitHeight="400" fitWidth="920" preserveRatio="true" />
+                <VBox styleClass="image-overlay" alignment="BOTTOM_LEFT">
+                    <Label fx:id="titleLabel" styleClass="details-title" />
+                    <HBox spacing="15" alignment="CENTER_LEFT">
+                        <Label fx:id="typeLabel" styleClass="details-type" />
+                        <Label fx:id="priceLabel" styleClass="details-price" />
+                    </HBox>
+                </VBox>
+                <effect>
+                    <DropShadow color="#00000040" radius="10" spread="0.1" />
+                </effect>
+            </StackPane>
+
+            <HBox spacing="40">
+                <!-- Left Column: Workshop Info -->
+                <VBox spacing="25" HBox.hgrow="ALWAYS" styleClass="info-section">
+                    <Label fx:id="formateurLabel" styleClass="details-formateur" wrapText="true" />
+                    
+                    <VBox styleClass="description-section">
+                        <Label text="À propos de cet atelier" styleClass="section-title" />
+                        <ScrollPane fitToWidth="true" styleClass="description-scroll">
+                            <VBox spacing="10">
+                                <Label fx:id="descriptionLabel" styleClass="details-description" wrapText="true" />
+                            </VBox>
+                        </ScrollPane>
+                    </VBox>
+                </VBox>
+
+                <!-- Right Column: Reservation Form -->
+                <VBox spacing="20" styleClass="reservation-section" minWidth="350">
+                    <!-- Login Message -->
+                    <Label fx:id="loginMessageLabel" styleClass="login-message" visible="false"/>
+
+                    <!-- Reservation Form -->
+                    <VBox fx:id="reservationForm" spacing="15">
+                        <Label text="Réserver votre place" styleClass="form-title"/>
+                        <Label fx:id="placesLabel" styleClass="places-info"/>
+                        
+                        <TextField fx:id="emailField" promptText="Adresse email" styleClass="form-field"/>
+                        <TextField fx:id="telField" promptText="Numéro de téléphone" styleClass="form-field"/>
+                        <TextField fx:id="cardNumberField" promptText="Numéro de carte bancaire" styleClass="form-field"/>
+                        <TextArea fx:id="commentField" promptText="Commentaire (optionnel)" styleClass="form-field" prefRowCount="3"/>
+                        
+                        <Button fx:id="reserveButton" text="Réserver maintenant" onAction="#handleReservation" 
+                                styleClass="reserve-button" maxWidth="Infinity"/>
+                        
+                        <StackPane>
+                            <ProgressIndicator fx:id="reservationProgress" visible="false"/>
+                        </StackPane>
+                    </VBox>
+                </VBox>
+            </HBox>
+        </VBox>
+    </ScrollPane>
+</VBox>
