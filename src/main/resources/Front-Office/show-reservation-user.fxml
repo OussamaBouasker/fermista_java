@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<ScrollPane fitToWidth="true" styleClass="main-scroll-pane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+    fx:controller="tn.fermista.controllers.Front.ShowReservationUser"
+    stylesheets="@StyleReservations.css">
+    <VBox spacing="0" styleClass="main-container">
+        <!-- Navbar -->
+        <fx:include source="../Navbar.fxml" />
+
+        <!-- Header Banner -->
+        <StackPane styleClass="reservation-header">
+            <VBox alignment="CENTER" spacing="10">
+                <Label text="My Reservations" styleClass="header-title"/>
+                <Label text="Manage your workshop bookings with ease" styleClass="header-subtitle"/>
+            </VBox>
+        </StackPane>
+
+        <!-- Main Content -->
+        <VBox styleClass="content-container">
+            <!-- Title -->
+            <Label text="My Workshop Reservations" styleClass="section-title"/>
+
+            <!-- Table Container -->
+            <VBox styleClass="table-container">
+                <!-- Table Header -->
+                <HBox styleClass="table-header">
+                    <Label text="WORKSHOP" styleClass="header-cell" HBox.hgrow="ALWAYS" maxWidth="300"/>
+                    <Label text="DATE" styleClass="header-cell" HBox.hgrow="ALWAYS" maxWidth="200"/>
+                    <Label text="PRICE" styleClass="header-cell" HBox.hgrow="ALWAYS" maxWidth="150"/>
+                    <Label text="STATUS" styleClass="header-cell" HBox.hgrow="ALWAYS" maxWidth="150"/>
+                    <Label text="ACTIONS" styleClass="header-cell" HBox.hgrow="ALWAYS" maxWidth="200"/>
+                </HBox>
+
+                <!-- Table Content -->
+                <TableView fx:id="reservationsTable" styleClass="custom-table">
+                    <columns>
+                        <TableColumn fx:id="workshopColumn" text="WORKSHOP" prefWidth="300"/>
+                        <TableColumn fx:id="dateColumn" text="DATE" prefWidth="200"/>
+                        <TableColumn fx:id="priceColumn" text="PRICE" prefWidth="150"/>
+                        <TableColumn fx:id="statusColumn" text="STATUS" prefWidth="150"/>
+                        <TableColumn fx:id="actionsColumn" text="ACTIONS" prefWidth="200"/>
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
+                </TableView>
+            </VBox>
+        </VBox>
+    </VBox>
+</ScrollPane>

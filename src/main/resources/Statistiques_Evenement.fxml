@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="tn.fermista.controllers.StatistiquesEvenementController"
+            prefHeight="800.0" prefWidth="1000.0">
+    <VBox spacing="20" stylesheets="@styles/statistiques.css">
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+
+        <!-- En-tête avec titre et bouton retour -->
+        <HBox spacing="20" alignment="CENTER_LEFT">
+            <Label text="Statistiques des Workshops et Réservations" styleClass="main-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="returnButton" text="Retour au Dashboard" 
+                    onAction="#handleReturn" styleClass="return-button"/>
+        </HBox>
+
+        <!-- Première ligne de graphiques -->
+        <HBox spacing="20">
+            <!-- Graphique des utilisateurs avec le plus de réservations -->
+            <VBox styleClass="chart-container" HBox.hgrow="ALWAYS">
+                <Label text="Top Utilisateurs par Nombre de Réservations" styleClass="chart-title"/>
+                <BarChart fx:id="userReservationsChart" prefHeight="300.0">
+                    <xAxis>
+                        <CategoryAxis label="Utilisateurs"/>
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis label="Nombre de Réservations"/>
+                    </yAxis>
+                </BarChart>
+            </VBox>
+
+            <!-- Graphique des workshops les plus réservés -->
+            <VBox styleClass="chart-container" HBox.hgrow="ALWAYS">
+                <Label text="Workshops les Plus Populaires" styleClass="chart-title"/>
+                <PieChart fx:id="workshopPopularityChart" prefHeight="300.0"/>
+            </VBox>
+        </HBox>
+
+        <!-- Deuxième ligne de graphiques -->
+        <HBox spacing="20">
+            <!-- Graphique des réservations par mois -->
+            <VBox styleClass="chart-container" HBox.hgrow="ALWAYS">
+                <Label text="Évolution des Réservations" styleClass="chart-title"/>
+                <LineChart fx:id="reservationsTimeChart" prefHeight="300.0">
+                    <xAxis>
+                        <CategoryAxis label="Mois"/>
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis label="Nombre de Réservations"/>
+                    </yAxis>
+                </LineChart>
+            </VBox>
+
+            <!-- Graphique des types de workshops -->
+            <VBox styleClass="chart-container" HBox.hgrow="ALWAYS">
+                <Label text="Répartition par Type de Workshop" styleClass="chart-title"/>
+                <PieChart fx:id="workshopTypeChart" prefHeight="300.0"/>
+            </VBox>
+        </HBox>
+
+        <!-- Statistiques supplémentaires -->
+        <GridPane styleClass="stats-container" hgap="10" vgap="10">
+            <Label text="Statistiques Générales" styleClass="stats-title"
+                   GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0"/>
+                   
+            <Label fx:id="totalWorkshopsLabel" text="Nombre total de workshops : " 
+                   styleClass="stats-label" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <Label fx:id="totalReservationsLabel" text="Nombre total de réservations : " 
+                   styleClass="stats-label" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            <Label fx:id="avgReservationsLabel" text="Moyenne de réservations par workshop : " 
+                   styleClass="stats-label" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <Label fx:id="mostActiveUserLabel" text="Utilisateur le plus actif : " 
+                   styleClass="stats-label" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        </GridPane>
+    </VBox>
+</ScrollPane>

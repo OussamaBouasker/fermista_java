@@ -151,6 +151,20 @@
                         </Button>
                      </buttons>
                   </ButtonBar>
+                  <ButtonBar layoutX="9.0" layoutY="607.0" prefHeight="40.0" prefWidth="200.0">
+                     <buttons>
+                        <ImageView fitHeight="35.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/dashboard.png" />
+                           </image>
+                        </ImageView>
+                        <Button fx:id="btn_workbench11212" mnemonicParsing="false" onAction="#test" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@style.css" text="Statistiques Evenements" textFill="WHITE">
+                           <font>
+                              <Font name="Century Gothic Bold" size="10.0" />
+                           </font>
+                        </Button>
+                     </buttons>
+                  </ButtonBar>
                 </children>
             </AnchorPane>
         </children>

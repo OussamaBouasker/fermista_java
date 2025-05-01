@@ -4,39 +4,129 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.shape.Circle?>
 
-<AnchorPane fx:id="root" prefHeight="600.0" prefWidth="500.0" stylesheets="@style.css"
+<AnchorPane fx:id="root" prefHeight="700.0" prefWidth="600.0" stylesheets="@styles/StyleNavbar.css,@styles/addWorkshop.css"
             xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="tn.fermista.controllers.AddWorkshopController">
     <children>
-        <VBox spacing="15" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="20">
-            <children>
-                <Label text="Ajouter un Workshop" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+        <ScrollPane fitToWidth="true" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" 
+                    AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" styleClass="main-scroll">
+            <VBox spacing="20" styleClass="main-container">
+                <padding>
+                    <Insets top="30" right="40" bottom="40" left="40"/>
+                </padding>
 
-                <TextField fx:id="titreField" promptText="Titre"/>
-                <TextArea fx:id="descriptionField" promptText="Description" prefHeight="100"/>
-                <DatePicker fx:id="dateField" promptText="Date"/>
-                <TextField fx:id="timeField" promptText="Heure (HH:mm)"/>
-                <TextField fx:id="prixField" promptText="Prix"/>
-                <TextField fx:id="themeField" promptText="Theme"/>
-                <TextField fx:id="durationField" promptText="Duration (HH:mm)"/>
-                <TextField fx:id="nbrPlacesMaxField" promptText="Nombre de places maximum"/>
-                <ComboBox fx:id="typeComboBox" promptText="Type de workshop" prefWidth="150"/>
-                <ComboBox fx:id="formateurComboBox" promptText="Sélectionner un formateur" prefWidth="150"/>
-                <TextField fx:id="imageField" promptText="Image URL"/>
-                <TextField fx:id="meetlinkField" promptText="Meet Link"/>
-                <TextField fx:id="keywordsField" promptText="Keywords"/>
+                <Label text="Ajouter un Workshop" styleClass="form-title"/>
 
-                <HBox spacing="10">
-                    <children>
-                        <Button fx:id="saveButton" text="Enregistrer" onAction="#handleSave" styleClass="button-primary"/>
-                        <Button fx:id="cancelButton" text="Annuler" onAction="#handleCancel"/>
-                    </children>
+                <TextField fx:id="titreField" promptText="Titre" styleClass="form-field"/>
+                
+                <!-- Enhanced Description Generation Section -->
+                <VBox styleClass="generation-section" spacing="15">
+                    <Label text="Description du Workshop" styleClass="section-title"/>
+                    
+                    <!-- AI Generation Box -->
+                    <VBox styleClass="ai-generation-box" spacing="15">
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+                            <ImageView fitHeight="24" fitWidth="24" styleClass="ai-icon">
+                                <Image url="@images/ai-icon.png"/>
+                            </ImageView>
+                            <Label text="Génération IA" styleClass="ai-title"/>
+                        </HBox>
+                        
+                        <Label text="Entrez des mots-clés pour générer automatiquement une description" 
+                               styleClass="instruction-text"/>
+                        
+                        <HBox spacing="10" alignment="CENTER_LEFT">
+                            <TextField fx:id="keywordsField" promptText="Ex: agriculture, technologie, innovation..." 
+                                     styleClass="keywords-field" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="generateDescriptionButton" onAction="#handleGenerateDescription" 
+                                    styleClass="generate-button">
+                                <graphic>
+                                    <HBox spacing="8" alignment="CENTER">
+                                        <ImageView fitHeight="16" fitWidth="16">
+                                            <Image url="@images/generate-icon.png"/>
+                                        </ImageView>
+                                        <Label text="Générer" styleClass="generate-text"/>
+                                    </HBox>
+                                </graphic>
+                            </Button>
+                        </HBox>
+                        
+                        <!-- Generation Progress -->
+                        <StackPane fx:id="generationProgressContainer" styleClass="progress-container" visible="false">
+                            <VBox alignment="CENTER" spacing="10">
+                                <ProgressIndicator fx:id="generationProgress" styleClass="progress-indicator"/>
+                                <Label fx:id="generationLabel" text="L'IA génère votre description..." 
+                                       styleClass="progress-text"/>
+                            </VBox>
+                        </StackPane>
+                    </VBox>
+                    
+                    <!-- Description TextArea -->
+                    <TextArea fx:id="descriptionField" promptText="Description du workshop" 
+                             styleClass="description-field" prefRowCount="5" wrapText="true"/>
+                </VBox>
+
+                <!-- Other Fields -->
+                <GridPane hgap="15" vgap="15">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="ALWAYS" percentWidth="50"/>
+                        <ColumnConstraints hgrow="ALWAYS" percentWidth="50"/>
+                    </columnConstraints>
+                    
+                    <DatePicker fx:id="dateField" promptText="Date" 
+                               styleClass="form-field" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <TextField fx:id="timeField" promptText="Heure (HH:mm)" 
+                             styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                    
+                    <TextField fx:id="prixField" promptText="Prix" 
+                             styleClass="form-field" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <TextField fx:id="themeField" promptText="Theme" 
+                             styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                    
+                    <TextField fx:id="durationField" promptText="Duration (HH:mm)" 
+                             styleClass="form-field" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                    <TextField fx:id="nbrPlacesMaxField" promptText="Nombre de places maximum" 
+                             styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                </GridPane>
+
+                <HBox spacing="15">
+                    <ComboBox fx:id="typeComboBox" promptText="Type de workshop" 
+                            styleClass="form-field" HBox.hgrow="ALWAYS"/>
+                    <ComboBox fx:id="formateurComboBox" promptText="Sélectionner un formateur" 
+                            styleClass="form-field" HBox.hgrow="ALWAYS"/>
                 </HBox>
-            </children>
-            <padding>
-                <Insets top="20" right="20" bottom="20" left="20"/>
-            </padding>
-        </VBox>
+                
+                <!-- Image Selection -->
+                <VBox spacing="10" styleClass="image-section">
+                    <Label text="Image du Workshop" styleClass="section-title"/>
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <TextField fx:id="imageField" promptText="Sélectionnez une image..." 
+                                 styleClass="form-field" HBox.hgrow="ALWAYS" editable="false"/>
+                        <Button fx:id="imageButton" onAction="#handleChooseImage" styleClass="upload-button">
+                            <graphic>
+                                <HBox spacing="8" alignment="CENTER">
+                                    <ImageView fitHeight="16" fitWidth="16">
+                                        <Image url="@images/upload-icon.png"/>
+                                    </ImageView>
+                                    <Label text="Parcourir" styleClass="upload-text"/>
+                                </HBox>
+                            </graphic>
+                        </Button>
+                    </HBox>
+                    <Label fx:id="selectedImageLabel" styleClass="selected-image-label"/>
+                </VBox>
+
+                <!-- Action Buttons -->
+                <HBox spacing="15" alignment="CENTER_RIGHT">
+                    <Button fx:id="cancelButton" text="Annuler" onAction="#handleCancel" 
+                            styleClass="cancel-button"/>
+                    <Button fx:id="saveButton" text="Enregistrer" onAction="#handleSave" 
+                            styleClass="save-button"/>
+                </HBox>
+            </VBox>
+        </ScrollPane>
     </children>
-</AnchorPane> 
+</AnchorPane>

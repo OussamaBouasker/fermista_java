@@ -314,4 +314,17 @@ public class NavigationController implements Initializable {
             System.err.println("Erreur lors du chargement de ShowWorkshops.fxml: " + e.getMessage());
         }
     }
+
+    public void test(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Statistiques_Evenement.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ShowWorkshops.fxml: " + e.getMessage());
+        }
+    }
 }

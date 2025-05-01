@@ -43,48 +43,68 @@ public class ServiceWorkshop implements CRUD<Workshop> {
         System.out.println("Workshop inserted successfully!");
     }
 
-    //    @Override
+    @Override
     public void update(Workshop w) throws SQLException {
-        String sql = "UPDATE workshop SET titre = ?, description = ?, date = ?, prix = ?, theme = ?, duration = ?, nbr_places_max = ?, nbr_places_restantes = ?, type = ?, image = ?, meetlink = ?, user_id = ?, keywords = ? WHERE id = ?";
-        PreparedStatement pst = cnx.prepareStatement(sql);
-        pst.setString(1, w.getTitre());
-        pst.setString(2, w.getDescription());
-        pst.setTimestamp(3, w.getDate() != null ? Timestamp.valueOf(w.getDate()) : null);
-        pst.setString(4, w.getPrix());
-        pst.setString(5, w.getTheme());
-        pst.setTime(6, w.getDuration() != null ? Time.valueOf(w.getDuration()) : null);
-        pst.setInt(7, w.getNbrPlacesMax());
-        pst.setInt(8, w.getNbrPlacesRestantes());
-        pst.setString(9, w.getType());
-        pst.setString(10, w.getImage());
-        pst.setString(11, w.getMeetlink());
-        pst.setLong(12, w.getUser() != null ? w.getUser().getId() : null);
-        pst.setString(13, w.getKeywords());
-        pst.setLong(14, w.getId());
-        pst.executeUpdate();
-        System.out.println("Workshop updated successfully!");
-    }
-
-    public void update1(Workshop workshop) throws SQLException {
-        String sql = "UPDATE workshop SET titre = ?, user_id = ? WHERE id = ?";
-        PreparedStatement pst = cnx.prepareStatement(sql);
-        pst.setString(1, workshop.getTitre());
-        if (workshop.getUser() != null) {
-            pst.setInt(2, workshop.getUser().getId());
-        } else {
-            pst.setNull(2, java.sql.Types.INTEGER);
+        String sql = "UPDATE workshop SET titre = ?, description = ?, date = ?, prix = ?, theme = ?, " +
+                     "duration = ?, nbr_places_max = ?, nbr_places_restantes = ?, type = ?, " +
+                     "image = ?, meetlink = ?, user_id = ?, keywords = ? WHERE id = ?";
+        
+        try (PreparedStatement pst = cnx.prepareStatement(sql)) {
+            pst.setString(1, w.getTitre());
+            pst.setString(2, w.getDescription());
+            pst.setTimestamp(3, w.getDate() != null ? Timestamp.valueOf(w.getDate()) : null);
+            pst.setString(4, w.getPrix());
+            pst.setString(5, w.getTheme());
+            pst.setTime(6, w.getDuration() != null ? Time.valueOf(w.getDuration()) : null);
+            pst.setInt(7, w.getNbrPlacesMax());
+            pst.setInt(8, w.getNbrPlacesRestantes());
+            pst.setString(9, w.getType());
+            pst.setString(10, w.getImage() != null ? w.getImage() : "");
+            pst.setString(11, w.getMeetlink() != null ? w.getMeetlink() : "");
+            
+            if (w.getUser() != null) {
+                pst.setInt(12, w.getUser().getId());
+            } else {
+                pst.setNull(12, Types.INTEGER);
+            }
+            
+            pst.setString(13, w.getKeywords() != null ? w.getKeywords() : "");
+            pst.setInt(14, w.getId());
+            
+            int rowsAffected = pst.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Workshop updated successfully!");
+            } else {
+                throw new SQLException("Workshop update failed, no rows affected.");
+            }
         }
-        pst.setInt(3, workshop.getId());
-        pst.executeUpdate();
     }
 
     @Override
     public void delete(Workshop w) throws SQLException {
+        // First, check if the workshop exists
+        String checkSql = "SELECT id FROM workshop WHERE id = ?";
+        try (PreparedStatement checkStmt = cnx.prepareStatement(checkSql)) {
+            checkStmt.setInt(1, w.getId());
+            ResultSet rs = checkStmt.executeQuery();
+            
+            if (!rs.next()) {
+                throw new SQLException("Workshop with ID " + w.getId() + " does not exist.");
+            }
+        }
+
+        // If workshop exists, proceed with deletion
         String sql = "DELETE FROM workshop WHERE id = ?";
-        PreparedStatement pst = cnx.prepareStatement(sql);
-        pst.setLong(1, w.getId());
-        pst.executeUpdate();
-        System.out.println("Workshop deleted successfully!");
+        try (PreparedStatement pst = cnx.prepareStatement(sql)) {
+            pst.setInt(1, w.getId());
+            
+            int rowsAffected = pst.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Workshop deleted successfully!");
+            } else {
+                throw new SQLException("Workshop deletion failed, no rows affected.");
+            }
+        }
     }
 
     @Override

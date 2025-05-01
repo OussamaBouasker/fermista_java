@@ -1,0 +1,500 @@
+.main-scroll-pane {
+    -fx-background-color: #f5f2ed;
+    -fx-padding: 0;
+}
+
+.main-scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.main-container {
+    -fx-background-color: transparent;
+    -fx-padding: 40;
+}
+
+.header-banner {
+    -fx-background-color: linear-gradient(to right, #2b5876, #4e4376);
+    -fx-padding: 40 20;
+    -fx-min-height: 200;
+}
+
+.header-banner-image {
+    -fx-opacity: 0.8;
+}
+
+.header-title {
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 2);
+}
+
+.header-subtitle {
+    -fx-font-size: 18px;
+    -fx-text-fill: white;
+    -fx-opacity: 0.9;
+}
+
+.content-container {
+    -fx-background-color: transparent;
+    -fx-spacing: 20;
+}
+
+.title-search-container {
+    -fx-spacing: 50;
+    -fx-padding: 20;
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 4);
+}
+
+.page-title {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.search-field {
+    -fx-min-width: 300;
+    -fx-pref-height: 40;
+    -fx-background-color: #f5f5f5;
+    -fx-padding: 0 15;
+    -fx-font-size: 14px;
+    -fx-background-radius: 20;
+}
+
+.search-field:focused {
+    -fx-background-color: white;
+    -fx-border-color: rgb(129, 196, 8);
+    -fx-border-radius: 20;
+}
+
+.filter-buttons {
+    -fx-padding: 10 20;
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 4);
+}
+
+.filter-button {
+    -fx-background-color: #f5f5f5;
+    -fx-text-fill: #666;
+    -fx-padding: 10 25;
+    -fx-cursor: hand;
+    -fx-background-radius: 20;
+    -fx-min-width: 120;
+}
+
+.filter-button:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+.filter-button-active {
+    -fx-background-color: rgb(129, 196, 8);
+    -fx-text-fill: white;
+}
+
+.workshops-container {
+    -fx-background-color: transparent;
+    -fx-alignment: center;
+    -fx-pref-width: 1050px;
+    -fx-min-width: 1050px;
+}
+
+.workshops-grid {
+    -fx-padding: 20;
+    -fx-hgap: 20;
+    -fx-vgap: 20;
+    -fx-alignment: center;
+}
+
+.workshop-card {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
+    -fx-background-radius: 12;
+    -fx-pref-width: 330px;
+    -fx-max-width: 330px;
+    -fx-min-width: 330px;
+    -fx-cursor: hand;
+}
+
+.workshop-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 15, 0, 0, 5);
+    -fx-translate-y: -2;
+}
+
+.card-image-container {
+    -fx-background-color: #f5f5f5;
+    -fx-background-radius: 12 12 0 0;
+    -fx-min-width: 330px;
+    -fx-max-width: 330px;
+    -fx-min-height: 200px;
+    -fx-max-height: 200px;
+}
+
+.card-image {
+    -fx-background-radius: 12 12 0 0;
+    -fx-fit-width: 330px;
+    -fx-min-width: 330px;
+    -fx-max-width: 330px;
+    -fx-pref-height: 200px;
+}
+
+.card-content {
+    -fx-padding: 20;
+    -fx-spacing: 10;
+}
+
+.card-type-badge {
+    -fx-background-color: rgba(129, 196, 8, 0.9);
+    -fx-text-fill: white;
+    -fx-padding: 5 15;
+    -fx-background-radius: 15;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.card-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+.card-description {
+    -fx-font-size: 14px;
+    -fx-text-fill: #666;
+    -fx-wrap-text: true;
+}
+
+.card-formateur {
+    -fx-font-size: 14px;
+    -fx-text-fill: #4e4376;
+    -fx-font-style: italic;
+}
+
+.card-price {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2b5876;
+}
+
+.card-button {
+    -fx-font-size: 12px;
+    -fx-padding: 8px 16px;
+    -fx-background-color: #ffffff;
+    -fx-border-color: rgb(129, 196, 8);
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 3);
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.card-button:hover {
+    -fx-background-color: #f0f0f0;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.card-button:pressed {
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
+    -fx-translate-y: 1;
+}
+
+.reservation-button-container {
+    -fx-padding: 20 30;
+    -fx-background-color: transparent;
+}
+
+.reservation-button {
+    -fx-background-color: rgb(129, 196, 8);
+    -fx-text-fill: white;
+    -fx-background-radius: 20;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 2);
+}
+
+.reservation-button:hover {
+    -fx-background-color: #6fa007;
+}
+
+.reservation-text {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.pagination-controls {
+    -fx-padding: 20;
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 4);
+}
+
+.pagination-button {
+    -fx-background-color: rgb(129, 196, 8);
+    -fx-text-fill: white;
+    -fx-padding: 10 25;
+    -fx-cursor: hand;
+    -fx-background-radius: 20;
+    -fx-min-width: 100;
+}
+
+.pagination-button:hover {
+    -fx-background-color: #6fa007;
+}
+
+.pagination-button:disabled {
+    -fx-opacity: 0.5;
+}
+
+.page-info {
+    -fx-font-size: 14px;
+    -fx-text-fill: #666;
+    -fx-font-weight: bold;
+}
+
+.pagination .page {
+    -fx-background-color: transparent;
+}
+
+.pagination .pagination-control {
+    -fx-padding: 20 0;
+}
+
+.pagination .pagination-control .button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-background-radius: 4;
+}
+
+.pagination .pagination-control .button:hover {
+    -fx-background-color: #2980b9;
+}
+
+.pagination .label {
+    -fx-text-fill: #333;
+}
+
+.list-view {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.workshop-image {
+    -fx-background-color: #f8f9fa;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 4, 0, 0, 0);
+    -fx-background-radius: 4;
+}
+
+.list-cell {
+    -fx-background-color: white;
+    -fx-padding: 15;  /* Increased padding to accommodate larger images */
+    -fx-border-color: #eee;
+    -fx-border-width: 0 0 1 0;
+}
+
+.list-cell:hover {
+    -fx-background-color: #f8f9fa;
+}
+
+.list-cell:selected {
+    -fx-background-color: #e8f4f9;
+}
+
+.workshop-title {
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+}
+
+.type-badge {
+    -fx-background-color: #FFA500;
+    -fx-text-fill: white;
+    -fx-padding: 2 8;
+    -fx-background-radius: 10;
+}
+
+.price-label {
+    -fx-text-fill: #2ecc71;
+    -fx-font-weight: bold;
+}
+
+.details-button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-padding: 5 15;
+}
+
+.details-container {
+    -fx-background-color: #f8f9fa;
+    -fx-min-width: 800;
+}
+
+.details-scroll-pane {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.details-scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.image-container {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
+    -fx-padding: 10;
+}
+
+.info-container {
+    -fx-background-color: white;
+    -fx-padding: 30;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
+    -fx-background-radius: 8;
+}
+
+.description-container {
+    -fx-padding: 20 0 0 0;
+}
+
+.description-header {
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-padding: 0 0 10 0;
+}
+
+.details-description {
+    -fx-font-size: 14;
+    -fx-text-fill: #34495e;
+    -fx-line-spacing: 1.5;
+    -fx-wrap-text: true;
+    -fx-padding: 10;
+    -fx-background-color: #f8f9fa;
+    -fx-background-radius: 4;
+}
+
+.details-title {
+    -fx-font-size: 32;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.details-type {
+    -fx-font-size: 16;
+    -fx-text-fill: white;
+    -fx-padding: 5 15;
+    -fx-background-color: #e67e22;
+    -fx-background-radius: 20;
+}
+
+.details-price {
+    -fx-font-size: 20;
+    -fx-text-fill: #27ae60;
+    -fx-font-weight: bold;
+}
+
+.details-formateur {
+    -fx-font-size: 16;
+    -fx-text-fill: #7f8c8d;
+}
+
+.back-button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-padding: 10 25;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
+}
+
+.back-button:hover {
+    -fx-background-color: #2980b9;
+}
+
+.filter-button:hover {
+    -fx-background-color: #2980b9;
+}
+
+.filter-button:pressed {
+    -fx-background-color: #2471a3;
+}
+
+.header-image {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 2);
+}
+
+.header-text {
+    -fx-font-size: 48px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 2, 0, 0, 2);
+}
+
+.pagination-button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-padding: 8 16;
+    -fx-background-radius: 4;
+    -fx-cursor: hand;
+}
+
+.pagination-button:hover {
+    -fx-background-color: #2980b9;
+}
+
+.pagination-button:disabled {
+    -fx-background-color: #bdc3c7;
+    -fx-cursor: default;
+}
+
+.page-info {
+    -fx-font-size: 14px;
+    -fx-text-fill: #2c3e50;
+    -fx-font-weight: bold;
+}
+
+.reservation-button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-padding: 8 15;
+    -fx-cursor: hand;
+}
+
+.reservation-button:hover {
+    -fx-background-color: #45a049;
+}
+
+.reservation-text {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* Remove these styles as they're no longer needed */
+.navbar-button {
+    -fx-font-size: 12px;
+    -fx-padding: 8px 16px;
+    -fx-background-color: #ffffff;
+    -fx-border-color: rgb(129, 196, 8);
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 3);
+}
+
+.navbar-button:hover {
+    -fx-background-color: #f0f0f0;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.navbar-button:pressed {
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
+    -fx-translate-y: 1;
+}
+

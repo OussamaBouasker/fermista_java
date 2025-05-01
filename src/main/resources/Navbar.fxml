@@ -46,6 +46,10 @@
             </HBox>
 
             <!-- User Icon Menu -->
+            <!-- User Name Text -->
+            <Text fx:id="userNameText" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-fill: #333;" />
+
+            <!-- User Icon Menu -->
             <MenuButton fx:id="userMenu" graphicTextGap="10.0">
                 <graphic>
                     <ImageView fitWidth="30.0" fitHeight="30.0">
@@ -54,11 +58,6 @@
                         </image>
                     </ImageView>
                 </graphic>
-                <items>
-                    <MenuItem text="Se connecter" onAction="#handleLogin"/>
-                    <MenuItem text="Se déconnecter" onAction="#handleLogout"/>
-                    <MenuItem text="Réclamations" onAction="#handleReclamations"/>
-                </items>
             </MenuButton>
         </HBox>
 

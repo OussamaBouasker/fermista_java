@@ -1,0 +1,120 @@
+.main-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2d3436;
+}
+
+.return-button {
+    -fx-background-color: #00b894;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 5px;
+}
+
+.return-button:hover {
+    -fx-background-color: #00a884;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 1);
+}
+
+.chart {
+    -fx-padding: 10px;
+    -fx-background-color: transparent;
+}
+
+.chart-container {
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-padding: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
+}
+
+.chart-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2d3436;
+    -fx-padding: 0 0 10 0;
+}
+
+.axis-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #636e72;
+}
+
+.chart-legend {
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+}
+
+/* Bar Chart Styling avec dégradé de couleurs */
+.default-color0.chart-bar { -fx-bar-fill: #0984e3; }
+.default-color1.chart-bar { -fx-bar-fill: #00b894; }
+.default-color2.chart-bar { -fx-bar-fill: #6c5ce7; }
+.default-color3.chart-bar { -fx-bar-fill: #fdcb6e; }
+.default-color4.chart-bar { -fx-bar-fill: #e17055; }
+
+.chart-bar {
+    -fx-background-radius: 5px;
+}
+
+.chart-bar:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 1);
+}
+
+/* Pie Chart Styling avec couleurs vibrantes */
+.default-color0.chart-pie { -fx-pie-color: #0984e3; }
+.default-color1.chart-pie { -fx-pie-color: #00b894; }
+.default-color2.chart-pie { -fx-pie-color: #6c5ce7; }
+.default-color3.chart-pie { -fx-pie-color: #fdcb6e; }
+.default-color4.chart-pie { -fx-pie-color: #e17055; }
+.default-color5.chart-pie { -fx-pie-color: #00cec9; }
+.default-color6.chart-pie { -fx-pie-color: #e84393; }
+.default-color7.chart-pie { -fx-pie-color: #ff7675; }
+
+/* Line Chart Styling */
+.chart-series-line {
+    -fx-stroke-width: 2px;
+}
+
+.default-color0.chart-series-line { -fx-stroke: #0984e3; }
+.default-color1.chart-series-line { -fx-stroke: #00b894; }
+.default-color2.chart-series-line { -fx-stroke: #6c5ce7; }
+
+.chart-line-symbol {
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+}
+
+.default-color0.chart-line-symbol { -fx-background-color: #0984e3; }
+.default-color1.chart-line-symbol { -fx-background-color: #00b894; }
+.default-color2.chart-line-symbol { -fx-background-color: #6c5ce7; }
+
+/* Statistics Container Styling */
+.stats-container {
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-padding: 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
+}
+
+.stats-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2d3436;
+}
+
+.stats-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #636e72;
+    -fx-padding: 5px;
+}
+
+/* Hover effects */
+.chart-container:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 15, 0, 0, 3);
+}
+
+/* Animation pour les transitions */
+.chart {
+    -fx-animate: true;
+} 
