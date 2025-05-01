@@ -10,7 +10,7 @@
 
 <VBox fx:id="formContainer" prefHeight="400.0" prefWidth="600.0" spacing="10.0" styleClass="form-popup" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.fermista.controllers.UserFormPopupController">
     <children>
-        <Label alignment="CENTER_RIGHT" prefHeight="51.0" prefWidth="406.0" styleClass="form-title" text="l'ajout d'un utilisateur">
+        <Label fx:id="formTitle" alignment="CENTER_RIGHT" prefHeight="51.0" prefWidth="406.0" styleClass="form-title" text="Ajout d'un utilisateur">
             <font>
                 <Font name="Century Gothic Bold" size="24.0" />
             </font>

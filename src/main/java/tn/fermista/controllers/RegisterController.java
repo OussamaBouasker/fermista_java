@@ -9,10 +9,15 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.text.Text;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import com.github.cage.Cage;
+import com.github.cage.GCage;
 import tn.fermista.models.User;
 import tn.fermista.models.Roles;
 import tn.fermista.models.Admin;
@@ -30,6 +35,11 @@ import tn.fermista.utils.PasswordUtils;
 
 import java.util.regex.Pattern;
 import java.io.IOException;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import javax.imageio.ImageIO;
+import javafx.scene.control.DialogPane;
+import javafx.scene.control.ButtonType;
 
 public class RegisterController extends Application {
 
@@ -46,7 +56,13 @@ public class RegisterController extends Application {
     private TextField email;
     
     @FXML
+    private TextField visiblePassword;
+    
+    @FXML
     private TextField password;
+    
+    @FXML
+    private Button togglePasswordButton;
     
     @FXML
     private ComboBox<String> rolesComboBox;
@@ -57,6 +73,15 @@ public class RegisterController extends Application {
     @FXML
     private Text loginLink;
 
+    @FXML
+    private Label captchaLabel;
+
+    @FXML
+    private ImageView captchaImageView;
+
+    @FXML
+    private TextField captchaInput;
+
     private ServiceUser serviceUser;
     private ServiceAdmin serviceAdmin;
     private ServiceClient serviceClient;
@@ -64,11 +89,16 @@ public class RegisterController extends Application {
     private ServiceAgriculteur serviceAgriculteur;
     private ServiceVeterinaire serviceVeterinaire;
 
+    private Cage cage;
+    private String currentCaptcha;
+
     // Patterns pour la validation
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
     private static final Pattern PHONE_PATTERN = Pattern.compile("^[0-9]{8}$");
     private static final Pattern NAME_PATTERN = Pattern.compile("^[A-Za-zÀ-ÿ\\s]{2,50}$");
     private static final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$");
+
+    private boolean isPasswordVisible = false;
 
     @FXML
     public void initialize() {
@@ -78,6 +108,12 @@ public class RegisterController extends Application {
         serviceFormateur = new ServiceFormateur();
         serviceAgriculteur = new ServiceAgriculteur();
         serviceVeterinaire = new ServiceVeterinaire();
+        
+        // Initialize SimpleCaptcha
+        cage = new GCage();
+        
+        // Generate initial CAPTCHA
+        generateCaptcha();
     }
 
     public static void main(String[] args) {
@@ -89,18 +125,85 @@ public class RegisterController extends Application {
 
     }
 
+    private void generateCaptcha() {
+        // Generate a new CAPTCHA
+        currentCaptcha = cage.getTokenGenerator().next();
+        byte[] imageBytes = cage.draw(currentCaptcha);
+
+        // Convert CAPTCHA to JavaFX Image
+        try {
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(imageBytes);
+            Image image = new Image(inputStream);
+            captchaImageView.setImage(image);
+        } catch (Exception e) {
+            showAlert(AlertType.ERROR, "Erreur", "Erreur lors de la génération du CAPTCHA");
+        }
+    }
+
+    @FXML
+    public void refreshCaptcha(ActionEvent event) {
+        generateCaptcha();
+        captchaInput.clear();
+    }
+
+    @FXML
+    public void togglePasswordVisibility() {
+        isPasswordVisible = !isPasswordVisible;
+
+        if (isPasswordVisible) {
+            // Copier le texte du PasswordField vers le TextField
+            visiblePassword.setText(password.getText());
+            // Afficher le TextField et cacher le PasswordField
+            visiblePassword.setVisible(true);
+            password.setVisible(false);
+            // Mettre le focus sur le TextField
+            visiblePassword.requestFocus();
+            visiblePassword.positionCaret(visiblePassword.getText().length());
+        } else {
+            // Copier le texte du TextField vers le PasswordField
+            password.setText(visiblePassword.getText());
+            // Afficher le PasswordField et cacher le TextField
+            password.setVisible(true);
+            visiblePassword.setVisible(false);
+            // Mettre le focus sur le PasswordField
+            password.requestFocus();
+            password.positionCaret(password.getText().length());
+        }
+    }
+
     @FXML
     public void signUp(javafx.event.ActionEvent actionEvent) {
         // Vérification des champs vides
         if (firstname.getText().isEmpty() || lastname.getText().isEmpty() || 
             number.getText().isEmpty() || email.getText().isEmpty() || 
-            password.getText().isEmpty() || rolesComboBox.getValue() == null) {
+            (password.getText().isEmpty() && visiblePassword.getText().isEmpty()) || 
+            rolesComboBox.getValue() == null ||
+            captchaInput.getText().isEmpty()) {
             showAlert(AlertType.ERROR, "Erreur", "Veuillez remplir tous les champs");
             return;
         }
 
-        // Validation des champs
-        if (!validateFields()) {
+        // Vérification si l'email existe déjà
+        if (serviceUser.emailExists(email.getText())) {
+            showAlert(AlertType.ERROR, "Erreur", "Cet email est déjà utilisé. Veuillez utiliser un autre email.");
+            email.clear();
+            email.requestFocus();
+            return;
+        }
+
+        // Get the password from either visible or hidden field
+        String passwordText = isPasswordVisible ? visiblePassword.getText() : password.getText();
+
+        // Vérification du CAPTCHA
+        if (!captchaInput.getText().equals(currentCaptcha)) {
+            showAlert(AlertType.ERROR, "Erreur", "Le code CAPTCHA est incorrect");
+            generateCaptcha();
+            captchaInput.clear();
+            return;
+        }
+
+        // Validation des champs avec le bon mot de passe
+        if (!validateFields(passwordText)) {
             return;
         }
 
@@ -109,7 +212,7 @@ public class RegisterController extends Application {
             Roles role = Roles.valueOf(roleStr);
             
             // Hachage du mot de passe
-            String hashedPassword = PasswordUtils.hashPassword(password.getText());
+            String hashedPassword = PasswordUtils.hashPassword(passwordText);
 
             // Dans la méthode signUp, avant le switch case
             User user = null;
@@ -209,7 +312,7 @@ public class RegisterController extends Application {
         }
     }
 
-    private boolean validateFields() {
+    private boolean validateFields(String passwordText) {
         // Validation du prénom
         if (!NAME_PATTERN.matcher(firstname.getText()).matches()) {
             showAlert(AlertType.ERROR, "Erreur", "Le prénom doit contenir entre 2 et 50 caractères et ne peut contenir que des lettres");
@@ -235,7 +338,7 @@ public class RegisterController extends Application {
         }
 
         // Validation du mot de passe
-        if (!PASSWORD_PATTERN.matcher(password.getText()).matches()) {
+        if (!PASSWORD_PATTERN.matcher(passwordText).matches()) {
             showAlert(AlertType.ERROR, "Erreur", 
                 "Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial (@#$%^&+=)");
             return false;
@@ -250,6 +353,7 @@ public class RegisterController extends Application {
         number.clear();
         email.clear();
         password.clear();
+        visiblePassword.clear();
         rolesComboBox.setValue(null);
     }
 
@@ -258,6 +362,19 @@ public class RegisterController extends Application {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(content);
+        
+        // Style personnalisé pour l'alerte
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setStyle("-fx-background-color: #FFF0F5;"); // Rose pastel clair
+        dialogPane.getStyleClass().add("custom-alert");
+        
+        // Style pour le contenu
+        Label contentLabel = new Label(content);
+        contentLabel.setStyle("-fx-text-fill: #333333; -fx-font-size: 14px; -fx-font-family: 'Segoe UI';");
+        dialogPane.setContent(contentLabel);
+        
+
+        
         alert.showAndWait();
     }
 }

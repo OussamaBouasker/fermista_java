@@ -24,13 +24,10 @@
                     <Button text="Home" onAction="#handleHome"/>
                     <Button text="Shop" onAction="#handleShop"/>
                     <Button text="Collier" onAction="#handleCollier"/>
-
-
-
                     <Button text="Workshops" onAction="#handleWorkshops"/>
                     <Button text="Contrôle Médical" onAction="#handleControlMedical"/>
                     <Button text="Rendez-vous" onAction="#handleRendezVous"/>
-                    <Button text="Liste des Rendez-vous" onAction="#handleListeRendezVous"/> <!-- New button -->
+                    <Button text="Liste des Rendez-vous" onAction="#handleListeRendezVous"/>
                     <Button text="Produits" onAction="#handleProduits"/>
 
                     <MenuButton text="Suivis Médical">
@@ -45,6 +42,9 @@
                 </padding>
             </HBox>
 
+            <!-- User Name Text -->
+            <Text fx:id="userNameText" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-fill: #333;" />
+
             <!-- User Icon Menu -->
             <MenuButton fx:id="userMenu" graphicTextGap="10.0">
                 <graphic>
@@ -54,12 +54,8 @@
                         </image>
                     </ImageView>
                 </graphic>
-                <items>
-                    <MenuItem text="Se connecter" onAction="#handleLogin"/>
-                    <MenuItem text="Se déconnecter" onAction="#handleLogout"/>
-                    <MenuItem text="Réclamations" onAction="#handleReclamations"/>
-                </items>
             </MenuButton>
+
         </HBox>
 
     </VBox>

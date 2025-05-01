@@ -141,22 +141,21 @@ public class UserController implements Initializable {
             @Override
             public TableCell<User, Void> call(final TableColumn<User, Void> param) {
                 return new TableCell<User, Void>() {
-                    private final Button updateButton = new Button("Update");
-                    private final Button deleteButton = new Button("Delete");
-                    private final HBox buttons = new HBox(5, updateButton, deleteButton);
+                    private final Button updateButton = new Button("Modifier");
+                    private final Button toggleStateButton = new Button();
+                    private final HBox buttons = new HBox(5, updateButton, toggleStateButton);
 
                     {
                         updateButton.getStyleClass().add("btn-success");
-                        deleteButton.getStyleClass().add("btn-danger");
 
                         updateButton.setOnAction(event -> {
                             User user = getTableView().getItems().get(getIndex());
                             showUserFormPopup(user, true);
                         });
 
-                        deleteButton.setOnAction(event -> {
+                        toggleStateButton.setOnAction(event -> {
                             User user = getTableView().getItems().get(getIndex());
-                            handleDeleteUser(user);
+                            handleToggleUserState(user);
                         });
                     }
 
@@ -166,6 +165,14 @@ public class UserController implements Initializable {
                         if (empty) {
                             setGraphic(null);
                         } else {
+                            User user = getTableView().getItems().get(getIndex());
+                            if (user.getState() != null && user.getState()) {
+                                toggleStateButton.setText("Désactiver");
+                                toggleStateButton.setStyle("-fx-background-color: #FF4444; -fx-text-fill: white;");
+                            } else {
+                                toggleStateButton.setText("Activer");
+                                toggleStateButton.setStyle("-fx-background-color: #4444FF; -fx-text-fill: white;");
+                            }
                             setGraphic(buttons);
                         }
                     }
@@ -492,6 +499,64 @@ public class UserController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Erreur lors du chargement de ShowWorkshops.fxml: " + e.getMessage());
+        }
+    }
+
+    private void handleToggleUserState(User user) {
+        if (user == null) return;
+
+        try {
+            // Toggle the state
+            boolean newState = !(user.getState() != null && user.getState());
+            user.setState(newState);
+
+            // Update the user based on their role
+            switch (user.getRoles().toString()) {
+                case "ROLE_ADMIN":
+                    serviceAdmin.modifier((Admin) user);
+                    break;
+                case "ROLE_AGRICULTOR":
+                    serviceAgriculteur.modifier((Agriculteur) user);
+                    break;
+                case "ROLE_CLIENT":
+                    serviceClient.modifier((Client) user);
+                    break;
+                case "ROLE_VETERINAIR":
+                    serviceVeterinaire.modifier((Veterinaire) user);
+                    break;
+                case "ROLE_FORMATEUR":
+                    serviceFormateur.modifier((Formateur) user);
+                    break;
+            }
+
+            // Refresh the table
+            loadUserData();
+
+            // Show success message
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Succès");
+            alert.setHeaderText(null);
+            alert.setContentText("L'état de l'utilisateur a été modifié avec succès.");
+            alert.showAndWait();
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText(null);
+            alert.setContentText("Une erreur est survenue lors de la modification de l'état de l'utilisateur: " + e.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+    public void StatTemplate(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/StatTemplate.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de StatTemplate.fxml: " + e.getMessage());
         }
     }
 }

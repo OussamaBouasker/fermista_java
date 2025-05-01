@@ -55,7 +55,7 @@ public class ServiceReclamation implements CRUD<Reclamation> {
     @Override
     public List<Reclamation> showAll() throws SQLException {
         List<Reclamation> list = new ArrayList<>();
-        String sql = "SELECT r.*, u.email, u.first_name, u.last_name FROM reclamation r JOIN user u ON r.user_id = u.id";
+        String sql = "SELECT r.*, u.email, u.first_name, u.last_name, u.number FROM reclamation r JOIN user u ON r.user_id = u.id";
         Statement st = cnx.createStatement();
         ResultSet rs = st.executeQuery(sql);
 
@@ -73,6 +73,7 @@ public class ServiceReclamation implements CRUD<Reclamation> {
             u.setEmail(rs.getString("email"));
             u.setFirstName(rs.getString("first_name"));
             u.setLastName(rs.getString("last_name"));
+            u.setNumber(rs.getString("number"));
             r.setUser(u);
 
             list.add(r);
@@ -91,5 +92,90 @@ public class ServiceReclamation implements CRUD<Reclamation> {
             return rs.getInt(1);
         }
         return 0;
+    }
+
+    public int countUserReclamationsToday(int userId) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM reclamation WHERE user_id = ? AND DATE(date_soumission) = CURRENT_DATE";
+        try (PreparedStatement pst = cnx.prepareStatement(sql)) {
+            pst.setInt(1, userId);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+            return 0;
+        }
+    }
+
+    public List<Reclamation> getUserRecentReclamations(int userId) throws SQLException {
+        String sql = "SELECT * FROM reclamation WHERE user_id = ? ORDER BY date_soumission DESC LIMIT 5";
+        List<Reclamation> reclamations = new ArrayList<>();
+        try (PreparedStatement pst = cnx.prepareStatement(sql)) {
+            pst.setInt(1, userId);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                Reclamation reclamation = new Reclamation();
+                reclamation.setId(rs.getInt("id"));
+                reclamation.setTitre(rs.getString("titre"));
+                reclamation.setDescription(rs.getString("description"));
+                reclamation.setStatus(rs.getString("status"));
+                reclamation.setDateSoumission(rs.getTimestamp("date_soumission").toLocalDateTime());
+                
+                // Créer un mini objet User
+                User user = new User();
+                user.setId(rs.getInt("user_id"));
+                reclamation.setUser(user);
+                
+                reclamations.add(reclamation);
+            }
+        }
+        return reclamations;
+    }
+
+    public List<Reclamation> getReclamationsByUser(int userId) throws SQLException {
+        String sql = "SELECT * FROM reclamation WHERE user_id = ? ORDER BY date_soumission DESC";
+        List<Reclamation> reclamations = new ArrayList<>();
+        try (PreparedStatement pst = cnx.prepareStatement(sql)) {
+            pst.setInt(1, userId);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                Reclamation reclamation = new Reclamation();
+                reclamation.setId(rs.getInt("id"));
+                reclamation.setTitre(rs.getString("titre"));
+                reclamation.setDescription(rs.getString("description"));
+                reclamation.setStatus(rs.getString("status"));
+                reclamation.setDateSoumission(rs.getTimestamp("date_soumission").toLocalDateTime());
+                
+                User user = new User();
+                user.setId(rs.getInt("user_id"));
+                reclamation.setUser(user);
+                
+                reclamations.add(reclamation);
+            }
+        }
+        return reclamations;
+    }
+
+    public List<Reclamation> getReclamationsByStatus(String status) throws SQLException {
+        String sql = "SELECT * FROM reclamation WHERE status = ? ORDER BY date_soumission DESC";
+        List<Reclamation> reclamations = new ArrayList<>();
+        try (PreparedStatement pst = cnx.prepareStatement(sql)) {
+            pst.setString(1, status);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                Reclamation reclamation = new Reclamation();
+                reclamation.setId(rs.getInt("id"));
+                reclamation.setTitre(rs.getString("titre"));
+                reclamation.setDescription(rs.getString("description"));
+                reclamation.setStatus(rs.getString("status"));
+                reclamation.setDateSoumission(rs.getTimestamp("date_soumission").toLocalDateTime());
+                
+                User user = new User();
+                user.setId(rs.getInt("user_id"));
+                reclamation.setUser(user);
+                
+                reclamations.add(reclamation);
+            }
+        }
+        return reclamations;
     }
 }

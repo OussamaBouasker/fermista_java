@@ -1,0 +1,31 @@
+
+.retour-btn {
+    -fx-background-color: rgb(129, 196, 8);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+    -fx-border-color: rgb(129, 196, 8);
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 8, 0, 0, 3);
+    -fx-cursor: hand;
+    -fx-padding: 8px 32px;
+    -fx-font-size: 16px;
+    -fx-transition: all 0.2s;
+}
+
+.retour-btn:hover {
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: rgb(129, 196, 8);
+    -fx-border-color: #4e7c0a;
+    -fx-border-width: 2px;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.retour-btn:pressed {
+    -fx-background-color: #e0e0e0;
+    -fx-border-color: #4e7c0a;
+    -fx-scale-x: 0.97;
+    -fx-scale-y: 0.97;
+}

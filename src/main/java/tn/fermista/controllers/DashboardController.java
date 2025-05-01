@@ -111,13 +111,13 @@ public class DashboardController {
             // Charger la vue du shop
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ProductShopView.fxml"));
             Parent root = loader.load();
-            
+
             // Créer une nouvelle scène
             Scene scene = new Scene(root);
-            
+
             // Obtenir la fenêtre actuelle
             Stage stage = (Stage) root.getScene().getWindow();
-            
+
             // Changer la scène
             stage.setScene(scene);
             stage.show();
