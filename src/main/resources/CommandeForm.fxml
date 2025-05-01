@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.web.WebView?>
+
+<?import java.lang.String?>
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="tn.fermista.controllers.CommandeFormController" prefHeight="680.0" prefWidth="930.0">
+    <top>
+        <!-- Header vert avec titre blanc -->
+        <VBox alignment="CENTER" spacing="10" style="-fx-background-color: #4CAF50;">
+            <padding>
+                <Insets top="25" right="20" bottom="25" left="20"/>
+            </padding>
+            <Label text="FINALISER VOTRE COMMANDE" textFill="WHITE" alignment="CENTER">
+                <font>
+                    <Font name="System Bold" size="24.0"/>
+                </font>
+            </Label>
+            <Label text="Veuillez remplir les informations ci-dessous pour compléter votre commande" textFill="WHITE" alignment="CENTER" wrapText="true">
+                <font>
+                    <Font size="14.0"/>
+                </font>
+            </Label>
+        </VBox>
+    </top>
+    
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="form-scroll-pane">
+            <VBox spacing="25">
+                <padding>
+                    <Insets top="30" right="30" bottom="30" left="30"/>
+                </padding>
+                
+                <!-- Informations personnelles -->
+                <VBox spacing="15">
+                    <!-- Titre de section avec fond vert clair -->
+                    <VBox alignment="CENTER" style="-fx-background-color: #e8f5e9; -fx-background-radius: 5px;">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
+                        <Label text="INFORMATIONS PERSONNELLES" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #2E7D32;"/>
+                    </VBox>
+                    
+                    <VBox spacing="15" styleClass="form-group">
+                        <VBox spacing="5">
+                            <Label text="Nom complet" styleClass="form-field-label"/>
+                            <TextField fx:id="fullNameField" promptText="Entrez votre nom et prénom" styleClass="form-field"/>
+                            <Label fx:id="fullNameError" styleClass="error-label" managed="false" visible="false"/>
+                        </VBox>
+                        
+                        <VBox spacing="5">
+                            <Label text="Adresse email" styleClass="form-field-label"/>
+                            <TextField fx:id="emailField" promptText="Entrez votre adresse email" styleClass="form-field"/>
+                            <Label fx:id="emailError" styleClass="error-label" managed="false" visible="false"/>
+                        </VBox>
+                        
+                        <VBox spacing="5">
+                            <Label text="Numéro de téléphone" styleClass="form-field-label"/>
+                            <TextField fx:id="phoneField" promptText="Entrez votre numéro de téléphone" styleClass="form-field"/>
+                            <Label fx:id="phoneError" styleClass="error-label" managed="false" visible="false"/>
+                        </VBox>
+                    </VBox>
+                </VBox>
+                
+                <!-- Adresse de livraison -->
+                <VBox spacing="15">
+                    <!-- Titre de section avec fond vert clair -->
+                    <VBox alignment="CENTER" style="-fx-background-color: #e8f5e9; -fx-background-radius: 5px;">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
+                        <Label text="ADRESSE DE LIVRAISON" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #2E7D32;"/>
+                    </VBox>
+                    
+                    <VBox spacing="15" styleClass="form-group">
+                        <VBox spacing="5">
+                            <Label text="Localisation" styleClass="form-field-label"/>
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <TextField fx:id="locationField" promptText="Sélectionnez votre localisation sur la carte" 
+                                           styleClass="form-field" HBox.hgrow="ALWAYS" editable="false"/>
+                                <Button text="SÉLECTIONNER" styleClass="select-map-button" onAction="#handleShowMap"/>
+                            </HBox>
+                            <Label fx:id="locationError" styleClass="error-label" managed="false" visible="false"/>
+                        </VBox>
+                        
+                        <VBox spacing="5">
+                            <Label text="Adresse" styleClass="form-field-label"/>
+                            <TextField fx:id="addressField" promptText="Entrez votre adresse complète" styleClass="form-field"/>
+                            <Label fx:id="addressError" styleClass="error-label" managed="false" visible="false"/>
+                        </VBox>
+                        
+                        <VBox spacing="5">
+                            <Label text="Code postal" styleClass="form-field-label"/>
+                            <TextField fx:id="postalCodeField" promptText="Entrez votre code postal" styleClass="form-field"/>
+                            <Label fx:id="postalCodeError" styleClass="error-label" managed="false" visible="false"/>
+                        </VBox>
+                    </VBox>
+                </VBox>
+                
+                <!-- Notes supplémentaires -->
+                <VBox spacing="15">
+                    <!-- Titre de section avec fond vert clair -->
+                    <VBox alignment="CENTER" style="-fx-background-color: #e8f5e9; -fx-background-radius: 5px;">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
+                        <Label text="NOTES SUPPLÉMENTAIRES" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #2E7D32;"/>
+                    </VBox>
+                    
+                    <VBox spacing="5" styleClass="form-group">
+                        <Label text="Instructions de livraison (optionnel)" styleClass="form-field-label"/>
+                        <TextArea fx:id="notesField" promptText="Entrez des instructions spéciales pour la livraison" 
+                                  styleClass="form-field" prefHeight="80"/>
+                    </VBox>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+    
+    <bottom>
+        <HBox spacing="15" alignment="CENTER">
+            <padding>
+                <Insets top="20" right="30" bottom="30" left="30"/>
+            </padding>
+            <Button text="ANNULER" styleClass="form-cancel-button" onAction="#handleCancel"/>
+            <Button text="CONFIRMER LA COMMANDE" styleClass="form-button" onAction="#handleSubmit"/>
+        </HBox>
+    </bottom>
+    
+    <stylesheets>
+        <String fx:value="styles.css"/>
+    </stylesheets>
+</BorderPane> 

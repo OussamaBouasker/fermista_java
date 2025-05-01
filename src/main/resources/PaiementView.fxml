@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.web.WebView?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="tn.fermista.controllers.PaiementController"
+            prefHeight="680.0" prefWidth="930.0"
+            stylesheets="styles.css">
+    <top>
+        <VBox alignment="CENTER" spacing="10" style="-fx-background-color: #4CAF50;">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            <Label text="Paiement de votre commande" textFill="WHITE">
+                <font>
+                    <Font name="System Bold" size="24.0"/>
+                </font>
+            </Label>
+            <Label text="Veuillez vérifier votre commande et procéder au paiement" textFill="WHITE">
+                <font>
+                    <Font size="14.0"/>
+                </font>
+            </Label>
+        </VBox>
+    </top>
+    
+    <center>
+        <VBox spacing="20">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            
+            <!-- Récapitulatif de la commande -->
+            <VBox spacing="10" style="-fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-radius: 5px;">
+                <padding>
+                    <Insets top="15" right="15" bottom="15" left="15"/>
+                </padding>
+                <Label text="Récapitulatif de votre commande" style="-fx-font-weight: bold; -fx-font-size: 16px;"/>
+                
+                <TableView fx:id="panierTableView" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="produitColumn" text="Produit" prefWidth="300.0"/>
+                        <TableColumn fx:id="quantiteColumn" text="Quantité" prefWidth="100.0"/>
+                        <TableColumn fx:id="prixColumn" text="Prix unitaire" prefWidth="100.0"/>
+                        <TableColumn fx:id="totalColumn" text="Total" prefWidth="100.0"/>
+                    </columns>
+                </TableView>
+                
+                <HBox alignment="CENTER_RIGHT" spacing="10">
+                    <Label text="Total de la commande:" style="-fx-font-weight: bold;"/>
+                    <Label fx:id="totalLabel" text="0.00 €" style="-fx-font-weight: bold; -fx-font-size: 16px;"/>
+                </HBox>
+            </VBox>
+            
+            <!-- Formulaire de paiement -->
+            <VBox spacing="10" style="-fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-radius: 5px;">
+                <padding>
+                    <Insets top="15" right="15" bottom="15" left="15"/>
+                </padding>
+                <Label text="Informations de paiement" style="-fx-font-weight: bold; -fx-font-size: 16px;"/>
+                
+                <VBox fx:id="stripeContainer" VBox.vgrow="ALWAYS">
+                    <!-- Le formulaire de carte Stripe sera chargé ici via WebView -->
+                    <WebView fx:id="webView" VBox.vgrow="ALWAYS" prefHeight="250.0"/>
+                </VBox>
+                
+                <ProgressBar fx:id="progressBar" visible="false" prefWidth="Infinity" progress="-1.0"/>
+                <Label fx:id="statusLabel" visible="false" style="-fx-text-fill: #4CAF50; -fx-font-weight: bold;"/>
+            </VBox>
+        </VBox>
+    </center>
+    
+    <bottom>
+        <HBox alignment="CENTER" spacing="20">
+            <padding>
+                <Insets top="10" right="20" bottom="20" left="20"/>
+            </padding>
+            <Button fx:id="cancelButton" text="Annuler le paiement" onAction="#handleCancel" styleClass="button-cancel"/>
+            <Button fx:id="payButton" text="Payer maintenant" onAction="#handlePay" styleClass="button-primary"/>
+        </HBox>
+    </bottom>
+</BorderPane> 

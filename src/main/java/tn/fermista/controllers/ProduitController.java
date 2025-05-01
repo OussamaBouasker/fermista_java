@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
@@ -29,6 +30,7 @@ public class ProduitController implements Initializable {
     @FXML private TextField commandeField;
 
     private ServiceProduit serviceProduit = new ServiceProduit();
+    private boolean isLoadingData = false;
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -111,10 +113,10 @@ public class ProduitController implements Initializable {
     private void handleAddProduct() {
         try {
             if (validateInputs()) {
-                String nom = nomField.getText();
-                String description = descriptionField.getText();
-                String image = imageField.getText();
-                int prix = Integer.parseInt(prixField.getText());
+            String nom = nomField.getText();
+            String description = descriptionField.getText();
+            String image = imageField.getText();
+            int prix = Integer.parseInt(prixField.getText());
                 String categorie = categorieField.getValue();
                 String etat = etatField.getValue();
                 
@@ -123,12 +125,12 @@ public class ProduitController implements Initializable {
                 if (!commandeField.getText().isEmpty()) {
                     commandeId = Integer.parseInt(commandeField.getText());
                 }
-    
-                Produit produit = new Produit(0, nom, description, image, prix, categorie, etat, null);
+
+            Produit produit = new Produit(0, nom, description, image, prix, categorie, etat, null);
                 try {
-                    serviceProduit.insert(produit);
-                    clearFields();
-                    showAlert("Succès", "Produit ajouté avec succès!");
+            serviceProduit.insert(produit);
+            clearFields();
+            showAlert("Succès", "Produit ajouté avec succès!");
                 } catch (Exception e) {
                     showAlert("Erreur", "Échec de l'ajout du produit: " + e.getMessage());
                 }
@@ -142,36 +144,69 @@ public class ProduitController implements Initializable {
     @FXML
     private void handleUpdateProduct() {
         try {
-            if (validateInputs()) {
-                // Pour une mise à jour, l'ID est nécessaire
-                if (commandeField.getText().isEmpty()) {
-                    showAlert("Erreur", "Veuillez spécifier l'ID du produit à mettre à jour");
+            // Vérifier si un ID de produit est fourni
+            if (commandeField.getText().isEmpty()) {
+                showAlert("Erreur", "Veuillez entrer l'ID du produit à mettre à jour");
+                return;
+            }
+
+            int idProduit = Integer.parseInt(commandeField.getText());
+
+            if (!isLoadingData) {
+                // Première étape : charger les données
+                Produit produit = serviceProduit.getById(idProduit);
+                if (produit == null) {
+                    showAlert("Erreur", "Aucun produit trouvé avec cet ID");
                     return;
                 }
+
+                // Remplir les champs avec les données du produit existant
+                nomField.setText(produit.getNom());
+                descriptionField.setText(produit.getDescription());
+                imageField.setText(produit.getImage());
+                prixField.setText(String.valueOf(produit.getPrix()));
+                categorieField.setValue(produit.getCategorie());
+                etatField.setValue(produit.getEtat());
                 
-                try {
-                    int id = Integer.parseInt(commandeField.getText());
-                    String nom = nomField.getText();
-                    String description = descriptionField.getText();
-                    String image = imageField.getText();
-                    int prix = Integer.parseInt(prixField.getText());
-                    String categorie = categorieField.getValue();
-                    String etat = etatField.getValue();
-                    
-                    Produit produit = new Produit(id, nom, description, image, prix, categorie, etat, null);
-                    try {
-                        serviceProduit.update(produit);
-                        clearFields();
-                        showAlert("Succès", "Produit mis à jour avec succès!");
-                    } catch (Exception e) {
-                        showAlert("Erreur", "Échec de la mise à jour du produit: " + e.getMessage());
-                    }
-                } catch (NumberFormatException e) {
-                    showAlert("Erreur", "L'ID doit être un nombre entier valide");
+                isLoadingData = true;
+                showAlert("Info", "Les données ont été chargées. Modifiez les champs souhaités puis cliquez à nouveau sur Mettre à jour pour confirmer");
+            } else {
+                // Deuxième étape : effectuer la mise à jour
+                if (!validateInputs()) {
+                    return;
+                }
+
+                // Créer un nouvel objet Produit avec les données mises à jour
+                Produit updatedProduit = new Produit(
+                    idProduit,
+                    nomField.getText(),
+                    descriptionField.getText(),
+                    imageField.getText(),
+                    Integer.parseInt(prixField.getText()),
+                    categorieField.getValue(),
+                    etatField.getValue(),
+                    null  // pas de commande associée pour la mise à jour
+                );
+
+                System.out.println("Updating product: " + updatedProduit); // Debug log
+
+                if (serviceProduit.update(updatedProduit)) {
+                    showAlert("Succès", "Produit mis à jour avec succès!");
+            clearFields();
+                    isLoadingData = false;
+                } else {
+                    showAlert("Erreur", "La mise à jour du produit a échoué");
                 }
             }
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
+            showAlert("Erreur", "L'ID du produit ou le prix doit être un nombre valide");
+            e.printStackTrace(); // Debug log
+        } catch (SQLException e) {
             showAlert("Erreur", "Erreur lors de la mise à jour du produit: " + e.getMessage());
+            e.printStackTrace(); // Debug log
+        } catch (Exception e) {
+            showAlert("Erreur", "Une erreur inattendue s'est produite: " + e.getMessage());
+            e.printStackTrace(); // Debug log
         }
     }
 
@@ -186,16 +221,9 @@ public class ProduitController implements Initializable {
             
             try {
                 int id = Integer.parseInt(commandeField.getText());
-                Produit produit = new Produit();
-                produit.setId(id);
-                
-                try {
-                    serviceProduit.delete(produit);
-                    clearFields();
-                    showAlert("Succès", "Produit supprimé avec succès!");
-                } catch (Exception e) {
-                    showAlert("Erreur", "Échec de la suppression du produit: " + e.getMessage());
-                }
+                serviceProduit.delete(id);
+            clearFields();
+                showAlert("Succès", "Produit supprimé avec succès!");
             } catch (NumberFormatException e) {
                 showAlert("Erreur", "L'ID doit être un nombre entier valide");
             }
@@ -238,7 +266,7 @@ public class ProduitController implements Initializable {
                 int prix = Integer.parseInt(prixField.getText());
                 if (prix <= 0) {
                     errorMessage.append("Le prix doit être supérieur à 0\n");
-                }
+            }
             } catch (NumberFormatException e) {
                 errorMessage.append("Le prix doit être un nombre valide\n");
             }
@@ -262,13 +290,14 @@ public class ProduitController implements Initializable {
 
     // Méthode pour effacer les champs du formulaire
     private void clearFields() {
+        commandeField.clear();
         nomField.clear();
         descriptionField.clear();
         imageField.clear();
         prixField.clear();
         categorieField.setValue(null);
         etatField.setValue(null);
-        commandeField.clear();
+        isLoadingData = false;
     }
 
     // Méthode pour afficher des alertes

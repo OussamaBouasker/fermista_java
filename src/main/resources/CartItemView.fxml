@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="tn.fermista.controllers.CartItemController"
+      styleClass="cart-item"
+      spacing="10">
+    
+    <padding>
+        <Insets top="10" right="15" bottom="10" left="15"/>
+    </padding>
+    
+    <HBox spacing="15" alignment="CENTER_LEFT">
+        <ImageView fx:id="productImage" fitWidth="80" fitHeight="80" preserveRatio="true"/>
+        
+        <VBox spacing="5" HBox.hgrow="ALWAYS">
+            <Label fx:id="productName" styleClass="product-name"/>
+            <Label fx:id="productPrice" styleClass="product-price"/>
+            
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Button fx:id="decreaseButton" text="-" onAction="#handleDecrease" styleClass="quantity-button"/>
+                <Label fx:id="quantityLabel" styleClass="quantity-label"/>
+                <Button fx:id="increaseButton" text="+" onAction="#handleIncrease" styleClass="quantity-button"/>
+            </HBox>
+        </VBox>
+        
+        <Button fx:id="removeButton" text="×" onAction="#handleRemove" styleClass="remove-button"/>
+    </HBox>
+    
+    <Separator/>
+</VBox> 

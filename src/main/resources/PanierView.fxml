@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<?import java.lang.String?>
+<BorderPane styleClass="panier-main-container" prefHeight="680.0" prefWidth="930.0" xmlns:fx="http://javafx.com/fxml" fx:controller="tn.fermista.controllers.PanierController">
+    <top>
+        <VBox spacing="0">
+            <!-- Header vert avec titre blanc -->
+            <VBox alignment="CENTER" spacing="10" style="-fx-background-color: #4CAF50;">
+                <padding>
+                    <Insets top="25" right="20" bottom="25" left="20"/>
+                </padding>
+                <Label text="MON PANIER" textFill="WHITE" alignment="CENTER">
+                    <font>
+                        <Font name="System Bold" size="24.0"/>
+                    </font>
+                </Label>
+            </VBox>
+            
+            <!-- Sous-header avec bouton retour -->
+            <HBox alignment="CENTER_RIGHT" spacing="15" styleClass="header-container">
+                <padding>
+                    <Insets top="15" right="20" bottom="15" left="20"/>
+                </padding>
+                <Button fx:id="retourBoutiqueButton" text="Continuer mes achats" styleClass="retour-boutique-button" onAction="#handleRetourBoutique">
+                    <graphic>
+                        <ImageView fitHeight="16" fitWidth="16" preserveRatio="true">
+                            <Image url="@/images/back-arrow.svg" />
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </HBox>
+            <Separator/>
+        </VBox>
+    </top>
+    
+    <center>
+        <StackPane>
+            <!-- Layout responsive - s'adapte aux écrans larges et étroits -->
+            <VBox fx:id="responsiveContainer" spacing="20">
+                <!-- Conteneur des produits avec nouveau style -->
+                <VBox styleClass="cart-items-column" VBox.vgrow="ALWAYS" spacing="15">
+                    <padding>
+                        <Insets top="15" right="15" bottom="15" left="15"/>
+                    </padding>
+                    
+                    <!-- Titre de section avec fond vert clair -->
+                    <VBox alignment="CENTER" style="-fx-background-color: #e8f5e9; -fx-background-radius: 5px;">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
+                        <Label text="ARTICLES DANS VOTRE PANIER" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #2E7D32;"/>
+                    </VBox>
+                    
+                    <Label fx:id="emptyCartLabel" text="Votre panier est vide" styleClass="empty-cart-label" visible="false" managed="false"/>
+                    
+                    <ScrollPane fitToWidth="true" styleClass="panier-scroll" VBox.vgrow="ALWAYS">
+                        <VBox fx:id="cartItemsContainer" spacing="20"/>
+                    </ScrollPane>
+                </VBox>
+                
+                <!-- Résumé du panier - s'adaptera en hauteur sur les petits écrans -->
+                <VBox styleClass="cart-summary-column" spacing="20">
+                    <padding>
+                        <Insets top="15" right="15" bottom="15" left="15"/>
+                    </padding>
+                    
+                    <!-- Titre de résumé avec fond vert clair -->
+                    <VBox alignment="CENTER" style="-fx-background-color: #e8f5e9; -fx-background-radius: 5px;">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
+                        <Label text="RÉSUMÉ DE VOTRE COMMANDE" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #2E7D32;"/>
+                    </VBox>
+                    
+                    <VBox styleClass="total-summary-container" spacing="10">
+                        <GridPane styleClass="total-grid" vgap="10">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="ALWAYS" />
+                                <ColumnConstraints halignment="RIGHT" />
+                            </columnConstraints>
+                            
+                            <Label text="Sous-total" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="summary-label"/>
+                            <Label fx:id="totalLabel" text="0.00 DT" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="summary-value"/>
+                            
+                            <Label text="Livraison" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="summary-label"/>
+                            <Label text="Gratuit" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="summary-value free-shipping"/>
+                            
+                            <Separator GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+                            
+                            <Label text="Total à payer" GridPane.rowIndex="3" GridPane.columnIndex="0" styleClass="total-to-pay-label"/>
+                            <Label fx:id="finalTotalLabel" text="0.00 DT" GridPane.rowIndex="3" GridPane.columnIndex="1" styleClass="total-to-pay-value"/>
+                        </GridPane>
+                    </VBox>
+                    
+                    <VBox styleClass="payment-container" spacing="10">
+                        <!-- Titre de moyens de paiement avec fond vert clair -->
+                        <VBox alignment="CENTER" style="-fx-background-color: #e8f5e9; -fx-background-radius: 5px;">
+                            <padding>
+                                <Insets top="10" right="10" bottom="10" left="10"/>
+                            </padding>
+                            <Label text="MOYENS DE PAIEMENT ACCEPTÉS" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #2E7D32;"/>
+                        </VBox>
+                        
+                        <HBox spacing="10" styleClass="payment-methods" alignment="CENTER">
+                            <HBox alignment="CENTER" spacing="5">
+                                <ImageView fitHeight="24" fitWidth="36" preserveRatio="true">
+                                    <Image url="@/images/visa-logo.png" />
+                                </ImageView>
+                                <Label styleClass="payment-method-label visa" text="VISA"/>
+                            </HBox>
+                        </HBox>
+                        
+                        <Label text="Livraison standard en 4-7 jours ouvrables" styleClass="delivery-note" alignment="CENTER"/>
+                    </VBox>
+                    
+                    <Button fx:id="commanderButton" text="FINALISER MA COMMANDE" styleClass="commander-button" onAction="#handleCommander" 
+                            maxWidth="Infinity"/>
+                </VBox>
+            </VBox>
+        </StackPane>
+    </center>
+
+    <stylesheets>
+        <String fx:value="styles.css"/>
+    </stylesheets>
+</BorderPane> 

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="tn.fermista.controllers.SuccessPaymentController"
+            stylesheets="@styles.css">
+    <top>
+        <VBox alignment="CENTER" spacing="10" style="-fx-background-color: #4CAF50;">
+            <padding>
+                <Insets top="30" right="20" bottom="30" left="20"/>
+            </padding>
+            <Label text="Paiement réussi !" textFill="WHITE">
+                <font>
+                    <Font name="System Bold" size="28.0"/>
+                </font>
+            </Label>
+        </VBox>
+    </top>
+    
+    <center>
+        <VBox alignment="CENTER" spacing="30">
+            <padding>
+                <Insets top="40" right="40" bottom="40" left="40"/>
+            </padding>
+            
+            <ImageView fitWidth="200" fitHeight="200" preserveRatio="true">
+                <Image url="@images/succespayer.png"/>
+            </ImageView>
+            
+            <Label text="Merci pour votre confiance !">
+                <font>
+                    <Font size="22.0"/>
+                </font>
+            </Label>
+            
+            <Label text="Votre commande a été confirmée et sera traitée rapidement." textAlignment="CENTER" wrapText="true">
+                <font>
+                    <Font size="16.0"/>
+                </font>
+            </Label>
+            
+            <Label text="Un email de confirmation vous a été envoyé avec les détails de votre commande." 
+                   textAlignment="CENTER" wrapText="true" style="-fx-text-fill: #666;">
+                <font>
+                    <Font size="14.0"/>
+                </font>
+            </Label>
+        </VBox>
+    </center>
+    
+    <bottom>
+        <VBox alignment="CENTER" spacing="20">
+            <padding>
+                <Insets top="20" right="20" bottom="40" left="20"/>
+            </padding>
+            <Button fx:id="backToShopButton" text="Retourner à la boutique" onAction="#handleBackToShop" styleClass="button-primary">
+                <font>
+                    <Font size="14.0"/>
+                </font>
+            </Button>
+        </VBox>
+    </bottom>
+</BorderPane> 
