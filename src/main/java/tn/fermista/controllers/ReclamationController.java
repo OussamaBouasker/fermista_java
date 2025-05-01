@@ -21,6 +21,7 @@ import tn.fermista.models.Reclamation;
 import tn.fermista.models.User;
 import tn.fermista.services.ServiceReclamation;
 import tn.fermista.services.ServiceUser;
+import tn.fermista.utils.SMSSender;
 
 import java.io.IOException;
 import java.net.URL;
@@ -235,15 +236,63 @@ public class ReclamationController implements Initializable {
 
     @FXML
     private void handleSaveUpdate() {
-        if (selectedReclamation == null) return;
+        if (selectedReclamation == null) {
+            System.err.println("No reclamation selected");
+            return;
+        }
 
         try {
-            selectedReclamation.setStatus(popup_statusComboBox.getValue());
+            String oldStatus = selectedReclamation.getStatus();
+            String newStatus = popup_statusComboBox.getValue();
+            
+            System.out.println("Updating reclamation status:");
+            System.out.println("Old status: " + oldStatus);
+            System.out.println("New status: " + newStatus);
+            
+            selectedReclamation.setStatus(newStatus);
             serviceReclamation.update(selectedReclamation);
+            
+            // Send SMS notification if status has changed
+            if (!oldStatus.equals(newStatus)) {
+                User user = selectedReclamation.getUser();
+                if (user != null) {
+                    System.out.println("User found: " + user.getFirstName() + " " + user.getLastName());
+                    System.out.println("User phone number: " + user.getNumber());
+                    
+                    String phoneNumber = user.getNumber();
+                    if (phoneNumber != null && !phoneNumber.isEmpty()) {
+                        // Vérifier le format du numéro
+                        if (!phoneNumber.startsWith("+")) {
+                            phoneNumber = "+216" + phoneNumber; // Ajouter le préfixe international pour la Tunisie
+                        }
+                        
+                        System.out.println("Attempting to send SMS notification to: " + phoneNumber);
+                        SMSSender.sendReclamationStatusUpdate(
+                            phoneNumber,
+                            selectedReclamation.getTitre(),
+                            newStatus
+                        );
+                    } else {
+                        System.err.println("User phone number is null or empty");
+                        showAlert("Warning", "SMS notification could not be sent: User phone number is missing");
+                    }
+                } else {
+                    System.err.println("No user associated with this reclamation");
+                    showAlert("Warning", "SMS notification could not be sent: No user associated with this reclamation");
+                }
+            } else {
+                System.out.println("Status not changed, no SMS sent");
+            }
+            
             loadReclamations();
             updatePopup.setVisible(false);
         } catch (SQLException e) {
+            System.err.println("SQL Error while updating reclamation: " + e.getMessage());
             showAlert("Error", "Failed to update reclamation: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
+            e.printStackTrace();
+            showAlert("Error", "An unexpected error occurred: " + e.getMessage());
         }
     }
 
@@ -376,7 +425,18 @@ public class ReclamationController implements Initializable {
             System.err.println("Erreur lors du chargement de ShowWorkshops.fxml: " + e.getMessage());
         }
     }
-
+    public void StatTemplate(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/StatTemplate.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de StatTemplate.fxml: " + e.getMessage());
+        }
+    }
     public void CrudUser(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/CrudUser.fxml"));

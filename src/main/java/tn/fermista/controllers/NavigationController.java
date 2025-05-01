@@ -16,6 +16,7 @@ import tn.fermista.services.ServiceAgriculteur;
 import tn.fermista.services.ServiceClient;
 import tn.fermista.services.ServiceFormateur;
 import tn.fermista.services.ServiceReclamation;
+import tn.fermista.utils.UserSession;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,12 +24,13 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class NavigationController implements Initializable {
+    public Button btn_workbench11212;
     @FXML
     private Button btn_workbench11;
-    
+
     @FXML
     private Button btn_workbench113;
-    
+
     @FXML
     private Button logoutButton;
 
@@ -84,35 +86,35 @@ public class NavigationController implements Initializable {
         serviceClient = new ServiceClient();
         serviceAgriculteur = new ServiceAgriculteur();
         serviceReclamation = new ServiceReclamation();
-    
+
         try {
             // Nombre de formateurs
             int formateurCount = serviceFormateur.rechercher().size();
             nbrFormateur.setText(String.valueOf(formateurCount));
-    
+
             // Nombre de clients
             int clientCount = serviceClient.rechercher().size();
             nbrClient.setText(String.valueOf(clientCount));
-    
+
             // Nombre d'agriculteurs
             int agriculteurCount = serviceAgriculteur.rechercher().size();
             nbreAgriculteur.setText(String.valueOf(agriculteurCount));
-    
+
             // Nombre de réclamations
             // Count reclamations by status
             int pendingCount = serviceReclamation.countReclamationsByStatus("pending");
             nbrePendingReclamation.setText(String.valueOf(pendingCount));
-    
+
             int cancelledCount = serviceReclamation.countReclamationsByStatus("canceled");
             nbreCancelledReclamation.setText(String.valueOf(cancelledCount));
-    
+
             int confirmedCount = serviceReclamation.countReclamationsByStatus("confirmed");
             nbreConfirmedReclamation.setText(String.valueOf(confirmedCount));
-    
+
             // Total reclamations count
             int reclamationCount = serviceReclamation.showAll().size();
             nbrReclamation.setText(String.valueOf(reclamationCount));
-    
+
         } catch (SQLException e) {
             e.printStackTrace();
             // Set default values in case of error
@@ -121,21 +123,21 @@ public class NavigationController implements Initializable {
             nbreConfirmedReclamation.setText("0");
             nbrReclamation.setText("0");
         }
-    
+
         // Mettre à jour les labels avec les nombres depuis la BD
         try {
             // Nombre de formateurs
             int formateurCount = serviceFormateur.rechercher().size();
             nbrFormateur.setText(String.valueOf(formateurCount));
-    
+
             // Nombre de clients
             int clientCount = serviceClient.rechercher().size();
             nbrClient.setText(String.valueOf(clientCount));
-    
+
             // Nombre d'agriculteurs
             int agriculteurCount = serviceAgriculteur.rechercher().size();
             nbreAgriculteur.setText(String.valueOf(agriculteurCount));
-    
+
             // Nombre de réclamations
             int reclamationCount = serviceReclamation.showAll().size();
             nbrReclamation.setText(String.valueOf(reclamationCount));
@@ -147,7 +149,7 @@ public class NavigationController implements Initializable {
             nbreAgriculteur.setText("0");
             nbrReclamation.setText("0");
         }
-    
+
         // Garder le reste du code initialize() existant
         if (btn_workbench11 != null) {
             btn_workbench11.setOnAction(event -> navigateToCrudUser());
@@ -155,9 +157,12 @@ public class NavigationController implements Initializable {
         if (btn_workbench113 != null) {
             btn_workbench113.setOnAction(event -> navigateToCrudReclamation());
         }
-        
+
+        User currentUser = UserSession.getCurrentUser();
+
+// Mettre à jour le label de l'utilisateur
         if (currentUser != null && userNameLabel != null) {
-            userNameLabel.setText("Hello, " + currentUser.getFirstName() + " " + currentUser.getLastName());
+            userNameLabel.setText("Hello, " + currentUser.getFirstName() );
         }
     }
 
@@ -166,7 +171,7 @@ public class NavigationController implements Initializable {
         try {
             // Réinitialiser l'utilisateur courant
             currentUser = null;
-            
+
             // Rediriger vers la page de login
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
             Parent root = loader.load();
@@ -178,7 +183,7 @@ public class NavigationController implements Initializable {
             e.printStackTrace();
         }
     }
-    
+
     private void navigateToCrudUser() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/CrudUser.fxml"));
@@ -219,7 +224,7 @@ public class NavigationController implements Initializable {
             System.err.println("Erreur lors du chargement de ShowWorkshops.fxml: " + e.getMessage());
         }
     }
-    
+
 
 
     public void ControlMedicalShow(javafx.event.ActionEvent actionEvent) {
@@ -312,6 +317,50 @@ public class NavigationController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Erreur lors du chargement de ShowWorkshops.fxml: " + e.getMessage());
+        }
+    }
+    @FXML
+    private Button btn_home;
+
+    @FXML
+    private void NavigateToHomePage() {
+        try {
+            // Debug the path to ensure the resource is found
+            String fxmlPath = "/HomePage.fxml";
+            java.net.URL fxmlUrl = getClass().getResource(fxmlPath);
+            if (fxmlUrl == null) {
+                throw new IOException("Cannot find FXML file at path: " + fxmlPath);
+            }
+
+            // Load the FXML file
+            Parent root = FXMLLoader.load(fxmlUrl);
+            Stage stage = (Stage) btn_home.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Erreur de navigation", "Impossible de charger la page d'accueil: " + e.getMessage());
+        }
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.show();
+    }
+
+    public void StatTemplate(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/StatTemplate.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de StatTemplate.fxml: " + e.getMessage());
         }
     }
 }
