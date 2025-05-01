@@ -4,62 +4,50 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class arg_agit {
+    private int id;
+    private String accel_x;
+    private String accel_y;
+    private String accel_z;
+    private LocalDateTime time_receive;
 
-
-    private Long id;
-
-
-    private String accelX;
-
-
-    private String accelY;
-
-
-    private String accelZ;
-
-
-    private LocalDateTime timeReceive;
-
-    // Getters et Setters
-
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
     public String getAccelX() {
-        return accelX;
+        return accel_x;
     }
 
-    public void setAccelX(String accelX) {
-        this.accelX = accelX;
+    public void setAccelX(String accel_x) {
+        this.accel_x = accel_x;
     }
 
     public String getAccelY() {
-        return accelY;
+        return accel_y;
     }
 
-    public void setAccelY(String accelY) {
-        this.accelY = accelY;
+    public void setAccelY(String accel_y) {
+        this.accel_y = accel_y;
     }
 
     public String getAccelZ() {
-        return accelZ;
+        return accel_z;
     }
 
-    public void setAccelZ(String accelZ) {
-        this.accelZ = accelZ;
+    public void setAccelZ(String accel_z) {
+        this.accel_z = accel_z;
     }
 
     public LocalDateTime getTimeReceive() {
-        return timeReceive;
+        return time_receive;
     }
 
-    public void setTimeReceive(LocalDateTime timeReceive) {
-        this.timeReceive = timeReceive;
+    public void setTimeReceive(LocalDateTime time_receive) {
+        this.time_receive = time_receive;
     }
 
     @Override
@@ -67,22 +55,26 @@ public class arg_agit {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         arg_agit argAgit = (arg_agit) o;
-        return Objects.equals(id, argAgit.id) && Objects.equals(accelX, argAgit.accelX) && Objects.equals(accelY, argAgit.accelY) && Objects.equals(accelZ, argAgit.accelZ) && Objects.equals(timeReceive, argAgit.timeReceive);
+        return Objects.equals(id, argAgit.id) &&
+                Objects.equals(accel_x, argAgit.accel_x) &&
+                Objects.equals(accel_y, argAgit.accel_y) &&
+                Objects.equals(accel_z, argAgit.accel_z) &&
+                Objects.equals(time_receive, argAgit.time_receive);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, accelX, accelY, accelZ, timeReceive);
+        return Objects.hash(id, accel_x, accel_y, accel_z, time_receive);
     }
 
     @Override
     public String toString() {
-        return "arg_agit{" +
+        return "Arg_Agit{" +
                 "id=" + id +
-                ", accelX='" + accelX + '\'' +
-                ", accelY='" + accelY + '\'' +
-                ", accelZ='" + accelZ + '\'' +
-                ", timeReceive=" + timeReceive +
+                ", accelX='" + accel_x + '\'' +
+                ", accelY='" + accel_y + '\'' +
+                ", accelZ='" + accel_z + '\'' +
+                ", timeReceive=" + time_receive +
                 '}';
     }
 }

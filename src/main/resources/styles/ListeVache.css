@@ -1,0 +1,54 @@
+.pagination {
+    -fx-padding: 10px;
+}
+
+.pagination > .pagination-control > .control-box {
+    -fx-spacing: 4px;
+}
+
+.pagination > .pagination-control > .control-box > .number-button,
+.pagination > .pagination-control > .control-box > .bullet-button,
+.pagination > .pagination-control > .control-box > .left-arrow-button,
+.pagination > .pagination-control > .control-box > .right-arrow-button {
+    -fx-background-insets: 0, 1;
+    -fx-background-color: transparent;
+    -fx-min-width: 30px;
+    -fx-min-height: 30px;
+    -fx-border-color: #FFA500;
+    -fx-border-width: 1px;
+    -fx-border-radius: 3px;
+}
+
+.pagination > .pagination-control > .control-box > .number-button:hover,
+.pagination > .pagination-control > .control-box > .bullet-button:hover,
+.pagination > .pagination-control > .control-box > .left-arrow-button:hover,
+.pagination > .pagination-control > .control-box > .right-arrow-button:hover {
+    -fx-background-color: #FFF5E6;
+}
+
+.pagination > .pagination-control > .control-box > .number-button:selected,
+.pagination > .pagination-control > .control-box > .bullet-button:selected {
+    -fx-background-color: #FFA500;
+    -fx-text-fill: white;
+}
+
+.pagination > .pagination-control > .control-box > .left-arrow-button > .left-arrow,
+.pagination > .pagination-control > .control-box > .right-arrow-button > .right-arrow {
+    -fx-background-color: #FFA500;
+}
+
+.pagination > .pagination-control > .control-box > .left-arrow-button:hover > .left-arrow,
+.pagination > .pagination-control > .control-box > .right-arrow-button:hover > .right-arrow {
+    -fx-background-color: #FF8C00;
+}
+
+/* Style pour les boutons de navigation extrême (début/fin) */
+.pagination > .pagination-control > .control-box > .left-arrow-button.double > .left-arrow,
+.pagination > .pagination-control > .control-box > .right-arrow-button.double > .right-arrow {
+    -fx-background-color: #FFA500;
+}
+
+/* Style pour le label de page actuelle */
+.pagination > .pagination-control > .page-information {
+    -fx-padding: 5px;
+} 

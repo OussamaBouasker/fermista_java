@@ -10,10 +10,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import tn.fermista.models.Vache;
 import tn.fermista.services.ServiceVache;
 import java.io.IOException;
+import java.util.List;
 
 public class ListeVacheController {
 
@@ -37,6 +40,12 @@ public class ListeVacheController {
     private Button btn_workbench1132;
     @FXML
     private Button btn_workbench1121;
+    @FXML
+    private FlowPane vacheListPane;
+    @FXML
+    private TextField searchField;
+    @FXML
+    private Button applyButton;
 
     private final ServiceVache serviceVache = new ServiceVache();
 
@@ -46,7 +55,24 @@ public class ListeVacheController {
         loadVaches();
         btn_workbench1132.setOnAction(event -> naviguerVersAjoutVache());
         
-        btn_workbench1121.setOnAction(event -> NavigationController.naviguerVersSuiviMedical(btn_workbench1121));
+        btn_workbench1121.setOnAction(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/choixvachecollier.fxml"));
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) btn_workbench1121.getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText("Erreur de navigation");
+                alert.setContentText("Impossible d'ouvrir la page de suivi médical : " + e.getMessage());
+                alert.showAndWait();
+            }
+        });
+        afficherVaches();
     }
 
     private void setupColumns() {
@@ -74,13 +100,25 @@ public class ListeVacheController {
 
                 deleteBtn.setOnAction(event -> {
                     Vache vache = getTableView().getItems().get(getIndex());
-                    serviceVache.delete(vache);
-                    loadVaches();
+                    
+                    // Créer une boîte de dialogue de confirmation
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Confirmation de suppression");
+                    alert.setHeaderText("Suppression de vache");
+                    alert.setContentText("Êtes-vous sûr de vouloir supprimer la vache " + vache.getName() + " ?");
+                    
+                    // Afficher la boîte de dialogue et attendre la réponse
+                    alert.showAndWait().ifPresent(response -> {
+                        if (response == ButtonType.OK) {
+                            serviceVache.delete(vache);
+                            loadVaches();
+                        }
+                    });
                 });
 
                 editBtn.setOnAction(event -> {
                     Vache vache = getTableView().getItems().get(getIndex());
-                    ouvrirFenetreModification(vache);
+                    handleModifier(vache);
                 });
             }
 
@@ -119,20 +157,28 @@ public class ListeVacheController {
         }
     }
 
-    private void ouvrirFenetreModification(Vache vache) {
+    private void handleModifier(Vache vache) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierVache.fxml"));
-            Parent root = loader.load();
+            Pane root = loader.load();
             
             ModifierVacheController controller = loader.getController();
-            controller.setVacheAModifier(vache);
+            controller.setVache(vache, null);  // null car nous n'avons pas de FrontVacheCard ici
+            
+            // Configurer le callback pour rafraîchir la liste
+            controller.setOnModificationCallback(() -> {
+                // Rafraîchir la liste des vaches
+                afficherVaches();
+                // Rafraîchir également la table si nécessaire
+                loadVaches();
+            });
             
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setTitle("Modifier une vache");
+            stage.setTitle("Modifier Vache");
             stage.show();
-        } catch (Exception e) {
-            System.out.println("Erreur lors de l'ouverture de la fenêtre de modification : " + e.getMessage());
+        } catch (IOException e) {
+            showAlert("Erreur", "Erreur lors de l'ouverture de la fenêtre de modification : " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
@@ -156,6 +202,30 @@ public class ListeVacheController {
         }
     }
 
+    private void afficherVaches() {
+        vacheListPane.getChildren().clear();
+        List<Vache> vaches = serviceVache.getAll();
+        for (Vache v : vaches) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/FrontVacheCard.fxml"));
+                Pane card = loader.load();
+                FrontVacheCard controller = loader.getController();
+                controller.setVache(v);
+                controller.setOnModificationCallback(this::afficherVaches);
+                vacheListPane.getChildren().add(card);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void showAlert(String title, String content, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
 
     public void CrudReclamation(ActionEvent actionEvent) {
         try {
@@ -169,8 +239,6 @@ public class ListeVacheController {
             System.err.println("Erreur lors du chargement de ShowWorkshops.fxml: " + e.getMessage());
         }
     }
-
-
 
     public void ControlMedicalShow(javafx.event.ActionEvent actionEvent) {
         try {
@@ -210,8 +278,6 @@ public class ListeVacheController {
             System.err.println("Erreur lors du chargement de ShowWorkshops.fxml: " + e.getMessage());
         }
     }
-
-
 
     public void DashboardTemplate(ActionEvent actionEvent) {
         try {

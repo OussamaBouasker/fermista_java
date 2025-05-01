@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="card" prefHeight="250.0" prefWidth="200.0" spacing="10" style="-fx-background-color: white;
+                                       -fx-padding: 15;
+                                       -fx-background-radius: 10;
+                                       -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 0);" 
+      xmlns="http://javafx.com/javafx/21" 
+      xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="tn.fermista.controllers.FrontCollierCard">
+   
+   <HBox alignment="TOP_RIGHT">
+         <Button mnemonicParsing="false" onAction="#handleDelete" style="-fx-background-color: transparent;">
+            <graphic>
+            <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@images/poub.png" />
+                  </image>
+               </ImageView>
+            </graphic>
+         </Button>
+   </HBox>
+
+   <VBox spacing="10" style="-fx-padding: 0 0 10 0;">
+         <Label fx:id="referenceLabel" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: #2e8b57;" />
+      
+      <VBox spacing="5" style="-fx-padding: 5;">
+         <Label text="Taille:" style="-fx-font-weight: bold; -fx-text-fill: #333;" />
+         <Label fx:id="tailleLabel" style="-fx-text-fill: #666;" />
+         
+         <Label text="Température:" style="-fx-font-weight: bold; -fx-text-fill: #333; -fx-padding: 5 0 0 0;" />
+         <Label fx:id="temperatureLabel" style="-fx-text-fill: #666;" />
+         
+         <Label text="Agitation:" style="-fx-font-weight: bold; -fx-text-fill: #333; -fx-padding: 5 0 0 0;" />
+         <Label fx:id="agitationLabel" style="-fx-text-fill: #666;" />
+         
+         <Label text="Vache associée:" style="-fx-font-weight: bold; -fx-text-fill: #333; -fx-padding: 5 0 0 0;" />
+         <Label fx:id="vacheLabel" style="-fx-text-fill: #666;" />
+      </VBox>
+   </VBox>
+
+          <HBox alignment="CENTER" spacing="10">
+      <Button onAction="#handleStatus" style="-fx-background-color: #4CAF50;
+                        -fx-text-fill: white;
+                        -fx-font-weight: bold;
+                        -fx-padding: 5 15;
+                        -fx-background-radius: 5;" 
+              text="Status" />
+      <Button onAction="#handleModifier" style="-fx-background-color: #FFC107;
+                        -fx-text-fill: white;
+                        -fx-font-weight: bold;
+                        -fx-padding: 5 15;
+                        -fx-background-radius: 5;" 
+              text="Modifier" />
+    </HBox>
+</VBox>

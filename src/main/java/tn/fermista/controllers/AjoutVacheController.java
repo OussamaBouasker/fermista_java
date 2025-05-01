@@ -13,6 +13,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import tn.fermista.models.Vache;
 import tn.fermista.services.ServiceVache;
+import tn.fermista.models.User;
+import java.io.IOException;
 
 public class AjoutVacheController {
 
@@ -62,6 +64,7 @@ public class AjoutVacheController {
     private TextField tfRace;
 
     private final ServiceVache serviceVache = new ServiceVache();
+    private Runnable onVacheAdded;
 
     @FXML
     private void ajouterVache() {
@@ -81,6 +84,7 @@ public class AjoutVacheController {
 
             showAlert("Succès", "Vache ajoutée avec succès", Alert.AlertType.INFORMATION);
             resetForm();
+            if (onVacheAdded != null) onVacheAdded.run();
         } catch (NumberFormatException e) {
             showAlert("Erreur", "L'âge doit être un nombre valide", Alert.AlertType.ERROR);
         }
@@ -175,7 +179,27 @@ public class AjoutVacheController {
     @FXML
     public void initialize() {
         // Ajouter l'action pour le bouton Suivis médical
-        btn_workbench1121.setOnAction(event -> NavigationController.naviguerVersSuiviMedical(btn_workbench1121));
+        btn_workbench1121.setOnAction(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/choixvachecollier.fxml"));
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) btn_workbench1121.getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText("Erreur de navigation");
+                alert.setContentText("Impossible d'ouvrir la page de suivi médical : " + e.getMessage());
+                alert.showAndWait();
+            }
+        });
+    }
+
+    public void setOnVacheAdded(Runnable callback) {
+        this.onVacheAdded = callback;
     }
 }
 

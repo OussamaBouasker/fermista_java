@@ -1,16 +1,16 @@
 package tn.fermista.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import tn.fermista.models.Vache;
 import tn.fermista.services.ServiceVache;
 
-public class ModifierVacheController {
+public class AjouterVacheController {
     @FXML
     private TextField nameField;
     @FXML
@@ -33,9 +33,6 @@ public class ModifierVacheController {
     private Label etatError;
 
     private final ServiceVache serviceVache = new ServiceVache();
-    private Vache vache;
-    private FrontVacheCard cardController;
-    private Runnable onModificationCallback;
 
     @FXML
     public void initialize() {
@@ -58,23 +55,6 @@ public class ModifierVacheController {
         etatMedicalField.textProperty().addListener((observable, oldValue, newValue) -> {
             validateEtatMedical(newValue);
         });
-    }
-
-    public void setVache(Vache vache, FrontVacheCard cardController) {
-        this.vache = vache;
-        this.cardController = cardController;
-        
-        // Remplir les champs avec les données actuelles
-        nameField.setText(vache.getName());
-        ageField.setText(String.valueOf(vache.getAge()));
-        raceField.setText(vache.getRace());
-        etatMedicalField.setText(vache.getEtat_medical());
-
-        // Valider les données initiales
-        validateName(vache.getName());
-        validateAge(String.valueOf(vache.getAge()));
-        validateRace(vache.getRace());
-        validateEtatMedical(vache.getEtat_medical());
     }
 
     private boolean validateName(String name) {
@@ -168,34 +148,35 @@ public class ModifierVacheController {
         }
 
         try {
-            // Mettre à jour l'objet vache avec les nouvelles valeurs
-            vache.setName(nameField.getText().trim());
-            vache.setAge(Integer.parseInt(ageField.getText().trim()));
-            vache.setRace(raceField.getText().trim());
-            vache.setEtat_medical(etatMedicalField.getText().trim());
+            String name = nameField.getText().trim();
+            int age = Integer.parseInt(ageField.getText().trim());
+            String race = raceField.getText().trim();
+            String etatMedical = etatMedicalField.getText().trim();
 
-            // Sauvegarder dans la base de données
-            serviceVache.update(vache);
+            // Créer une nouvelle vache
+            Vache newVache = new Vache();
+            newVache.setName(name);
+            newVache.setAge(age);
+            newVache.setRace(race);
+            newVache.setEtat_medical(etatMedical);
+
+            // Sauvegarder la vache
+            serviceVache.insert(newVache);
 
             // Afficher un message de succès
-            showAlert("Succès", "La vache a été modifiée avec succès.", Alert.AlertType.INFORMATION);
-
-            // Mettre à jour la carte si elle existe
-            if (cardController != null) {
-                cardController.updateCard(vache);
-            }
-
-            // Exécuter le callback de modification
-            if (onModificationCallback != null) {
-                onModificationCallback.run();
-            }
+            showAlert("Succès", "La vache a été ajoutée avec succès.", Alert.AlertType.INFORMATION);
 
             // Fermer la fenêtre
             Stage stage = (Stage) saveButton.getScene().getWindow();
             stage.close();
-
+            
+            // Rafraîchir la liste des vaches
+            FrontListeVacheController parentController = FrontListeVacheController.getInstance();
+            if (parentController != null) {
+                parentController.refreshVacheList();
+            }
         } catch (Exception e) {
-            showAlert("Erreur", "Une erreur est survenue lors de la modification : " + e.getMessage(), Alert.AlertType.ERROR);
+            showAlert("Erreur", "Une erreur est survenue lors de l'ajout : " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
@@ -212,8 +193,4 @@ public class ModifierVacheController {
         alert.setContentText(content);
         alert.showAndWait();
     }
-
-    public void setOnModificationCallback(Runnable callback) {
-        this.onModificationCallback = callback;
-    }
-}
+} 

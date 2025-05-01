@@ -7,7 +7,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="tn.fermista.controllers.NavbarController" stylesheets="@/styles/StyleNavbar.css">
+<AnchorPane fx:id="rootPane" xmlns:fx="http://javafx.com/fxml" fx:controller="tn.fermista.controllers.NavbarController" stylesheets="@/styles/StyleNavbar.css">
     <VBox spacing="20.0" alignment="CENTER" prefHeight="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0">
 
         <!-- Header Section: All elements in the same row -->
@@ -24,13 +24,10 @@
                     <Button text="Home" onAction="#handleHome"/>
                     <Button text="Shop" onAction="#handleShop"/>
                     <Button text="Collier" onAction="#handleCollier"/>
-
-
-
                     <Button text="Workshops" onAction="#handleWorkshops"/>
                     <Button text="Contrôle Médical" onAction="#handleControlMedical"/>
                     <Button text="Rendez-vous" onAction="#handleRendezVous"/>
-                    <Button text="Liste des Rendez-vous" onAction="#handleListeRendezVous"/> <!-- New button -->
+                    <Button text="Liste des Rendez-vous" onAction="#handleListeRendezVous"/>
                     <Button text="Produits" onAction="#handleProduits"/>
 
                     <MenuButton text="Suivis Médical">

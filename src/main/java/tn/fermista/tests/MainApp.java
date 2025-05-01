@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/DashboardTemplate.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/HomePage.fxml"));
         Scene scene = new Scene(loader.load());
         primaryStage.setScene(scene);
         primaryStage.setTitle("Fermista");

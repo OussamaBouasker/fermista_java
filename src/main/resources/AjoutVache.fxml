@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.control.Pagination?>
 
 <HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="930.0" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.fermista.controllers.AjoutVacheController">
     <children>
@@ -126,10 +127,6 @@
             </children>
         </VBox>
 
-
-
-
-
         <Pane prefHeight="680.0" prefWidth="709.0">
             <children>
                 <FlowPane layoutY="14.0" prefHeight="60.0" prefWidth="710.0">
@@ -157,60 +154,43 @@
                     </children>
                 </FlowPane>
 
-            
-            
-            
-            
-                            <VBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+                <VBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
                     <Pane prefHeight="0.0" prefWidth="0.0">
                         <VBox alignment="CENTER" maxWidth="710.0" prefHeight="680.0" prefWidth="710.0" spacing="15.0" style="-fx-background-color: white; -fx-padding: 40; -fx-border-radius: 10; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
                             <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Ajouter une Vache" />
 
-                                                 <VBox spacing="15">
+                            <VBox spacing="15">
                                 <VBox spacing="5">
                                     <Label style="-fx-font-weight: bold;" text="Nom :" />
                                     <TextField fx:id="tfName" promptText="Entrez le nom" />
                                 </VBox>
 
-                                                     <VBox spacing="5">
+                                <VBox spacing="5">
                                     <Label style="-fx-font-weight: bold;" text="Race :" />
                                     <TextField fx:id="tfRace" promptText="Entrez la race" />
                                 </VBox>
 
-                                                     <VBox spacing="5">
+                                <VBox spacing="5">
                                     <Label style="-fx-font-weight: bold;" text="Âge :" />
                                     <TextField fx:id="tfAge" promptText="Entrez l'âge" />
                                 </VBox>
 
-                                                     <VBox spacing="5">
+                                <VBox spacing="5">
                                     <Label style="-fx-font-weight: bold;" text="État Médical :" />
                                     <TextField fx:id="tfEtatMedical" promptText="Entrez l'état médical" />
                                 </VBox>
                             </VBox>
-                     <HBox alignment="CENTER">
-                        <children>
-      
-                                                 <Button fx:id="btnAjouter" onAction="#ajouterVache" prefHeight="41.0" prefWidth="142.0" style="-fx-background-color: #2E3244; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 25 10 25; -fx-font-weight: bold; -fx-background-radius: 5;" text="Enregistrer" />
-                           <Button fx:id="btnAjouter1" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" onAction="#retourALaListe" prefHeight="42.0" prefWidth="255.0" style="-fx-background-color: white; -fx-text-fill: #2E3244; -fx-font-size: 14px; -fx-padding: 10 25 10 25; -fx-font-weight: bold; -fx-background-radius: 5;" text="retour à la liste" textAlignment="JUSTIFY" />
-                        </children>
-                     </HBox>
+                            <HBox alignment="CENTER">
+                                <children>
+                                    <Button fx:id="btnAjouter" onAction="#ajouterVache" prefHeight="41.0" prefWidth="142.0" style="-fx-background-color: #2E3244; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 25 10 25; -fx-font-weight: bold; -fx-background-radius: 5;" text="Enregistrer" />
+                                    <Button fx:id="btnAjouter1" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" onAction="#retourALaListe" prefHeight="42.0" prefWidth="255.0" style="-fx-background-color: white; -fx-text-fill: #2E3244; -fx-font-size: 14px; -fx-padding: 10 25 10 25; -fx-font-weight: bold; -fx-background-radius: 5;" text="retour à la liste" textAlignment="JUSTIFY" />
+                                </children>
+                            </HBox>
                         </VBox>
                     </Pane>
                 </VBox>
-
-
-
-
-
-
             </children>
-
-
         </Pane>
-
-
     </children>
-
-
 </HBox>
 

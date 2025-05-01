@@ -16,7 +16,7 @@
 
 <!-- Add these fx:ids to your root HBox and first VBox -->
 
-<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="930.0" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.fermista.controllers.NavigationController">    <children>
+<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="930.0" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.fermista.controllers.NavbarController">    <children>
     <VBox prefHeight="680.0" prefWidth="205.0">
         <children>
             <AnchorPane fx:id="side_ankerpane" prefHeight="680.0" prefWidth="253.0" styleClass="side_ankerpane" stylesheets="@style.css">
