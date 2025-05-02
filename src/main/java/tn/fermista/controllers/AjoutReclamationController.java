@@ -28,7 +28,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class AjoutReclamationController {
@@ -175,50 +177,237 @@ public class AjoutReclamationController {
     @FXML
     private void handleImprove() {
         String currentText = descriptionArea.getText();
-        if (!currentText.isEmpty()) {
-            // Désactiver les boutons pendant le traitement
-            suggestButton.setDisable(true);
-            improveButton.setDisable(true);
-            formulateButton.setDisable(true);
-            descriptionArea.setEditable(false);
-
-            // Créer une tâche pour l'amélioration du texte
-            Task<String> improvementTask = new Task<String>() {
-                @Override
-                protected String call() throws Exception {
-                    // Simuler un temps de traitement
-                    Thread.sleep(500);
-                    return ReclamationAssistant.improveDescription(currentText);
-                }
-            };
-
-            // Gérer la fin de la tâche
-            improvementTask.setOnSucceeded(e -> {
-                String improvedText = improvementTask.getValue();
-                animateTextGeneration(improvedText);
-            });
-
-            // Démarrer la tâche dans un nouveau thread
-            new Thread(improvementTask).start();
-        } else {
-            showAlert(Alert.AlertType.WARNING, "Description vide", 
-                "Veuillez d'abord entrer une description à améliorer.");
-        }
-    }
-
-    @FXML
-    private void handleFormulate() {
         String title = titreField.getText();
+        
         if (title.isEmpty()) {
-            showAlert(Alert.AlertType.WARNING, "Titre vide", "Veuillez d'abord entrer un titre pour votre réclamation.");
+            showAlert(Alert.AlertType.WARNING, "Titre vide", 
+                "Veuillez d'abord entrer un titre pour votre réclamation.");
             return;
         }
+        
+        // Désactiver les boutons pendant le traitement
+        suggestButton.setDisable(true);
+        improveButton.setDisable(true);
+        formulateButton.setDisable(true);
+        descriptionArea.setEditable(false);
 
-        // Générer une réclamation structurée basée sur le titre
-        String structuredReclamation = generateStructuredReclamation(title);
-        animateTextGeneration(structuredReclamation);
+        // Créer une tâche pour l'amélioration du texte
+        Task<String> improvementTask = new Task<String>() {
+            @Override
+            protected String call() throws Exception {
+                // Simuler un temps de traitement
+                Thread.sleep(500);
+                
+                // Si la description est vide, générer une description basée sur le titre
+                if (currentText.isEmpty()) {
+                    String fullText = generateStructuredReclamation(title);
+                    // Résumer le texte généré en une ligne et demie (environ 150 caractères)
+                    String summary = ReclamationAssistant.summarizeText(fullText, 150);
+                    return fullText + "\n\nRésumé: " + summary;
+                } else {
+                    // Sinon, améliorer la description existante en tenant compte du titre
+                    String improvedText = improveDescriptionWithTitle(currentText, title);
+                    // Résumer le texte amélioré en une ligne et demie
+                    String summary = ReclamationAssistant.summarizeText(improvedText, 150);
+                    return improvedText + "\n\nRésumé: " + summary;
+                }
+            }
+        };
+
+        // Gérer la fin de la tâche
+        improvementTask.setOnSucceeded(e -> {
+            String improvedText = improvementTask.getValue();
+            animateTextGeneration(improvedText);
+        });
+
+        // Démarrer la tâche dans un nouveau thread
+        new Thread(improvementTask).start();
     }
-
+    
+    private String improveDescriptionWithTitle(String description, String title) {
+        // Améliorer la description en tenant compte du titre
+        String improvedText = ReclamationAssistant.improveDescription(description);
+        
+        // Analyser le titre pour extraire des mots-clés
+        String[] keywords = title.toLowerCase().split("\\s+");
+        
+        // Vérifier si la description améliorée contient déjà des éléments du titre
+        boolean containsTitleElements = false;
+        for (String keyword : keywords) {
+            if (keyword.length() > 3 && improvedText.toLowerCase().contains(keyword)) {
+                containsTitleElements = true;
+                break;
+            }
+        }
+        
+        // Si la description ne contient pas d'éléments du titre, les ajouter
+        if (!containsTitleElements) {
+            // Ajouter une référence au titre au début de la description avec une formulation variée
+            String[] titleReferences = {
+                "Concernant \"" + title + "\", ",
+                "Au sujet de \"" + title + "\", ",
+                "À propos de \"" + title + "\", ",
+                "En référence à \"" + title + "\", ",
+                "Relativement à \"" + title + "\", "
+            };
+            String titleRef = titleReferences[(int)(Math.random() * titleReferences.length)];
+            improvedText = titleRef + improvedText;
+            
+            // Ajouter des détails spécifiques basés sur les mots-clés du titre
+            StringBuilder additionalDetails = new StringBuilder();
+            
+            // Créer un ensemble pour suivre les catégories déjà traitées
+            Set<String> processedCategories = new HashSet<>();
+            
+            for (String keyword : keywords) {
+                if (keyword.length() > 3) { // Ignorer les mots courts
+                    String category = getCategoryFromKeyword(keyword);
+                    
+                    // Éviter de traiter plusieurs fois la même catégorie
+                    if (category != null && !processedCategories.contains(category)) {
+                        processedCategories.add(category);
+                        
+                        switch (category) {
+                            // Catégories existantes
+                            case "livraison":
+                                additionalDetails.append("\nLa livraison n'a pas été effectuée dans les délais prévus.");
+                                additionalDetails.append("\nJ'attends depuis plusieurs jours sans avoir reçu de mise à jour sur le statut de ma commande.");
+                                break;
+                            case "produit":
+                                additionalDetails.append("\nLe produit reçu ne correspond pas à la description.");
+                                additionalDetails.append("\nLes caractéristiques annoncées ne correspondent pas à ce que j'ai reçu.");
+                                break;
+                            case "service":
+                                additionalDetails.append("\nLe service fourni n'est pas à la hauteur de mes attentes.");
+                                additionalDetails.append("\nLa qualité du service est bien inférieure à ce qui était promis.");
+                                break;
+                            case "facture":
+                                additionalDetails.append("\nJ'ai rencontré des difficultés avec le processus de paiement.");
+                                additionalDetails.append("\nLe montant facturé ne correspond pas au prix annoncé initialement.");
+                                break;
+                            case "qualité":
+                                additionalDetails.append("\nLa qualité du produit/service n'est pas satisfaisante.");
+                                additionalDetails.append("\nJ'ai constaté plusieurs défauts qui rendent l'utilisation difficile.");
+                                break;
+                                
+                            // Nouvelles catégories spécifiques à l'agriculture
+                            case "vache":
+                                additionalDetails.append("\nJ'ai constaté un problème concernant l'état de santé ou le comportement de la vache.");
+                                additionalDetails.append("\nLes symptômes observés sont préoccupants et nécessitent une attention immédiate.");
+                                additionalDetails.append("\nJ'ai remarqué une baisse significative de la production laitière ces derniers jours.");
+                                break;
+                            case "collier":
+                                additionalDetails.append("\nLe collier connecté ne fonctionne pas correctement ou ne transmet pas les données.");
+                                additionalDetails.append("\nJ'ai déjà essayé de le réinitialiser sans succès.");
+                                additionalDetails.append("\nL'application mobile associée au collier affiche des erreurs fréquentes.");
+                                break;
+                            case "formation":
+                                additionalDetails.append("\nLa formation n'a pas couvert tous les aspects mentionnés dans le programme.");
+                                additionalDetails.append("\nLe formateur n'a pas été en mesure de répondre à toutes mes questions techniques.");
+                                additionalDetails.append("\nLes supports de cours fournis étaient incomplets ou obsolètes.");
+                                break;
+                            case "commande":
+                                additionalDetails.append("\nMa commande n'est pas arrivée dans les délais indiqués lors de l'achat.");
+                                additionalDetails.append("\nCertains articles de ma commande sont manquants ou endommagés.");
+                                additionalDetails.append("\nJe n'ai pas reçu de confirmation de livraison comme promis.");
+                                break;
+                            case "équipement":
+                                additionalDetails.append("\nL'équipement agricole présente des dysfonctionnements importants.");
+                                additionalDetails.append("\nLes pièces de rechange fournies ne sont pas compatibles avec le modèle.");
+                                break;
+                            case "alimentation":
+                                additionalDetails.append("\nLa qualité des aliments pour bétail n'est pas conforme aux standards annoncés.");
+                                additionalDetails.append("\nJ'ai observé des effets négatifs sur la santé de mes animaux après utilisation.");
+                                break;
+                        }
+                    }
+                }
+            }
+            
+            if (additionalDetails.length() > 0) {
+                improvedText += "\n\nDétails supplémentaires concernant \"" + title + "\" :" + additionalDetails.toString();
+            }
+        }
+        
+        return improvedText;
+    }
+    
+    // Nouvelle méthode pour déterminer la catégorie à partir d'un mot-clé
+    private String getCategoryFromKeyword(String keyword) {
+        // Catégories de livraison
+        if (keyword.equals("livraison") || keyword.equals("livrer") || 
+            keyword.equals("expédition") || keyword.equals("transport") ||
+            keyword.equals("délai") || keyword.equals("retard")) {
+            return "livraison";
+        }
+        
+        // Catégories de produit
+        if (keyword.equals("produit") || keyword.equals("article") || 
+            keyword.equals("marchandise") || keyword.equals("colis") ||
+            keyword.equals("défectueux") || keyword.equals("endommagé")) {
+            return "produit";
+        }
+        
+        // Catégories de service
+        if (keyword.equals("service") || keyword.equals("prestation") || 
+            keyword.equals("assistance") || keyword.equals("aide") ||
+            keyword.equals("support") || keyword.equals("conseil")) {
+            return "service";
+        }
+        
+        // Catégories de facturation
+        if (keyword.equals("facture") || keyword.equals("paiement") || 
+            keyword.equals("prix") || keyword.equals("coût") ||
+            keyword.equals("tarif") || keyword.equals("remboursement")) {
+            return "facture";
+        }
+        
+        // Catégories de qualité
+        if (keyword.equals("qualité") || keyword.equals("mauvais") || 
+            keyword.equals("insatisfaisant") || keyword.equals("médiocre") ||
+            keyword.equals("défaut") || keyword.equals("problème")) {
+            return "qualité";
+        }
+        
+        // Catégories spécifiques à l'agriculture
+        if (keyword.equals("vache") || keyword.equals("vaches") || 
+            keyword.equals("bovin") || keyword.equals("bovins") ||
+            keyword.equals("lait") || keyword.equals("traite")) {
+            return "vache";
+        }
+        
+        if (keyword.equals("collier") || keyword.equals("colliers") || 
+            keyword.equals("tracker") || keyword.equals("traceur") ||
+            keyword.equals("connecté") || keyword.equals("suivi")) {
+            return "collier";
+        }
+        
+        if (keyword.equals("formation") || keyword.equals("formations") || 
+            keyword.equals("cours") || keyword.equals("atelier") ||
+            keyword.equals("séminaire") || keyword.equals("apprentissage")) {
+            return "formation";
+        }
+        
+        if (keyword.equals("commande") || keyword.equals("commandes") || 
+            keyword.equals("achat") || keyword.equals("acheter") ||
+            keyword.equals("commander") || keyword.equals("acquisition")) {
+            return "commande";
+        }
+        
+        if (keyword.equals("équipement") || keyword.equals("matériel") || 
+            keyword.equals("machine") || keyword.equals("outil") ||
+            keyword.equals("appareil") || keyword.equals("instrument")) {
+            return "équipement";
+        }
+        if (keyword.equals("alimentation") || keyword.equals("nourriture") || 
+            keyword.equals("fourrage") || keyword.equals("aliment") ||
+            keyword.equals("nutrition") || keyword.equals("foin")) {
+            return "alimentation";
+        }
+        
+        return null;
+    }
+    
     private String generateStructuredReclamation(String title) {
         StringBuilder structuredText = new StringBuilder();
         
@@ -232,6 +421,7 @@ public class AjoutReclamationController {
         for (String keyword : keywords) {
             if (keyword.length() > 3) { // Ignorer les mots courts
                 switch (keyword) {
+                    // Catégories existantes
                     case "livraison":
                     case "livrer":
                         structuredText.append("La livraison n'a pas été effectuée dans les délais prévus.\n");
@@ -250,6 +440,43 @@ public class AjoutReclamationController {
                     case "qualité":
                         structuredText.append("La qualité du produit/service n'est pas satisfaisante.\n");
                         break;
+                        
+                    // Nouvelles catégories spécifiques à l'agriculture
+                    case "vache":
+                    case "vaches":
+                    case "bovin":
+                    case "bovins":
+                        structuredText.append("J'ai constaté un problème avec ma vache qui présente les symptômes suivants :\n");
+                        structuredText.append("- Changement de comportement inhabituel\n");
+                        structuredText.append("- Possible problème de santé nécessitant une intervention\n");
+                        structuredText.append("- Inquiétudes concernant la production laitière\n");
+                        break;
+                    case "collier":
+                    case "colliers":
+                    case "tracker":
+                    case "traceur":
+                        structuredText.append("Le collier connecté présente les dysfonctionnements suivants :\n");
+                        structuredText.append("- Problèmes de connexion avec l'application\n");
+                        structuredText.append("- Données incorrectes ou manquantes\n");
+                        structuredText.append("- Batterie se déchargeant trop rapidement\n");
+                        break;
+                    case "formation":
+                    case "formations":
+                    case "cours":
+                    case "atelier":
+                        structuredText.append("La formation n'a pas répondu à mes attentes pour les raisons suivantes :\n");
+                        structuredText.append("- Contenu incomplet par rapport au programme annoncé\n");
+                        structuredText.append("- Manque d'exercices pratiques\n");
+                        structuredText.append("- Niveau inadapté à mes besoins\n");
+                        break;
+                    case "commande":
+                    case "commandes":
+                    case "achat":
+                        structuredText.append("Ma commande présente les problèmes suivants :\n");
+                        structuredText.append("- Retard de livraison significatif\n");
+                        structuredText.append("- Articles manquants ou endommagés\n");
+                        structuredText.append("- Erreur dans la facturation\n");
+                        break;
                 }
             }
         }
@@ -260,6 +487,62 @@ public class AjoutReclamationController {
         
         return structuredText.toString();
     }
+
+    @FXML
+    private void handleFormulate() {
+        String title = titreField.getText();
+        if (title.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Titre vide", "Veuillez d'abord entrer un titre pour votre réclamation.");
+            return;
+        }
+
+        // Générer une réclamation structurée basée sur le titre
+        String structuredReclamation = generateStructuredReclamation(title);
+        animateTextGeneration(structuredReclamation);
+    }
+
+    // Supprimer cette méthode car elle est dupliquée
+    // private String generateStructuredReclamation(String title) {
+    //     StringBuilder structuredText = new StringBuilder();
+    //     
+    //     // Introduction
+    //     structuredText.append("Je souhaite porter à votre attention un problème concernant : ").append(title).append(".\n\n");
+    //     
+    //     // Analyse des mots-clés du titre
+    //     String[] keywords = title.toLowerCase().split("\\s+");
+    //     
+    //     // Ajout de détails contextuels basés sur les mots-clés
+    //     for (String keyword : keywords) {
+    //         if (keyword.length() > 3) { // Ignorer les mots courts
+    //             switch (keyword) {
+    //                 case "livraison":
+    //                 case "livrer":
+    //                     structuredText.append("La livraison n'a pas été effectuée dans les délais prévus.\n");
+    //                     break;
+    //                 case "produit":
+    //                 case "article":
+    //                     structuredText.append("Le produit reçu ne correspond pas à la description.\n");
+    //                     break;
+    //                 case "service":
+    //                     structuredText.append("Le service fourni n'est pas à la hauteur de mes attentes.\n");
+    //                     break;
+    //                 case "facture":
+    //                 case "paiement":
+    //                     structuredText.append("J'ai rencontré des difficultés avec le processus de paiement.\n");
+    //                     break;
+    //                 case "qualité":
+    //                     structuredText.append("La qualité du produit/service n'est pas satisfaisante.\n");
+    //                     break;
+    //             }
+    //         }
+    //     }
+    //     
+    //     // Conclusion
+    //     structuredText.append("\nJe vous serais reconnaissant de bien vouloir examiner cette situation et de me proposer une solution appropriée.\n");
+    //     structuredText.append("Dans l'attente de votre retour, je vous prie d'agréer mes salutations distinguées.");
+    //     
+    //     return structuredText.toString();
+    // }
 
     private boolean containsBadWords(String text) {
         if (text == null || text.isEmpty()) {
