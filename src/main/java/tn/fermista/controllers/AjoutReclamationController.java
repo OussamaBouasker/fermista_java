@@ -11,6 +11,15 @@ import javafx.scene.control.Button;
 import tn.fermista.models.Reclamation;
 import tn.fermista.models.User;
 import tn.fermista.services.ServiceReclamation;
+import tn.fermista.utils.ReclamationAssistant;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Tooltip;
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
+import javafx.concurrent.Task;
+import javafx.concurrent.Service;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -20,6 +29,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class AjoutReclamationController {
 
@@ -29,6 +39,18 @@ public class AjoutReclamationController {
     @FXML
     private TextArea descriptionArea;
 
+    @FXML
+    private ComboBox<String> commonProblemsComboBox;
+
+    @FXML
+    private Button suggestButton;
+
+    @FXML
+    private Button improveButton;
+
+    @FXML
+    private Button formulateButton;
+
     private ServiceReclamation serviceReclamation = new ServiceReclamation();
 
     // Suppose que tu as l'utilisateur courant déjà chargé
@@ -37,9 +59,11 @@ public class AjoutReclamationController {
 
     // Liste des mots interdits
     private static final String[] BAD_WORDS = {
-        "merde", "putain", "con", "connard", "salope", "enculé", "nique", "fuck", "shit",
         "bitch", "asshole", "bastard", "damn", "hell", "piss", "crap", "dick", "pussy"
     };
+
+    private Service<String> textGenerationService;
+    private String currentTextToGenerate;
 
     public void setCurrentUser(User user) {
         this.currentUser = user;
@@ -50,6 +74,191 @@ public class AjoutReclamationController {
         if (currentUser == null) {
             currentUser = tn.fermista.utils.UserSession.getCurrentUser();
         }
+
+        // Initialiser le ComboBox avec les problèmes courants
+        commonProblemsComboBox.getItems().addAll(ReclamationAssistant.getCommonProblems());
+        commonProblemsComboBox.setPromptText("Sélectionnez un problème courant");
+
+        // Ajouter les tooltips
+        suggestButton.setTooltip(new Tooltip("Obtenir des suggestions de formulation"));
+        improveButton.setTooltip(new Tooltip("Améliorer la description"));
+        formulateButton.setTooltip(new Tooltip("Générer une réclamation structurée basée sur le titre"));
+
+        // Ajouter les listeners
+        commonProblemsComboBox.setOnAction(e -> handleCommonProblemSelection());
+        descriptionArea.textProperty().addListener((obs, old, newValue) -> handleDescriptionChange());
+        titreField.textProperty().addListener((obs, old, newValue) -> handleTitleChange());
+
+        // Initialisation du service de génération de texte
+        textGenerationService = new Service<String>() {
+            @Override
+            protected Task<String> createTask() {
+                return new Task<String>() {
+                    @Override
+                    protected String call() throws Exception {
+                        StringBuilder currentText = new StringBuilder();
+                        
+                        for (int i = 0; i < currentTextToGenerate.length(); i++) {
+                            currentText.append(currentTextToGenerate.charAt(i));
+                            updateValue(currentText.toString());
+                            Thread.sleep(50); // Vitesse d'écriture
+                        }
+                        return currentTextToGenerate;
+                    }
+                };
+            }
+        };
+
+        textGenerationService.setOnSucceeded(e -> {
+            descriptionArea.setEditable(true);
+            suggestButton.setDisable(false);
+            improveButton.setDisable(false);
+            formulateButton.setDisable(false);
+        });
+    }
+
+    private void handleTitleChange() {
+        if (!titreField.getText().isEmpty() && descriptionArea.getText().isEmpty()) {
+            generateDescriptionFromTitle();
+        }
+    }
+
+    private void generateDescriptionFromTitle() {
+        String title = titreField.getText();
+        String suggestedDescription = ReclamationAssistant.suggestFormulation(title);
+        animateTextGeneration(suggestedDescription);
+    }
+
+    private void handleCommonProblemSelection() {
+        String selectedProblem = commonProblemsComboBox.getValue();
+        if (selectedProblem != null) {
+            titreField.setText(selectedProblem);
+            String suggestedDescription = ReclamationAssistant.suggestFormulation(selectedProblem);
+            animateTextGeneration(suggestedDescription);
+        }
+    }
+
+    private void animateTextGeneration(String text) {
+        descriptionArea.setEditable(false);
+        suggestButton.setDisable(true);
+        improveButton.setDisable(true);
+        formulateButton.setDisable(true);
+        
+        currentTextToGenerate = text;
+        textGenerationService.cancel();
+        textGenerationService.restart();
+
+        textGenerationService.valueProperty().addListener((obs, old, newValue) -> {
+            if (newValue != null) {
+                descriptionArea.setText(newValue);
+            }
+        });
+    }
+
+    private void handleDescriptionChange() {
+        // Si le titre est vide, générer un titre intelligent
+        if (titreField.getText().isEmpty() && !descriptionArea.getText().isEmpty()) {
+            String smartTitle = ReclamationAssistant.generateSmartTitle(descriptionArea.getText());
+            titreField.setText(smartTitle);
+        }
+    }
+
+    @FXML
+    private void handleSuggest() {
+        String currentText = descriptionArea.getText();
+        if (!currentText.isEmpty()) {
+            String suggestedText = ReclamationAssistant.suggestFormulation(currentText);
+            animateTextGeneration(suggestedText);
+        }
+    }
+
+    @FXML
+    private void handleImprove() {
+        String currentText = descriptionArea.getText();
+        if (!currentText.isEmpty()) {
+            // Désactiver les boutons pendant le traitement
+            suggestButton.setDisable(true);
+            improveButton.setDisable(true);
+            formulateButton.setDisable(true);
+            descriptionArea.setEditable(false);
+
+            // Créer une tâche pour l'amélioration du texte
+            Task<String> improvementTask = new Task<String>() {
+                @Override
+                protected String call() throws Exception {
+                    // Simuler un temps de traitement
+                    Thread.sleep(500);
+                    return ReclamationAssistant.improveDescription(currentText);
+                }
+            };
+
+            // Gérer la fin de la tâche
+            improvementTask.setOnSucceeded(e -> {
+                String improvedText = improvementTask.getValue();
+                animateTextGeneration(improvedText);
+            });
+
+            // Démarrer la tâche dans un nouveau thread
+            new Thread(improvementTask).start();
+        } else {
+            showAlert(Alert.AlertType.WARNING, "Description vide", 
+                "Veuillez d'abord entrer une description à améliorer.");
+        }
+    }
+
+    @FXML
+    private void handleFormulate() {
+        String title = titreField.getText();
+        if (title.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Titre vide", "Veuillez d'abord entrer un titre pour votre réclamation.");
+            return;
+        }
+
+        // Générer une réclamation structurée basée sur le titre
+        String structuredReclamation = generateStructuredReclamation(title);
+        animateTextGeneration(structuredReclamation);
+    }
+
+    private String generateStructuredReclamation(String title) {
+        StringBuilder structuredText = new StringBuilder();
+        
+        // Introduction
+        structuredText.append("Je souhaite porter à votre attention un problème concernant : ").append(title).append(".\n\n");
+        
+        // Analyse des mots-clés du titre
+        String[] keywords = title.toLowerCase().split("\\s+");
+        
+        // Ajout de détails contextuels basés sur les mots-clés
+        for (String keyword : keywords) {
+            if (keyword.length() > 3) { // Ignorer les mots courts
+                switch (keyword) {
+                    case "livraison":
+                    case "livrer":
+                        structuredText.append("La livraison n'a pas été effectuée dans les délais prévus.\n");
+                        break;
+                    case "produit":
+                    case "article":
+                        structuredText.append("Le produit reçu ne correspond pas à la description.\n");
+                        break;
+                    case "service":
+                        structuredText.append("Le service fourni n'est pas à la hauteur de mes attentes.\n");
+                        break;
+                    case "facture":
+                    case "paiement":
+                        structuredText.append("J'ai rencontré des difficultés avec le processus de paiement.\n");
+                        break;
+                    case "qualité":
+                        structuredText.append("La qualité du produit/service n'est pas satisfaisante.\n");
+                        break;
+                }
+            }
+        }
+        
+        // Conclusion
+        structuredText.append("\nJe vous serais reconnaissant de bien vouloir examiner cette situation et de me proposer une solution appropriée.\n");
+        structuredText.append("Dans l'attente de votre retour, je vous prie d'agréer mes salutations distinguées.");
+        
+        return structuredText.toString();
     }
 
     private boolean containsBadWords(String text) {
