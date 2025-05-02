@@ -19,17 +19,15 @@
             <Region HBox.hgrow="ALWAYS"/>
 
             <!-- Navigation Section -->
-            <HBox spacing="10.0" alignment="CENTER_LEFT">
+            <HBox fx:id="navigationBox" spacing="0.0" alignment="CENTER_LEFT">
                 <children>
-                    <Button text="Home" onAction="#handleHome"/>
-
-                    <Button text="Workshops" onAction="#handleWorkshops"/>
-                    <Button text="Contrôle Médical" onAction="#handleControlMedical"/>
-                    <Button text="Rendez-vous" onAction="#handleRendezVous"/>
-                    <Button text="Liste des Rendez-vous" onAction="#handleListeRendezVous"/>
-                    <Button text="Produits" onAction="#handleProduits"/>
-
-                    <MenuButton text="Suivis Médical">
+                    <Button fx:id="homeButton" text="Home" onAction="#handleHome"/>
+                    <Button fx:id="workshopsButton" text="Workshops" onAction="#handleWorkshops"/>
+                    <Button fx:id="controleMedicalButton" text="Contrôle Médical" onAction="#handleControlMedical"/>
+                    <Button fx:id="rendezVousButton" text="Rendez-vous" onAction="#handleRendezVous"/>
+                    <Button fx:id="listeRendezVousButton" text="Liste des Rendez-vous" onAction="#handleListeRendezVous"/>
+                    <Button fx:id="produitsButton" text="Produits" onAction="#handleProduits"/>
+                    <MenuButton fx:id="suivisMedicalMenu" text="Suivis Médical">
                         <items>
                             <MenuItem text="Mes Vaches" onAction="#handleMesVaches"/>
                             <MenuItem text="Mes Colliers" onAction="#handleMesColliers"/>
@@ -46,7 +44,7 @@
 
             <!-- User Icon Menu -->
             <!-- User Name Text -->
-            <Text fx:id="userNameText" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-fill: #333;" />
+
 
             <!-- User Icon Menu -->
             <MenuButton fx:id="userMenu" graphicTextGap="10.0">

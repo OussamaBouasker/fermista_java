@@ -69,10 +69,10 @@ public class PDFGenerator {
         addTableRow(table, "Date", reservation.getReservationDate().format(DATE_FORMATTER));
         addTableRow(table, "Statut", reservation.getStatus());
         addTableRow(table, "Prix", reservation.getPrix() + " DT");
-        
+
         if (reservation.getUser() != null) {
-            addTableRow(table, "Client", 
-                reservation.getUser().getFirstName() + " " + reservation.getUser().getLastName());
+            addTableRow(table, "Client",
+                    reservation.getUser().getFirstName() + " " + reservation.getUser().getLastName());
             addTableRow(table, "Email", reservation.getUser().getEmail());
         }
 
@@ -93,7 +93,7 @@ public class PDFGenerator {
                 .setBackgroundColor(ColorConstants.LIGHT_GRAY)
                 .setPadding(10)
                 .add(new Paragraph(label).setBold());
-        
+
         Cell valueCell = new Cell()
                 .setPadding(10)
                 .add(new Paragraph(value));

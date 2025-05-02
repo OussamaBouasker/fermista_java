@@ -40,7 +40,7 @@
                 <!-- Left Column: Workshop Info -->
                 <VBox spacing="25" HBox.hgrow="ALWAYS" styleClass="info-section">
                     <Label fx:id="formateurLabel" styleClass="details-formateur" wrapText="true" />
-                    
+
                     <VBox styleClass="description-section">
                         <Label text="À propos de cet atelier" styleClass="section-title" />
                         <ScrollPane fitToWidth="true" styleClass="description-scroll">
@@ -60,15 +60,15 @@
                     <VBox fx:id="reservationForm" spacing="15">
                         <Label text="Réserver votre place" styleClass="form-title"/>
                         <Label fx:id="placesLabel" styleClass="places-info"/>
-                        
+
                         <TextField fx:id="emailField" promptText="Adresse email" styleClass="form-field"/>
                         <TextField fx:id="telField" promptText="Numéro de téléphone" styleClass="form-field"/>
                         <TextField fx:id="cardNumberField" promptText="Numéro de carte bancaire" styleClass="form-field"/>
                         <TextArea fx:id="commentField" promptText="Commentaire (optionnel)" styleClass="form-field" prefRowCount="3"/>
-                        
-                        <Button fx:id="reserveButton" text="Réserver maintenant" onAction="#handleReservation" 
+
+                        <Button fx:id="reserveButton" text="Réserver maintenant" onAction="#handleReservation"
                                 styleClass="reserve-button" maxWidth="Infinity"/>
-                        
+
                         <StackPane>
                             <ProgressIndicator fx:id="reservationProgress" visible="false"/>
                         </StackPane>

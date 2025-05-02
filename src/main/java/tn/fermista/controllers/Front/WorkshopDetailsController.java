@@ -27,7 +27,7 @@ public class WorkshopDetailsController {
     @FXML private Label formateurLabel;
     @FXML private Label descriptionLabel;
     @FXML private Label placesLabel;
-    
+
     // Reservation form fields
     @FXML private TextField emailField;
     @FXML private TextField telField;
@@ -49,11 +49,11 @@ public class WorkshopDetailsController {
 
     public void initData(Workshop workshop) {
         this.currentWorkshop = workshop;
-        
+
         // Get current user from UserSession
         this.currentUser = UserSession.getCurrentUser();
         System.out.println("Current user from UserSession: " + (currentUser != null ? currentUser.getEmail() : "null"));
-        
+
         // Set workshop details
         titleLabel.setText(workshop.getTitre());
         typeLabel.setText(workshop.getType());
@@ -65,9 +65,9 @@ public class WorkshopDetailsController {
 
         // Handle formateur info for live workshops
         if ("Atelier Live".equals(workshop.getType()) && workshop.getUser() != null) {
-            formateurLabel.setText("Formateur: " + 
-                workshop.getUser().getFirstName() + " " + 
-                workshop.getUser().getLastName());
+            formateurLabel.setText("Formateur: " +
+                    workshop.getUser().getFirstName() + " " +
+                    workshop.getUser().getLastName());
             formateurLabel.setVisible(true);
         } else {
             formateurLabel.setVisible(false);
@@ -105,7 +105,7 @@ public class WorkshopDetailsController {
             reservationForm.setVisible(true);
             loginMessageLabel.setVisible(false);
             reserveButton.setDisable(false);
-            
+
             // Pre-fill email from user account
             emailField.setText(currentUser.getEmail());
             emailField.setEditable(false); // Email is taken from account
@@ -117,7 +117,7 @@ public class WorkshopDetailsController {
         if (currentWorkshop != null) {
             int placesRestantes = currentWorkshop.getNbrPlacesRestantes();
             placesLabel.setText("Places disponibles: " + placesRestantes);
-            
+
             // Disable reservation if no places left
             if (placesRestantes <= 0) {
                 placesLabel.setStyle("-fx-text-fill: red;");
@@ -131,10 +131,10 @@ public class WorkshopDetailsController {
     private void handleReservation() {
         // Refresh current user status before proceeding
         currentUser = UserSession.getCurrentUser();
-        
+
         if (currentUser == null) {
-            showAlert(Alert.AlertType.WARNING, "Non connecté", 
-                     "Veuillez vous connecter pour effectuer une réservation.");
+            showAlert(Alert.AlertType.WARNING, "Non connecté",
+                    "Veuillez vous connecter pour effectuer une réservation.");
             return;
         }
 
@@ -169,16 +169,16 @@ public class WorkshopDetailsController {
             sendConfirmationEmail(reservation);
 
             // Show success message
-            showAlert(Alert.AlertType.INFORMATION, "Succès", 
-                     "Votre réservation a été enregistrée avec succès!\n" +
-                     "Un email de confirmation vous a été envoyé.\n" +
-                     "Votre réservation est en attente de confirmation.");
+            showAlert(Alert.AlertType.INFORMATION, "Succès",
+                    "Votre réservation a été enregistrée avec succès!\n" +
+                            "Un email de confirmation vous a été envoyé.\n" +
+                            "Votre réservation est en attente de confirmation.");
 
             // Clear form except email
             clearForm();
         } catch (SQLException e) {
-            showAlert(Alert.AlertType.ERROR, "Erreur", 
-                     "Une erreur est survenue lors de la réservation: " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Erreur",
+                    "Une erreur est survenue lors de la réservation: " + e.getMessage());
         } finally {
             setFormDisabled(false);
             reservationProgress.setVisible(false);

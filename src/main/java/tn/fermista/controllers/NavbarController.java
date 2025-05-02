@@ -5,8 +5,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import tn.fermista.models.Roles;
@@ -17,6 +19,13 @@ import java.io.IOException;
 
 public class NavbarController {
 
+    public Button homeButton;
+    public Button workshopsButton;
+    public Button controleMedicalButton;
+    public Button rendezVousButton;
+    public Button produitsButton;
+    public Button listeRendezVousButton;
+    public MenuButton suivisMedicalMenu;
     @FXML
     private MenuButton userMenu;
 
@@ -31,6 +40,66 @@ public class NavbarController {
             UserSession.setCurrentUser(loadedUser);
         }
         updateMenuItems();
+        updateNavigationButtons();
+    }
+
+    @FXML
+    private HBox navigationBox;
+
+    private void updateNavigationButtons() {
+        User currentUser = UserSession.getCurrentUser();
+        
+        // Par défaut, cacher tous les boutons sauf Home, Produits et Workshops
+        homeButton.setVisible(true);
+        homeButton.setManaged(true);
+        produitsButton.setVisible(true);
+        produitsButton.setManaged(true);
+        workshopsButton.setVisible(true);
+        workshopsButton.setManaged(true);
+        
+        controleMedicalButton.setVisible(false);
+        controleMedicalButton.setManaged(false);
+        rendezVousButton.setVisible(false);
+        rendezVousButton.setManaged(false);
+        listeRendezVousButton.setVisible(false);
+        listeRendezVousButton.setManaged(false);
+        suivisMedicalMenu.setVisible(false);
+        suivisMedicalMenu.setManaged(false);
+
+        if (currentUser != null) {
+            switch (currentUser.getRoles()) {
+                case ROLE_ADMIN:
+                    // Afficher tous les boutons pour l'admin
+                    controleMedicalButton.setVisible(true);
+                    controleMedicalButton.setManaged(true);
+                    rendezVousButton.setVisible(true);
+                    rendezVousButton.setManaged(true);
+                    listeRendezVousButton.setVisible(true);
+                    listeRendezVousButton.setManaged(true);
+                    suivisMedicalMenu.setVisible(true);
+                    suivisMedicalMenu.setManaged(true);
+                    break;
+                    
+                case ROLE_AGRICULTOR:
+                    // Boutons spécifiques pour l'agriculteur
+                    rendezVousButton.setVisible(true);
+                    rendezVousButton.setManaged(true);
+                    suivisMedicalMenu.setVisible(true);
+                    suivisMedicalMenu.setManaged(true);
+                    break;
+                    
+                case ROLE_VETERINAIR:
+                    // Boutons spécifiques pour le vétérinaire
+                    controleMedicalButton.setVisible(true);
+                    controleMedicalButton.setManaged(true);
+                    listeRendezVousButton.setVisible(true);
+                    listeRendezVousButton.setManaged(true);
+                    break;
+            }
+        }
+
+        // Mettre à jour l'espacement
+        navigationBox.setSpacing(0.0);
     }
 
     public void updateMenuItems() {
@@ -81,6 +150,7 @@ public class NavbarController {
         UserSession.clearCurrentUser();
         UserSession.clearSavedUser();
         updateMenuItems();
+        updateNavigationButtons(); // Mettre à jour les boutons après déconnexion
         navigateTo("/HomePage.fxml");
     }
 
@@ -115,6 +185,6 @@ public class NavbarController {
     @FXML private void handleRendezVous() { navigateTo("/ListVet.fxml"); }
     @FXML private void handleListeRendezVous(ActionEvent actionEvent) { navigateTo("/ListRendezVous.fxml"); }
     @FXML private void handleProduits() { navigateTo("/ProductShopView.fxml"); }
-    @FXML private void handleMesVaches() { navigateTo("/MesVachesPage.fxml"); }
-    @FXML private void handleMesColliers() { navigateTo("/MesColliersPage.fxml"); }
+    @FXML private void handleMesVaches() { navigateTo("/FrontListeVache.fxml"); }
+    @FXML private void handleMesColliers() { navigateTo("/FrontListeCollier.fxml"); }
 }

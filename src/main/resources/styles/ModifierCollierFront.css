@@ -1,0 +1,73 @@
+.dialog-pane {
+    -fx-background-color: white;
+    -fx-padding: 20px;
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 16, 0, 0, 0);
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 10px 0;
+}
+
+.dialog-pane .content {
+    -fx-padding: 10px 0;
+}
+
+.dialog-pane .header-panel .label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.dialog-pane .label {
+    -fx-font-size: 15px;
+    -fx-text-fill: #666666;
+}
+
+.text-field {
+    -fx-background-color: #fafafa;
+    -fx-border-color: #FFA500;
+    -fx-border-radius: 7px;
+    -fx-padding: 8px;
+    -fx-font-size: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(255,165,0,0.08), 4, 0, 0, 0);
+}
+
+.text-field:focused {
+    -fx-border-color: #FF8C00;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(255,140,0,0.18), 8, 0, 0, 0);
+}
+
+.button {
+    -fx-background-radius: 7px;
+    -fx-padding: 8px 24px;
+    -fx-font-size: 15px;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+}
+
+.button:default {
+    -fx-background-color: linear-gradient(to right, #FFA500, #FF8C00);
+    -fx-text-fill: white;
+}
+
+.button:default:hover {
+    -fx-background-color: linear-gradient(to right, #FFB52E, #FFA500);
+}
+
+.button:cancel {
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: #666666;
+}
+
+.button:cancel:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+.grid-pane {
+    -fx-hgap: 10px;
+    -fx-vgap: 15px;
+    -fx-padding: 10px;
+} 
