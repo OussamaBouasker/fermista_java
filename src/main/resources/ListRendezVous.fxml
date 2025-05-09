@@ -1,37 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
-
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="tn.fermista.controllers.ListRendezVous"
-            prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #f5f2ed"
-            stylesheets="@styles/ListRendezVous.css">
-            
+            prefHeight="600.0" prefWidth="800.0"
+            style="-fx-background-color: #f5f2ed"
+            stylesheets="@styles/ListRendezVous.css, @styles/StyleCalendar.css">
+
     <!-- Navbar -->
-    <fx:include source="Navbar.fxml" AnchorPane.topAnchor="0.0" 
-                AnchorPane.leftAnchor="0.0" 
+    <fx:include source="Navbar.fxml" AnchorPane.topAnchor="0.0"
+                AnchorPane.leftAnchor="0.0"
                 AnchorPane.rightAnchor="0.0"/>
-    
+
     <!-- Main Content -->
     <VBox spacing="20" alignment="TOP_CENTER"
-          AnchorPane.topAnchor="80.0" 
-          AnchorPane.leftAnchor="0.0" 
-          AnchorPane.rightAnchor="0.0" 
+          AnchorPane.topAnchor="80.0"
+          AnchorPane.leftAnchor="0.0"
+          AnchorPane.rightAnchor="0.0"
           AnchorPane.bottomAnchor="0.0">
-        
+
         <!-- Title -->
-        <Label text="Mes Rendez-vous" styleClass="title-label">
+        <Label text="Mes Rendez-vous" styleClass="popup-title">
             <font>
                 <Font name="System Bold" size="24.0"/>
             </font>
         </Label>
-        
+
         <!-- Table View -->
-        <TableView fx:id="rendezVousTable" VBox.vgrow="ALWAYS">
+        <TableView fx:id="rendezVousTable" VBox.vgrow="ALWAYS" styleClass="popup-container">
             <columns>
                 <TableColumn fx:id="dateColumn" text="Date" prefWidth="100"/>
                 <TableColumn fx:id="heureColumn" text="Heure" prefWidth="100"/>
@@ -41,7 +43,7 @@
                 <TableColumn fx:id="actionsColumn" text="Actions" prefWidth="150"/>
             </columns>
         </TableView>
-        
+
     </VBox>
-    
+
 </AnchorPane>

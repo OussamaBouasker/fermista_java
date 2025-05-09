@@ -13,13 +13,13 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class NavigController {
-    
+
     @FXML
     private Button btn_workbench1121; // Bouton Suivis médical
-    
+
     @FXML
     private Button btnVache; // Bouton VACHE
-    
+
     @FXML
     private Button btnCollier; // Bouton COLLIER
 

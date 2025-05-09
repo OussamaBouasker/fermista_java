@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="tn.fermista.controllers.ModifyRapportMedicalPopupController"
+           styleClass="popup-root"
+           stylesheets="@styles/StyleCalendar.css">
+
+    <VBox styleClass="popup-container" spacing="15" maxWidth="600" maxHeight="500">
+        <Label text="Modifier le Rapport Médical" styleClass="popup-title"/>
+
+        <ScrollPane fitToWidth="true" styleClass="popup-scroll-pane">
+            <GridPane styleClass="popup-grid" hgap="10" vgap="10">
+                <Label text="Numéro:" styleClass="popup-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="numField" styleClass="popup-field" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Race:" styleClass="popup-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="raceField" styleClass="popup-field" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Historique de maladie:" styleClass="popup-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextArea fx:id="historiqueField" styleClass="popup-text-area" prefRowCount="3" wrapText="true"
+                          GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Cas médical:" styleClass="popup-label" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextArea fx:id="casMedicalField" styleClass="popup-text-area" prefRowCount="3" wrapText="true"
+                          GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label text="Solution:" styleClass="popup-label" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextArea fx:id="solutionField" styleClass="popup-text-area" prefRowCount="3" wrapText="true"
+                          GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+            </GridPane>
+        </ScrollPane>
+
+        <HBox styleClass="popup-button-container" spacing="10" alignment="CENTER_RIGHT">
+            <Button text="Annuler" onAction="#handleCancel" styleClass="popup-button"/>
+            <Button text="Enregistrer" onAction="#handleSave" styleClass="popup-button"/>
+        </HBox>
+    </VBox>
+</StackPane>

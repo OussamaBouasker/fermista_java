@@ -4,35 +4,35 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox spacing="15" styleClass="popup-container" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.fermista.controllers.ConsultationPopupController">
+<VBox spacing="20" styleClass="popup-container" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.fermista.controllers.ConsultationPopupController">
     <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
+        <Insets top="25" right="25" bottom="25" left="25"/>
     </padding>
 
     <Label text="Nouvelle Consultation" styleClass="popup-title"/>
 
-    <GridPane vgap="15" hgap="10">
-        <Label text="Nom:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-        <TextField fx:id="nomField" promptText="Nom de la consultation" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+    <GridPane vgap="15" hgap="15" styleClass="popup-grid">
+        <Label text="Nom:" styleClass="popup-label" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <TextField fx:id="nomField" promptText="Nom de la consultation" styleClass="popup-field" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
 
-        <Label text="Date:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-        <DatePicker fx:id="dateField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        <Label text="Date:" styleClass="popup-label" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <DatePicker fx:id="dateField" styleClass="popup-date-picker" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-        <Label text="Heure:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-        <ComboBox fx:id="heureField" promptText="Sélectionnez l'heure" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        <Label text="Heure:" styleClass="popup-label" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <ComboBox fx:id="heureField" promptText="Sélectionnez l'heure" styleClass="popup-combo-box" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
-        <Label text="Lieu:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-        <TextField fx:id="lieuField" promptText="Lieu de la consultation" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+        <Label text="Lieu:" styleClass="popup-label" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+        <TextField fx:id="lieuField" promptText="Lieu de la consultation" styleClass="popup-field" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
-        <Label text="Rapport Médical:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-        <ComboBox fx:id="rapportMedicalComboBox" promptText="Sélectionnez un rapport médical" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+        <Label text="Rapport Médical:" styleClass="popup-label" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+        <ComboBox fx:id="rapportMedicalComboBox" promptText="Sélectionnez un rapport médical" styleClass="popup-combo-box" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
 
-        <Label text="Vache:" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
-        <ComboBox fx:id="vacheComboBox" promptText="Sélectionnez une vache" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+        <Label text="Vache:" styleClass="popup-label" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+        <ComboBox fx:id="vacheComboBox" promptText="Sélectionnez une vache" styleClass="popup-combo-box" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
     </GridPane>
 
-    <HBox spacing="10" alignment="CENTER_RIGHT">
-        <Button text="Annuler" onAction="#handleCancel" styleClass="cancel-button"/>
-        <Button text="Enregistrer" onAction="#handleSave" styleClass="save-button"/>
+    <HBox spacing="15" alignment="CENTER_RIGHT" styleClass="popup-button-container">
+        <Button text="Annuler" onAction="#handleCancel" styleClass="popup-button"/>
+        <Button text="Enregistrer" onAction="#handleSave" styleClass="popup-button"/>
     </HBox>
-</VBox> 
+</VBox>

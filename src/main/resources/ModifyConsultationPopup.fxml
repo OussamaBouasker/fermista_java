@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="tn.fermista.controllers.ModifyConsultationPopupController"
+           styleClass="popup-root"
+           stylesheets="@styles/StyleCalendar.css">
+
+    <VBox styleClass="popup-container" spacing="20">
+        <Label text="Modifier la Consultation" styleClass="popup-title"/>
+
+        <GridPane styleClass="popup-grid" hgap="15" vgap="15">
+            <Label text="Nom:" styleClass="popup-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="nomField" styleClass="popup-field" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="Date:" styleClass="popup-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <DatePicker fx:id="datePicker" styleClass="popup-date-picker" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="Heure:" styleClass="popup-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <HBox spacing="10" GridPane.rowIndex="2" GridPane.columnIndex="1">
+                <Spinner fx:id="heureSpinner" min="0" max="23" styleClass="popup-field"/>
+                <Label text=":" styleClass="popup-label"/>
+                <Spinner fx:id="minuteSpinner" min="0" max="59" styleClass="popup-field"/>
+            </HBox>
+
+            <Label text="Lieu:" styleClass="popup-label" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <TextField fx:id="lieuField" styleClass="popup-field" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+        </GridPane>
+
+        <HBox styleClass="popup-button-container" spacing="10">
+            <Button text="Annuler" onAction="#handleCancel" styleClass="popup-button"/>
+            <Button text="Enregistrer" onAction="#handleSave" styleClass="popup-button"/>
+        </HBox>
+    </VBox>
+</StackPane>

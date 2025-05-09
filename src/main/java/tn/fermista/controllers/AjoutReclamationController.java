@@ -399,7 +399,6 @@ public class AjoutReclamationController {
                 keyword.equals("appareil") || keyword.equals("instrument")) {
             return "équipement";
         }
-
         if (keyword.equals("alimentation") || keyword.equals("nourriture") ||
                 keyword.equals("fourrage") || keyword.equals("aliment") ||
                 keyword.equals("nutrition") || keyword.equals("foin")) {

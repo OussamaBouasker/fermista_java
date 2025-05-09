@@ -50,18 +50,18 @@ public class ControlMedicalFront {
     public void initialize() {
         serviceConsultation = new ServiceConsultation();
         consultationsParDate = new HashMap<>();
-        
+
         // Configurer la locale en français
         Locale.setDefault(new Locale("fr", "FR"));
-        
+
         // Créer un DatePicker moderne
         datePicker = new DatePicker(LocalDate.now());
         datePicker.setShowWeekNumbers(true);
-        
+
         // Personnaliser le format d'affichage de la date
         StringConverter<LocalDate> converter = new StringConverter<>() {
-            private DateTimeFormatter dateFormatter = 
-                DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).withLocale(new Locale("fr", "FR"));
+            private DateTimeFormatter dateFormatter =
+                    DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).withLocale(new Locale("fr", "FR"));
 
             @Override
             public String toString(LocalDate date) {
@@ -81,19 +81,19 @@ public class ControlMedicalFront {
                 }
             }
         };
-        
+
         datePicker.setConverter(converter);
-        
+
         // Charger les consultations
         loadConsultations();
-        
+
         // Créer le skin du DatePicker pour avoir accès au popup calendar
         DatePickerSkin datePickerSkin = new DatePickerSkin(datePicker);
         Node popupContent = datePickerSkin.getPopupContent();
-        
+
         // Appliquer les styles
         popupContent.getStyleClass().add("modern-date-picker");
-        
+
         // Gérer le clic sur une date
         datePicker.setOnAction(e -> {
             LocalDate selectedDate = datePicker.getValue();
@@ -101,10 +101,10 @@ public class ControlMedicalFront {
                 showConsultationsForDate(selectedDate);
             }
         });
-        
+
         // Ajouter directement le popup calendar au conteneur
         calendarContainer.getChildren().add(popupContent);
-        
+
         // Marquer les dates avec des consultations
         updateCalendarCellFactory();
     }
@@ -113,7 +113,7 @@ public class ControlMedicalFront {
         try {
             List<Consultation> consultations = serviceConsultation.showAll();
             consultationsParDate = consultations.stream()
-                .collect(Collectors.groupingBy(c -> c.getDate().toLocalDate()));
+                    .collect(Collectors.groupingBy(c -> c.getDate().toLocalDate()));
         } catch (Exception e) {
             showAlert("Erreur", "Impossible de charger les consultations", Alert.AlertType.ERROR);
         }
@@ -148,10 +148,10 @@ public class ControlMedicalFront {
             Stage popupStage = new Stage();
             popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.setTitle("Nouvelle Consultation");
-            
+
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/styles/StyleCalendar.css").toExternalForm());
-            
+
             popupStage.setScene(scene);
             popupStage.showAndWait();
 
@@ -188,21 +188,21 @@ public class ControlMedicalFront {
 
             Label nomLabel = new Label(consultation.getNom());
             Label heureLabel = new Label(consultation.getHeure().toString());
-            
+
             consultationItem.getChildren().addAll(nomLabel, new Label(" - "), heureLabel);
-            
+
             // Ajouter un gestionnaire de clic pour afficher les détails
             consultationItem.setOnMouseClicked(e -> showConsultationDetails(consultation));
-            
+
             content.getChildren().add(consultationItem);
         }
 
         ScrollPane scrollPane = new ScrollPane(content);
         scrollPane.setFitToWidth(true);
-        
+
         Scene scene = new Scene(scrollPane);
         scene.getStylesheets().add(getClass().getResource("/styles/StyleCalendar.css").toExternalForm());
-        
+
         popup.setScene(scene);
         popup.showAndWait();
     }
@@ -220,55 +220,55 @@ public class ControlMedicalFront {
         VBox consultationSection = new VBox(10);
         Label consultationTitle = new Label("Détails de la consultation");
         consultationTitle.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
-        
+
         GridPane consultationGrid = createConsultationGrid(consultation);
 
         // Section Rapport Médical
         VBox rapportSection = new VBox(10);
         Label rapportTitle = new Label("Rapport Médical");
         rapportTitle.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
-        
+
         GridPane rapportGrid = createRapportGrid(consultation.getRapportMedical());
 
         // Boutons pour Consultation
         HBox consultationButtons = new HBox(10);
         Button modifyConsultationBtn = new Button("Modifier Consultation");
         Button deleteConsultationBtn = new Button("Supprimer Consultation");
-        
+
         modifyConsultationBtn.getStyleClass().add("action-button");
         deleteConsultationBtn.getStyleClass().add("delete-button");
-        
+
         modifyConsultationBtn.setOnAction(e -> {
             handleModifyConsultation(consultation, consultationGrid, detailsStage);
         });
         deleteConsultationBtn.setOnAction(e -> handleDeleteConsultation(consultation, detailsStage));
-        
+
         consultationButtons.getChildren().addAll(modifyConsultationBtn, deleteConsultationBtn);
 
         // Boutons pour Rapport Médical
         HBox rapportButtons = new HBox(10);
         Button modifyRapportBtn = new Button("Modifier Rapport");
         Button deleteRapportBtn = new Button("Supprimer Rapport");
-        
+
         modifyRapportBtn.getStyleClass().add("action-button");
         deleteRapportBtn.getStyleClass().add("delete-button");
-        
+
         modifyRapportBtn.setOnAction(e -> {
             handleModifyRapport(consultation.getRapportMedical(), rapportGrid, detailsStage);
         });
         deleteRapportBtn.setOnAction(e -> handleDeleteRapport(consultation.getRapportMedical(), detailsStage));
-        
+
         rapportButtons.getChildren().addAll(modifyRapportBtn, deleteRapportBtn);
 
         // Assembler les sections
         consultationSection.getChildren().addAll(consultationTitle, consultationGrid, consultationButtons);
         rapportSection.getChildren().addAll(rapportTitle, rapportGrid, rapportButtons);
-        
+
         content.getChildren().addAll(consultationSection, new Separator(), rapportSection);
 
         Scene scene = new Scene(content);
         scene.getStylesheets().add(getClass().getResource("/styles/StyleCalendar.css").toExternalForm());
-        
+
         detailsStage.setScene(scene);
         detailsStage.show();
     }
@@ -289,7 +289,7 @@ public class ControlMedicalFront {
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
-        
+
         if (rapport != null) {
             grid.addRow(0, new Label("Numéro:"), new Label(String.valueOf(rapport.getNum())));
             grid.addRow(1, new Label("Race:"), new Label(rapport.getRace()));
@@ -300,71 +300,82 @@ public class ControlMedicalFront {
         return grid;
     }
 
+    public void refreshDisplay() {
+        loadConsultations();
+        updateCalendarCellFactory();
+    }
+
     private void handleModifyConsultation(Consultation consultation, GridPane consultationGrid, Stage detailsStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifyConsultation.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifyConsultationPopup.fxml"));
             Parent root = loader.load();
-            
-            ModifyConsultationController controller = loader.getController();
-            controller.initData(consultation);
-            
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Modifier Consultation");
-            
+
+            ModifyConsultationPopupController controller = loader.getController();
+            controller.setConsultation(consultation);
+            controller.setParentController(this);
+
+            Stage popupStage = new Stage();
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.setTitle("Modifier Consultation");
+
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/styles/StyleCalendar.css").toExternalForm());
-            
-            stage.setScene(scene);
-            
-            // Ajouter un écouteur pour la fermeture de la fenêtre
-            stage.setOnHiding(e -> {
-                // Rafraîchir l'affichage des détails
+
+            popupStage.setScene(scene);
+            controller.setStage(popupStage);
+
+            // Ajouter un écouteur pour la fermeture de la fenêtre de modification
+            popupStage.setOnHiding(e -> {
+                // Mettre à jour l'affichage des détails
                 VBox parent = (VBox) consultationGrid.getParent();
                 parent.getChildren().set(parent.getChildren().indexOf(consultationGrid), createConsultationGrid(consultation));
-                
+
                 // Rafraîchir le calendrier
                 loadConsultations();
                 updateCalendarCellFactory();
             });
-            
-            stage.showAndWait(); // Utiliser showAndWait au lieu de show pour attendre la fermeture
+
+            popupStage.showAndWait();
+
         } catch (Exception e) {
-            showAlert("Erreur", "Erreur lors de la modification de la consultation", Alert.AlertType.ERROR);
+            showAlert("Erreur", "Erreur lors de l'ouverture du formulaire de modification", Alert.AlertType.ERROR);
         }
     }
 
     private void handleModifyRapport(RapportMedical rapport, GridPane rapportGrid, Stage detailsStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifyRapportMedical.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifyRapportMedicalPopup.fxml"));
             Parent root = loader.load();
-            
-            ModifyRapportMedicalController controller = loader.getController();
-            controller.initData(rapport);
-            
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Modifier Rapport Médical");
-            
+
+            ModifyRapportMedicalPopupController controller = loader.getController();
+            controller.setRapportMedical(rapport);
+            controller.setParentController(this);
+
+            Stage popupStage = new Stage();
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.setTitle("Modifier Rapport Médical");
+
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/styles/StyleCalendar.css").toExternalForm());
-            
-            stage.setScene(scene);
-            
-            // Ajouter un écouteur pour la fermeture de la fenêtre
-            stage.setOnHiding(e -> {
-                // Rafraîchir l'affichage des détails
+
+            popupStage.setScene(scene);
+            controller.setStage(popupStage);
+
+            // Ajouter un écouteur pour la fermeture de la fenêtre de modification
+            popupStage.setOnHiding(e -> {
+                // Mettre à jour l'affichage des détails
                 VBox parent = (VBox) rapportGrid.getParent();
                 parent.getChildren().set(parent.getChildren().indexOf(rapportGrid), createRapportGrid(rapport));
-                
+
                 // Rafraîchir le calendrier
                 loadConsultations();
                 updateCalendarCellFactory();
             });
-            
-            stage.showAndWait(); // Utiliser showAndWait au lieu de show pour attendre la fermeture
+
+            popupStage.showAndWait();
+
         } catch (Exception e) {
-            showAlert("Erreur", "Erreur lors de la modification du rapport médical", Alert.AlertType.ERROR);
+            showAlert("Erreur", "Erreur lors de l'ouverture du formulaire de modification", Alert.AlertType.ERROR);
         }
     }
 
@@ -450,8 +461,8 @@ public class ControlMedicalFront {
         try {
             // Récupérer toutes les consultations correspondantes
             List<Consultation> matchingConsultations = serviceConsultation.showAll().stream()
-                .filter(c -> c.getNom().toLowerCase().contains(searchTerm.toLowerCase()))
-                .collect(Collectors.toList());
+                    .filter(c -> c.getNom().toLowerCase().contains(searchTerm.toLowerCase()))
+                    .collect(Collectors.toList());
 
             if (matchingConsultations.isEmpty()) {
                 showAlert("Information", "Aucune consultation trouvée avec ce nom", Alert.AlertType.INFORMATION);
@@ -461,20 +472,20 @@ public class ControlMedicalFront {
             // Ouvrir le popup avec les résultats
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/SearchResultsPopup.fxml"));
             Parent root = loader.load();
-            
+
             Stage popupStage = new Stage();
             popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.setTitle("Résultats de la recherche");
-            
+
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/styles/StyleCalendar.css").toExternalForm());
-            
+
             popupStage.setScene(scene);
-            
+
             SearchResultsPopup controller = loader.getController();
             controller.setStage(popupStage);
             controller.setData(matchingConsultations);
-            
+
             popupStage.show();
 
         } catch (Exception e) {

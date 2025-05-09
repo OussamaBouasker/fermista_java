@@ -153,8 +153,8 @@
                 </AnchorPane>
             </children>
         </VBox>
-      <Pane>
-         <children>
+        <Pane>
+            <children>
                 <FlowPane prefHeight="60.0" prefWidth="710.0">
                     <children>
                         <Pane prefHeight="50.0" prefWidth="47.0" translateX="350.0" />
@@ -179,37 +179,37 @@
                         </ButtonBar>
                     </children>
                 </FlowPane>
-            <ImageView fitHeight="131.0" fitWidth="172.0" layoutX="393.0" layoutY="227.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/Collier.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="160.0" fitWidth="170.0" layoutX="115.0" layoutY="206.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/vache-removebg-preview.png" />
-               </image>
-            </ImageView>
-            <HBox alignment="CENTER" layoutX="-12.0" layoutY="366.0" prefHeight="100.0" prefWidth="701.0">
-               <children>
-                  <Button fx:id="btnVache" mnemonicParsing="false" onAction="#naviguerVersListeVache" prefHeight="38.0" prefWidth="110.0" text="VACHE" translateX="-100.0">
-                     <font>
-                        <Font name="Century Gothic Bold" size="15.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="btnCollier" alignment="CENTER" contentDisplay="RIGHT" depthTest="DISABLE" mnemonicParsing="false" onAction="#naviguerVersListeCollier" prefHeight="38.0" prefWidth="114.0" text="COLLIER" textAlignment="RIGHT" translateX="100.0">
-                     <font>
-                        <Font name="Century Gothic Bold" size="15.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                     <rotationAxis>
-                        <Point3D x="5.0" y="5.0" z="5.0" />
-                     </rotationAxis>
-                  </Button>
-               </children>
-            </HBox>
-         </children>
-      </Pane>
+                <ImageView fitHeight="131.0" fitWidth="172.0" layoutX="393.0" layoutY="227.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/Collier.png" />
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="160.0" fitWidth="170.0" layoutX="115.0" layoutY="206.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/vache-removebg-preview.png" />
+                    </image>
+                </ImageView>
+                <HBox alignment="CENTER" layoutX="-12.0" layoutY="366.0" prefHeight="100.0" prefWidth="701.0">
+                    <children>
+                        <Button fx:id="btnVache" mnemonicParsing="false" onAction="#naviguerVersListeVache" prefHeight="38.0" prefWidth="110.0" text="VACHE" translateX="-100.0">
+                            <font>
+                                <Font name="Century Gothic Bold" size="15.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="btnCollier" alignment="CENTER" contentDisplay="RIGHT" depthTest="DISABLE" mnemonicParsing="false" onAction="#naviguerVersListeCollier" prefHeight="38.0" prefWidth="114.0" text="COLLIER" textAlignment="RIGHT" translateX="100.0">
+                            <font>
+                                <Font name="Century Gothic Bold" size="15.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets />
+                            </HBox.margin>
+                            <rotationAxis>
+                                <Point3D x="5.0" y="5.0" z="5.0" />
+                            </rotationAxis>
+                        </Button>
+                    </children>
+                </HBox>
+            </children>
+        </Pane>
     </children>
 </HBox>
